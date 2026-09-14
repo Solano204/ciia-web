@@ -4,7 +4,7 @@ export function Footer() {
   return (
     <footer
       id="footer"
-      className="border-t border-white/5 bg-background px-6 py-14 md:px-10 md:py-16"
+      className="border-t border-white/5 px-6 py-14 md:px-10 md:py-16"
     >
       <div className="mx-auto flex max-w-[1400px] flex-col gap-10">
         <div className="flex flex-col justify-between gap-8 md:flex-row md:items-start">

@@ -36,7 +36,7 @@ export function Contact() {
   return (
     <section
       id="contacto"
-      className="border-t border-white/5 bg-background px-6 py-24 md:px-10 md:py-32"
+      className="border-t border-white/5 px-6 py-24 md:px-10 md:py-32"
     >
       <div className="mx-auto flex max-w-[1400px] flex-col gap-12">
         <AnimatedSection className="grid gap-6 md:grid-cols-12">

@@ -12,7 +12,7 @@ export function About() {
   return (
     <section
       id="nosotros"
-      className="border-t border-white/5 bg-background px-6 py-24 md:px-10 md:py-32"
+      className="border-t border-white/5 px-6 py-24 md:px-10 md:py-32"
     >
       <div className="mx-auto flex max-w-[1400px] flex-col gap-20">
         <AnimatedSection className="grid gap-8 md:grid-cols-12">
@@ -93,11 +93,11 @@ export function About() {
           </ul>
         </AnimatedSection>
 
-        <AnimatedSection className="grid gap-10 border-t border-white/8 pt-12 md:grid-cols-2">
+        <AnimatedSection className="flex flex-col gap-4 border-t border-white/8 pt-12">
           {CLIENT_QUOTES.map((item) => (
             <AnimatedItem key={item.id}>
-              <figure className="card-surface p-6">
-                <blockquote className="font-sans text-lg italic leading-snug text-foreground">
+              <figure className="card-surface max-w-[60ch] p-6">
+                  <blockquote className="font-sans text-lg italic leading-snug text-foreground">
                   &ldquo;{item.quote}&rdquo;
                 </blockquote>
                 <figcaption className="mt-4 text-sm text-zinc-500">{item.role}</figcaption>

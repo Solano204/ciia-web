@@ -158,7 +158,7 @@ export function Step({ children }: { children: ReactNode }) {
   return <div>{children}</div>;
 }
 
-function StepIndicator({
+export function StepIndicator({
   step,
   currentStep,
   onClickStep,

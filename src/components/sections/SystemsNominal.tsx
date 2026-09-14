@@ -3,6 +3,8 @@
 import { ArrowUpRight } from "@phosphor-icons/react";
 import { EyebrowBadge } from "@/components/ui/EyebrowBadge";
 import { AnimatedItem, AnimatedSection } from "@/components/ui/AnimatedSection";
+import { useLenis } from "@/components/providers/SmoothScrollProvider";
+import { scrollToAnchor } from "@/lib/smooth-anchor";
 
 const telemetry = [
   { label: "Suit Integrity", value: "99.2%", note: "Nanoparticle lattice" },
@@ -12,6 +14,8 @@ const telemetry = [
 ];
 
 export function SystemsNominal() {
+  const lenis = useLenis();
+
   return (
     <section
       id="systems"
@@ -39,6 +43,7 @@ export function SystemsNominal() {
           <AnimatedItem>
             <a
               href="#footer"
+              onClick={(event) => scrollToAnchor(event, "#footer", lenis)}
               className="group inline-flex items-center gap-2 self-start rounded-full border border-white/15 bg-white/[0.04] px-5 py-2.5 font-mono text-[11px] font-medium uppercase tracking-[0.22em] text-foreground backdrop-blur-md transition-all duration-200 hover:bg-white/[0.08] active:translate-y-[1px]"
             >
               Open Suit Archive

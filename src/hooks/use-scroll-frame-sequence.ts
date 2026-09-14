@@ -90,11 +90,17 @@ export function useScrollFrameSequence({
   const resizeCanvas = useCallback(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
+    // ponytail: sized off the parent box (not the canvas itself, which we're
+    // about to resize) so it works both for a viewport-filling hero and a
+    // small grid tile — for Hero/Challenge the parent is already
+    // viewport-sized, so this is a no-op there.
+    const width = canvas.parentElement?.clientWidth ?? window.innerWidth;
+    const height = canvas.parentElement?.clientHeight ?? window.innerHeight;
     const dpr = window.devicePixelRatio || 1;
-    canvas.width = window.innerWidth * dpr;
-    canvas.height = window.innerHeight * dpr;
-    canvas.style.width = window.innerWidth + "px";
-    canvas.style.height = window.innerHeight + "px";
+    canvas.width = width * dpr;
+    canvas.height = height * dpr;
+    canvas.style.width = width + "px";
+    canvas.style.height = height + "px";
     const ctx = canvas.getContext("2d");
     if (ctx) ctx.scale(1, 1);
     drawFrame(lastFrameRef.current >= 0 ? lastFrameRef.current : 0);

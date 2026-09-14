@@ -16,6 +16,14 @@ export type ExecutionStage = {
   description: string;
 };
 
+export type CardMedia =
+  | { kind: "none" }
+  | { kind: "video"; src: string; poster?: string }
+  | { kind: "image"; src: string; alt: string }
+  | { kind: "frames"; dir: string; count: number }
+  | { kind: "text"; content: string }
+  | { kind: "stat"; value: string; label: string };
+
 export type ServiceItem = {
   id: string;
   title: string;
@@ -29,6 +37,9 @@ export type ServiceItem = {
   stageMapping: string[];
   technicalSpecs: string[];
   externalLink?: { label: string; href: string };
+  media?: CardMedia;
+  span: { col: number; row: number };
+  featured?: boolean;
 };
 
 export type ProjectCase = {
@@ -70,13 +81,13 @@ export const INSTITUTIONAL_METRICS: { id: string; value: string; label: string }
 
 export const CLIENT_QUOTES = [
   {
-    id: "q1",
-    quote: "Llevo más de un año tratando de lanzar asistentes virtuales.",
+    id: "q2",
+    quote: "Ingeniería trae soluciones a la planta, pero en piso nadie entiende cómo usarlas.",
     role: "Voz de cliente recogida por CII.IA",
   },
   {
-    id: "q2",
-    quote: "Ingeniería trae soluciones a la planta, pero en piso nadie entiende cómo usarlas.",
+    id: "q1",
+    quote: "Llevo más de un año tratando de lanzar asistentes virtuales.",
     role: "Voz de cliente recogida por CII.IA",
   },
 ];
@@ -237,6 +248,8 @@ export const SERVICES_DATA: ServiceItem[] = [
     startingPrice: "Workshop desde MXN $85,000",
     stageMapping: ["descubrir", "disenar"],
     technicalSpecs: ["Masterclass ejecutiva", "Workshop de 6–8 h", "Roadmap priorizado"],
+    media: { kind: "none" },
+    span: { col: 5, row: 1 },
   },
   {
     id: "ai-lab",
@@ -255,6 +268,8 @@ export const SERVICES_DATA: ServiceItem[] = [
     startingPrice: "A cotizar según alcance",
     stageMapping: ["disenar", "desarrollar"],
     technicalSpecs: ["Celda de manufactura", "Robótica y drones", "Realidad virtual", "Edge y data center"],
+    media: { kind: "none" },
+    span: { col: 5, row: 1 },
   },
   {
     id: "academy",
@@ -274,6 +289,8 @@ export const SERVICES_DATA: ServiceItem[] = [
     stageMapping: ["desplegar", "escalar"],
     technicalSpecs: ["NVIDIA DLI", "Programas ejecutivos", "Programas corporativos"],
     externalLink: { label: "Certificación NVIDIA DLI en ciiia.mx", href: "https://ciiia.mx/nvidia" },
+    media: { kind: "none" },
+    span: { col: 4, row: 1 },
   },
   {
     id: "hiva",
@@ -291,6 +308,9 @@ export const SERVICES_DATA: ServiceItem[] = [
     startingPrice: "Licencia anual USD $7,950 + implementación USD $3,500",
     stageMapping: ["desplegar", "escalar"],
     technicalSpecs: ["SaaS multi-tenant", "Instancia dedicada", "On-premise", "Seguridad empresarial"],
+    media: { kind: "none" },
+    span: { col: 7, row: 2 },
+    featured: true,
   },
   {
     id: "pymes",
@@ -309,6 +329,8 @@ export const SERVICES_DATA: ServiceItem[] = [
     startingPrice: "Valor estimado del proyecto MXN $100,000 · con apoyo institucional",
     stageMapping: ["descubrir", "desarrollar"],
     technicalSpecs: ["Diagnóstico", "MVP funcional", "Acompañamiento"],
+    media: { kind: "none" },
+    span: { col: 3, row: 1 },
   },
 ];
 
@@ -459,6 +481,20 @@ export const PROJECT_CASES: ProjectCase[] = [
     outcome: "Mapas de calor, pronóstico, integración de fuentes y análisis de comportamiento.",
     tags: ["Ciencia de datos", "IA generativa", "Sector público"],
   },
+];
+
+/**
+ * Caso destacado: las cuatro cifras pertenecen al mismo despliegue (caso-01).
+ * Fuente: [DECK] Ejecutiva 2030 v1.06, lámina «CII.IA in action» — portado
+ * literal desde cii.ia-artificial-intelligence/src/data/ciiiaData.ts.
+ */
+export const FEATURED_CASE_ID = "caso-01";
+
+export const FEATURED_CASE_METRICS: { value: string; label: string }[] = [
+  { value: "-55%", label: "Paros de línea" },
+  { value: "-60%", label: "Tiempo de inspección" },
+  { value: "-30%", label: "Desperdicio" },
+  { value: "-28%", label: "Tiempo improductivo" },
 ];
 
 export const INDUSTRIAL_SECTORS = [

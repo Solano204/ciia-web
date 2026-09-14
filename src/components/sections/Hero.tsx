@@ -50,7 +50,7 @@ export function Hero() {
   });
 
   return (
-    <section ref={sectionRef} className="scroll-animation relative">
+    <section id="hero" ref={sectionRef} className="scroll-animation relative">
       <div
         className="sticky top-0 min-h-[100dvh] w-full overflow-hidden bg-background"
         style={{ height: "100dvh", willChange: "transform", transform: "translateZ(0)" }}
@@ -150,14 +150,14 @@ export function Hero() {
           </div>
         </div>
 
-        {DIALOGUES.map((d) => {
+        {DIALOGUES.map((d, index) => {
           const visible = visibleCards.has(d.id);
           const position =
-            d.id === "d1"
-              ? "top-[22%] right-6 md:right-12"
-              : d.id === "d2"
+            index === 0
+              ? "top-[60%] right-6 md:right-12"
+              : index === 1
               ? "top-1/2 -translate-y-1/2 right-6 md:right-12"
-              : "bottom-24 right-6 md:bottom-28 md:right-12";
+              : "bottom-44 right-6 md:bottom-88 md:right-12";
           return (
             <div
               key={d.id}

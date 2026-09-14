@@ -1,11 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type MouseEvent } from "react";
 import { ArrowUpRight } from "@phosphor-icons/react";
+import { useLenis } from "@/components/providers/SmoothScrollProvider";
+import { scrollToAnchor } from "@/lib/smooth-anchor";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const lenis = useLenis();
+
+  const handleAnchorClick = (event: MouseEvent<HTMLAnchorElement>, href: string) =>
+    scrollToAnchor(event, href, lenis);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -46,6 +52,7 @@ export function Navbar() {
             <a
               key={href}
               href={href}
+              onClick={(event) => handleAnchorClick(event, href)}
               className="font-mono text-[11px] uppercase tracking-[0.24em] text-zinc-400 transition-colors hover:text-foreground"
             >
               {label}
@@ -55,6 +62,7 @@ export function Navbar() {
 
         <a
           href="#contacto"
+          onClick={(event) => handleAnchorClick(event, "#contacto")}
           className="group inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.05] px-4 py-2 font-mono text-[11px] font-medium uppercase tracking-[0.22em] text-foreground backdrop-blur-md transition-all duration-200 hover:bg-white/[0.1] active:translate-y-[1px]"
         >
           Engage
