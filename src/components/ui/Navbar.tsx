@@ -36,10 +36,10 @@ export function Navbar() {
 
         <nav className="hidden items-center gap-5 lg:flex xl:gap-7">
           {[
-            ["#nosotros", "Nosotros"],
-            ["#ciclo", "Ciclo"],
             ["#soluciones", "Soluciones"],
+            ["#ciclo", "Ciclo"],
             ["#casos", "Casos"],
+            ["#nosotros", "Nosotros"],
             ["#ecosistema", "Ecosistema"],
             ["#contacto", "Contacto"],
           ].map(([href, label]) => (
