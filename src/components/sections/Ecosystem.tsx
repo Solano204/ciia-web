@@ -1,59 +1,79 @@
+"use client";
+
+import { Suspense, useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { EyebrowBadge } from "@/components/ui/EyebrowBadge";
 import { AnimatedItem, AnimatedSection } from "@/components/ui/AnimatedSection";
-import { ALL_PARTNERS, ECOSYSTEM_GROUPS } from "@/lib/ciiia";
+import { EcosystemGrid } from "@/components/ui/EcosystemGrid";
+import { ECOSYSTEM_INTRO } from "@/lib/ciiia";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export function Ecosystem() {
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const scope = sectionRef.current;
+    if (!scope) return;
+
+    const mm = gsap.matchMedia();
+
+    mm.add("(prefers-reduced-motion: no-preference)", () => {
+      gsap
+        .timeline({
+          scrollTrigger: { trigger: "[data-fx='eco-header']", start: "top 88%", once: true },
+        })
+        .from("[data-fx='eco-eyebrow']", { opacity: 0, y: 14, duration: 0.55, ease: "power2.out" })
+        .from("[data-fx='eco-title']", { yPercent: 110, duration: 1, ease: "power3.out" }, 0.1)
+        .from(
+          "[data-fx='eco-intro']",
+          { opacity: 0, y: 18, duration: 0.6, ease: "power2.out" },
+          0.35,
+        );
+    }, scope);
+
+    return () => mm.revert();
+  }, []);
+
   return (
     <section
+      ref={sectionRef}
       id="ecosistema"
       className="border-t border-white/5 px-6 py-24 md:px-10 md:py-32"
     >
-      <div className="mx-auto flex max-w-[1400px] flex-col gap-12">
-        <AnimatedSection className="grid gap-6 md:grid-cols-12">
-          <AnimatedItem className="md:col-span-12">
-            <EyebrowBadge>CII.IA // ECOSISTEMA</EyebrowBadge>
-          </AnimatedItem>
-          <AnimatedItem className="md:col-span-6">
-            <h2 className="mt-4 font-sans text-4xl font-semibold tracking-tighter text-foreground md:text-5xl">
-              Ecosistema
-            </h2>
-          </AnimatedItem>
-          <AnimatedItem className="md:col-span-5 md:col-start-8 md:self-end">
-            <p className="text-base leading-relaxed text-zinc-400">
-              Más de 50 organizaciones de tecnología, academia, gobierno e industria forman
-              parte del ecosistema del CII.IA.
-            </p>
-          </AnimatedItem>
+      <div className="mx-auto flex max-w-[1400px] flex-col gap-10">
+        <AnimatedSection className="grid gap-6 lg:grid-cols-12" >
+          <div className="lg:col-span-12" data-fx="eco-header">
+            <span className="block" data-fx="eco-eyebrow">
+              <EyebrowBadge>CII.IA // ECOSISTEMA</EyebrowBadge>
+            </span>
+
+            <div className="mt-5 grid gap-5 lg:grid-cols-12 lg:items-end">
+              <span className="block overflow-hidden pb-[0.08em] lg:col-span-6">
+                <h2
+                  className="font-sans text-[clamp(38px,5vw,52px)] font-medium leading-[1.05] text-foreground"
+                  data-fx="eco-title"
+                >
+                  Ecosistema
+                </h2>
+              </span>
+              <p
+                className="max-w-[420px] text-[15px] leading-relaxed text-zinc-400 lg:col-span-5 lg:col-start-8"
+                data-fx="eco-intro"
+              >
+                {ECOSYSTEM_INTRO}
+              </p>
+            </div>
+          </div>
         </AnimatedSection>
 
-        <AnimatedSection className="flex flex-col gap-10">
-          {ECOSYSTEM_GROUPS.map((group) => {
-            const members = ALL_PARTNERS.filter(
-              (partner) => partner.category === group.category && !partner.isFoundingPartner,
-            );
-            return (
-              <AnimatedItem
-                key={group.category}
-                className="grid gap-4 border-t border-white/8 pt-6 md:grid-cols-12"
-              >
-                <h3 className="font-sans text-lg font-semibold text-foreground md:col-span-3">
-                  {group.title}
-                </h3>
-                <ul className="grid gap-x-8 gap-y-4 sm:grid-cols-2 md:col-span-9 md:grid-cols-3">
-                  {members.map((partner) => (
-                    <li key={partner.name}>
-                      <span className="block text-sm font-medium leading-snug text-foreground">
-                        {partner.name}
-                      </span>
-                      <span className="mt-0.5 block text-xs leading-snug text-zinc-500">
-                        {partner.roleInEcosystem}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </AnimatedItem>
-            );
-          })}
+        <AnimatedSection>
+          <AnimatedItem>
+            <Suspense fallback={<div className="h-px w-full border-y border-white/8" />}>
+              <EcosystemGrid />
+            </Suspense>
+          </AnimatedItem>
         </AnimatedSection>
       </div>
     </section>

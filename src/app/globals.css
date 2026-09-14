@@ -45,6 +45,16 @@ body {
     0 20px 40px -20px rgba(0, 0, 0, 0.6);
 }
 
+/* Fundido al cambiar de filtro en el ecosistema. */
+@keyframes eco-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .scroll-animation {
   height: 400vh;
 }

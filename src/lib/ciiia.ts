@@ -79,6 +79,149 @@ export const INSTITUTIONAL_METRICS: { id: string; value: string; label: string }
   { id: "i4", value: "2021", label: "Inauguración en el PIIT, Nuevo León" },
 ];
 
+export type AboutStat = {
+  id: string;
+  value: string;
+  label: string;
+  /** Los años no se animan: se imprimen tal cual. */
+  isDate: boolean;
+};
+
+export type AboutFoundingPartner = {
+  id: string;
+  name: string;
+  role: string;
+  /** Ruta dentro de `public/logos/`. */
+  logo: string;
+  /** Dimensiones intrínsecas del asset: sin ellas next/image deforma la razón. */
+  logoWidth: number;
+  logoHeight: number;
+  url?: string;
+  /**
+   * El asset viene con fondo claro y marca oscura, así que hay que invertirlo
+   * para que se lea sobre el tile oscuro. Innecesario con un SVG transparente.
+   */
+  logoOnLight?: boolean;
+};
+
+export type WorkPrinciple = {
+  id: string;
+  affirmative: string;
+  negative: string;
+  highlighted: boolean;
+};
+
+export type AboutData = {
+  eyebrow: string;
+  headlineLines: string[];
+  highlightValue: string;
+  highlightCopy: string;
+  leadParagraph: string;
+  labImageSrc: string;
+  labImageAlt: string;
+  labCaption: string;
+  stats: AboutStat[];
+  foundingPartnersTitle: string;
+  foundingPartnersCopy: string;
+  foundingPartners: AboutFoundingPartner[];
+  principlesEyebrow: string;
+  principlesTitle: string;
+  workPrinciples: WorkPrinciple[];
+};
+
+/** El índice 01..09 se deriva de la posición en el array, no se guarda aquí. */
+export const WORK_PRINCIPLES: WorkPrinciple[] = [
+  { id: "descubrimos", affirmative: "DESCUBRIMOS", negative: "no diagnosticamos", highlighted: true },
+  { id: "guiamos", affirmative: "GUIAMOS", negative: "no entrenamos", highlighted: false },
+  { id: "catalizamos", affirmative: "CATALIZAMOS", negative: "no instruimos", highlighted: false },
+  { id: "materializamos", affirmative: "MATERIALIZAMOS", negative: "no adoctrinamos", highlighted: false },
+  { id: "educamos", affirmative: "EDUCAMOS", negative: "no damos sermones", highlighted: true },
+  { id: "demostramos", affirmative: "DEMOSTRAMOS", negative: "no solo hablamos", highlighted: false },
+  { id: "innovamos", affirmative: "INNOVAMOS", negative: "no imitamos", highlighted: false },
+  { id: "interrumpimos", affirmative: "INTERRUMPIMOS", negative: "no vamos con la corriente", highlighted: false },
+  { id: "lideramos", affirmative: "LIDERAMOS", negative: "no seguimos", highlighted: true },
+];
+
+/**
+ * TODO: colocar el render del laboratorio en `public/nosotros-encabezado.jpg`.
+ * Mientras el archivo no exista, el marco de la imagen se renderiza vacío.
+ */
+export const ABOUT_LAB_IMAGE_SRC = "/nosotros-encabezado.jpg";
+
+export const ABOUT_DATA: AboutData = {
+  eyebrow: MANIFESTO.eyebrow,
+  headlineLines: ["El problema", "no es la IA.", "Es la última milla."],
+  highlightValue: "5%",
+  highlightCopy:
+    "de las empresas de Nuevo León cuenta con equipos internos de ciencia de datos",
+  leadParagraph:
+    "En CII.IA, entendemos que el verdadero desafío no radica en la creación de algoritmos avanzados, sino en la implementación efectiva de estas soluciones en el entorno empresarial real. Nuestra misión es cerrar esa brecha crítica.",
+  labImageSrc: ABOUT_LAB_IMAGE_SRC,
+  labImageAlt:
+    "Laboratorio del CII.IA en el PIIT: celda de manufactura con brazos robóticos industriales",
+  labCaption:
+    "Nuestra infraestructura de laboratorio, ubicada en el PIIT, es el núcleo de nuestros desarrollos tangibles. Desde aquí, conectamos con ecosistemas globales para acelerar la adopción de IA de vanguardia en la industria regional, asegurando que cada proyecto llegue al final de la milla.",
+  stats: INSTITUTIONAL_METRICS.map((metric) => ({
+    ...metric,
+    isDate: metric.id === "i4",
+  })),
+  foundingPartnersTitle: "Cinco instituciones fundadoras",
+  foundingPartnersCopy:
+    "El centro se inauguró en 2021 dentro del programa federal de Centros de Innovación Industrial. Monterrey IT Clúster se encarga de su administración.",
+  // TODO: sustituir los PNG por SVG con fondo transparente. Los assets
+  // actuales traen fondo opaco (blanco, salvo PROSOFT que es negro), por eso
+  // llevan `logoOnLight` y el tratamiento de mezcla en el componente.
+  foundingPartners: [
+    {
+      id: "prosoft",
+      name: "PROSOFT · Gobierno de México",
+      role: "Programa federal de Centros de Innovación Industrial",
+      logo: "/logos/prosoft.png",
+      logoWidth: 552,
+      logoHeight: 362,
+    },
+    {
+      id: "gobierno",
+      name: "Gobierno del Estado de Nuevo León",
+      role: "Sede en el Parque de Investigación e Innovación Tecnológica",
+      logo: "/logos/gobierno-nl.png",
+      logoWidth: 444,
+      logoHeight: 450,
+      logoOnLight: true,
+    },
+    {
+      id: "mitc",
+      name: "Monterrey IT Clúster (Csoftmty)",
+      role: "Administración del centro y vinculación con la industria de TI",
+      logo: "/logos/mitc.png",
+      logoWidth: 350,
+      logoHeight: 350,
+      logoOnLight: true,
+    },
+    {
+      id: "uanl",
+      name: "Universidad Autónoma de Nuevo León",
+      role: "Formación de talento y transferencia tecnológica",
+      logo: "/logos/uanl.png",
+      logoWidth: 697,
+      logoHeight: 360,
+      logoOnLight: true,
+    },
+    {
+      id: "cimat",
+      name: "CIMAT",
+      role: "Centro de Investigación en Matemáticas",
+      logo: "/logos/cimat.png",
+      logoWidth: 395,
+      logoHeight: 506,
+      logoOnLight: true,
+    },
+  ],
+  principlesEyebrow: "CII.IA // PRINCIPIOS",
+  principlesTitle: "Cómo trabajamos",
+  workPrinciples: WORK_PRINCIPLES,
+};
+
 export const CLIENT_QUOTES = [
   {
     id: "q2",
@@ -168,6 +311,87 @@ export const ALL_PARTNERS: EcosystemPartner[] = [
   { name: "SIT Consultores", category: "Shareholders", roleInEcosystem: "Empresa socia" },
   { name: "PCG", category: "Shareholders", roleInEcosystem: "Empresa socia" },
 ];
+
+export type EcosystemCategoryId =
+  | "tecnologia"
+  | "plataformas"
+  | "academia"
+  | "industria"
+  | "empresas";
+
+export type EcosystemCategory = {
+  id: EcosystemCategoryId;
+  label: string;
+};
+
+export type EcosystemPartnerEntry = {
+  id: string;
+  name: string;
+  categoryId: EcosystemCategoryId;
+  /** Ruta en `public/logos/ecosistema/`, derivada del id. */
+  logo: string;
+  /** Solo cuando aporta algo que la categoría no comunica ya. */
+  note?: string;
+  url?: string;
+};
+
+export const ECOSYSTEM_CATEGORIES: EcosystemCategory[] = [
+  { id: "tecnologia", label: "Tecnología" },
+  { id: "plataformas", label: "Plataformas" },
+  { id: "academia", label: "Academia e investigación" },
+  { id: "industria", label: "Industria y clústeres" },
+  { id: "empresas", label: "Empresas socias" },
+];
+
+const ecosystemLogo = (id: string): string => `/logos/ecosistema/${id}.svg`;
+
+/**
+ * TODO: faltan los 28 SVG en `public/logos/ecosistema/`. Mientras no existan,
+ * cada tile cae al fallback con el nombre en mono. Archivos esperados:
+ * nvidia.svg, ibm.svg, microsoft.svg, intel.svg, qualcomm.svg, kuka.svg,
+ * microsoft-azure.svg, aws.svg, google-cloud.svg, h2o-ai.svg, aveva.svg,
+ * rekor.svg, tec-monterrey.svg, fime-uanl.svg, universite-montreal.svg,
+ * externado-colombia.svg, incmty.svg, nuevo-leon-40.svg, claut.svg,
+ * clelac.svg, amt.svg, mxti.svg, kernel.svg, microsip.svg, novalan.svg,
+ * northware.svg, sit-consultores.svg, pcg.svg
+ */
+export const ECOSYSTEM_PARTNERS: EcosystemPartnerEntry[] = [
+  { id: "nvidia", name: "NVIDIA", categoryId: "tecnologia", logo: ecosystemLogo("nvidia"), note: "Deep Learning Institute" },
+  { id: "ibm", name: "IBM", categoryId: "tecnologia", logo: ecosystemLogo("ibm") },
+  { id: "microsoft", name: "Microsoft", categoryId: "tecnologia", logo: ecosystemLogo("microsoft") },
+  { id: "intel", name: "Intel", categoryId: "tecnologia", logo: ecosystemLogo("intel") },
+  { id: "qualcomm", name: "Qualcomm", categoryId: "tecnologia", logo: ecosystemLogo("qualcomm") },
+  { id: "kuka", name: "KUKA", categoryId: "tecnologia", logo: ecosystemLogo("kuka"), note: "Robótica industrial" },
+
+  { id: "microsoft-azure", name: "Microsoft Azure", categoryId: "plataformas", logo: ecosystemLogo("microsoft-azure") },
+  { id: "aws", name: "Amazon Web Services", categoryId: "plataformas", logo: ecosystemLogo("aws") },
+  { id: "google-cloud", name: "Google Cloud", categoryId: "plataformas", logo: ecosystemLogo("google-cloud") },
+  { id: "h2o-ai", name: "H2O.ai", categoryId: "plataformas", logo: ecosystemLogo("h2o-ai") },
+  { id: "aveva", name: "AVEVA", categoryId: "plataformas", logo: ecosystemLogo("aveva"), note: "Plataforma industrial" },
+  { id: "rekor", name: "REKOR", categoryId: "plataformas", logo: ecosystemLogo("rekor"), note: "Plataforma de visión" },
+
+  { id: "tec-monterrey", name: "Tecnológico de Monterrey", categoryId: "academia", logo: ecosystemLogo("tec-monterrey"), note: "AI Hub" },
+  { id: "fime-uanl", name: "FIME · UANL", categoryId: "academia", logo: ecosystemLogo("fime-uanl") },
+  { id: "universite-montreal", name: "Université de Montréal", categoryId: "academia", logo: ecosystemLogo("universite-montreal"), note: "Internacional" },
+  { id: "externado-colombia", name: "Universidad Externado de Colombia", categoryId: "academia", logo: ecosystemLogo("externado-colombia"), note: "Internacional" },
+  { id: "incmty", name: "INCmty", categoryId: "academia", logo: ecosystemLogo("incmty"), note: "Ecosistema de innovación" },
+
+  { id: "nuevo-leon-40", name: "Nuevo León 4.0", categoryId: "industria", logo: ecosystemLogo("nuevo-leon-40"), note: "Iniciativa estatal de Industria 4.0" },
+  { id: "claut", name: "CLAUT", categoryId: "industria", logo: ecosystemLogo("claut"), note: "Clúster automotriz" },
+  { id: "clelac", name: "CLELAC", categoryId: "industria", logo: ecosystemLogo("clelac"), note: "Clúster de electrodomésticos" },
+  { id: "amt", name: "AMT", categoryId: "industria", logo: ecosystemLogo("amt") },
+  { id: "mxti", name: "mxTI", categoryId: "industria", logo: ecosystemLogo("mxti"), note: "Consejo nacional de clústeres de TI" },
+
+  { id: "kernel", name: "Kernel", categoryId: "empresas", logo: ecosystemLogo("kernel"), note: "Desarrolla y opera HIVA" },
+  { id: "microsip", name: "Microsip", categoryId: "empresas", logo: ecosystemLogo("microsip") },
+  { id: "novalan", name: "Novalan", categoryId: "empresas", logo: ecosystemLogo("novalan") },
+  { id: "northware", name: "Northware", categoryId: "empresas", logo: ecosystemLogo("northware") },
+  { id: "sit-consultores", name: "SIT Consultores", categoryId: "empresas", logo: ecosystemLogo("sit-consultores") },
+  { id: "pcg", name: "PCG", categoryId: "empresas", logo: ecosystemLogo("pcg") },
+];
+
+export const ECOSYSTEM_INTRO =
+  "Más de 50 organizaciones de tecnología, academia, gobierno e industria forman parte del ecosistema del CII.IA.";
 
 export const ECOSYSTEM_GROUPS: { category: EcosystemPartner["category"]; title: string }[] = [
   { category: "Tech", title: "Tecnología" },

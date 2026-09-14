@@ -1,6 +1,11 @@
 "use client";
 
 import Lenis from "lenis";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import gsap from "gsap";
+import { MotionConfig } from "framer-motion";
+
+gsap.registerPlugin(ScrollTrigger);
 import {
   createContext,
   useContext,
@@ -33,6 +38,10 @@ export function SmoothScrollProvider({ children }: Props) {
       syncTouch: false,
       touchMultiplier: 1.1,
     });
+    lenisRef.current = lenis;
+
+    // ScrollTrigger lee la posición del scroller en cada update de Lenis.
+    lenis.on("scroll", ScrollTrigger.update);
 
     let rafId: number;
     const raf = (time: number) => {
