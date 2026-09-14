@@ -177,9 +177,9 @@ export function StepIndicator({
       animate={status}
       initial={false}
       variants={{
-        inactive: { backgroundColor: "rgba(255,255,255,0.04)", color: "#6b6e7e", borderColor: "rgba(255,255,255,0.12)" },
-        active: { backgroundColor: "rgba(30,193,203,0.14)", color: "#1EC1CB", borderColor: "#1EC1CB" },
-        complete: { backgroundColor: "#1EC1CB", color: "#12121A", borderColor: "#1EC1CB" },
+        inactive: { backgroundColor: "rgba(255,255,255,0.04)", color: "#6B6F80", borderColor: "rgba(255,255,255,0.12)" },
+        active: { backgroundColor: "rgba(0,25,255,0.14)", color: "#3D52FF", borderColor: "#0019FF" },
+        complete: { backgroundColor: "#0019FF", color: "#FFFFFF", borderColor: "#0019FF" },
       }}
       style={{ border: "1px solid" }}
       transition={{ duration: 0.3 }}

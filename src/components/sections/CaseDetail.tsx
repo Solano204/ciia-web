@@ -150,7 +150,7 @@ export function CaseDetail({
           </h2>
           <Link
             href={CONTACT_HREF}
-            className="inline-flex shrink-0 items-center gap-2 rounded-full border border-accent-v2 px-6 py-3 font-mono text-[11px] uppercase tracking-[0.2em] text-accent-v2 transition-colors hover:bg-accent-soft-v2"
+            className="inline-flex shrink-0 items-center gap-2 rounded-full bg-accent-v2 px-6 py-3 font-mono text-[11px] uppercase tracking-[0.2em] text-white transition-colors hover:bg-accent-dim-v2"
           >
             Agendar diagnóstico <span aria-hidden>&#8599;</span>
           </Link>
@@ -162,7 +162,7 @@ export function CaseDetail({
             <span className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--text-muted-v2)]">
               <span aria-hidden>&larr;</span> Caso anterior
             </span>
-            <span className="text-base text-foreground transition-colors group-hover:text-accent-v2">
+            <span className="text-base text-foreground transition-colors group-hover:text-accent-light-v2">
               {prev.title}
             </span>
           </Link>
@@ -173,7 +173,7 @@ export function CaseDetail({
             <span className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--text-muted-v2)]">
               Caso siguiente <span aria-hidden>&rarr;</span>
             </span>
-            <span className="text-base text-foreground transition-colors group-hover:text-accent-v2">
+            <span className="text-base text-foreground transition-colors group-hover:text-accent-light-v2">
               {next.title}
             </span>
           </Link>

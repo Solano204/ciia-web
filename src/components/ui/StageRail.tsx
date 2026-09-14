@@ -9,7 +9,7 @@ const METHODOLOGY_HREF = "/#ciclo";
 
 function nodeClass(active: boolean) {
   return active
-    ? "bg-accent-v2 text-[var(--bg-deep-v2)]"
+    ? "bg-accent-v2 text-white"
     : "border border-[var(--border-strong-v2)] text-[var(--text-muted-v2)]";
 }
 

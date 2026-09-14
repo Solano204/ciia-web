@@ -47,14 +47,14 @@ export function BeamsGlobalMount() {
   const paused = useBeamsPaused();
 
   return (
-    <div aria-hidden className="pointer-events-none fixed inset-0 z-[-1]">
+    <div aria-hidden className="pointer-events-none fixed inset-0 z-0">
       <Beams
         beamWidth={3}
         beamHeight={30}
         beamNumber={20}
-        lightColor="#3A3A3A"
-        beamColor="#000000"
-        backgroundColor="#000000"
+       lightColor="#2A2A2A"
+beamColor="#000000"
+backgroundColor="#000000" 
         speed={2}
         noiseIntensity={1.75}
         scale={0.2}

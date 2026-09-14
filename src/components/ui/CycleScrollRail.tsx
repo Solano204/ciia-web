@@ -190,7 +190,7 @@ export function CycleScrollRail({
                         <Link
                           key={service.id}
                           href={`/soluciones/${service.id}`}
-                          className="text-sm text-foreground underline decoration-white/20 underline-offset-4 transition-colors motion-reduce:transition-none hover:text-accent-v2 hover:decoration-accent-v2"
+                          className="text-sm text-foreground underline decoration-white/20 underline-offset-4 transition-colors motion-reduce:transition-none hover:text-accent-light-v2 hover:decoration-accent-light-v2"
                         >
                           {service.title}
                         </Link>
@@ -206,7 +206,7 @@ export function CycleScrollRail({
                     style={{ width: `${((index + 1) / stages.length) * 100}%` }}
                   />
                 </div>
-                <span className="font-mono text-[11px] text-accent-v2">
+                <span className="font-mono text-[11px] text-accent-light-v2">
                   {Math.round(((index + 1) / stages.length) * 100)}%
                 </span>
               </div>

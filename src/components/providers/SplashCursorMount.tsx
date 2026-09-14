@@ -21,7 +21,7 @@ export function SplashCursorMount() {
       COLOR_UPDATE_SPEED={10}
       SHADING
       RAINBOW_MODE={false}
-      COLOR="#d4a22f"
+      COLOR="#0014CC"
     />
   );
 }

@@ -85,7 +85,7 @@ function FilterChip({
       onClick={onClick}
       className={`rounded-full border px-4 py-2 font-mono text-[11px] uppercase tracking-[0.2em] transition-colors duration-200 motion-reduce:transition-none ${
         active
-          ? "border-accent-v2 bg-accent-soft-v2 text-accent-v2"
+          ? "border-accent-v2 bg-accent-soft-v2 text-accent-light-v2"
           : "border-[var(--border-v2)] text-[var(--text-secondary-v2)] hover:text-foreground"
       }`}
     >

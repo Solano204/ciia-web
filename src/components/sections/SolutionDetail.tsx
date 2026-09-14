@@ -66,7 +66,7 @@ export function SolutionDetail({
           <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--text-muted-v2)]">
             Inversión de referencia
           </span>
-          <p className="mt-2 text-[22px] font-semibold leading-snug text-accent-v2">
+          <p className="mt-2 text-[22px] font-semibold leading-snug text-accent-bright-v2">
             {service.startingPrice}
           </p>
         </div>
@@ -101,7 +101,7 @@ export function SolutionDetail({
               href={service.externalLink.href}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex w-fit items-center gap-1.5 text-sm font-semibold text-accent-v2 underline decoration-accent-v2/40 underline-offset-4 transition-colors hover:decoration-accent-v2"
+              className="inline-flex w-fit items-center gap-1.5 text-sm font-semibold text-accent-light-v2 underline decoration-accent-light-v2/40 underline-offset-4 transition-colors hover:decoration-accent-light-v2"
             >
               {service.externalLink.label} <span aria-hidden>&#8599;</span>
               <span className="sr-only"> (abre en otra pestaña)</span>
@@ -159,7 +159,7 @@ export function SolutionDetail({
         </h2>
         <Link
           href={CONTACT_HREF}
-          className="inline-flex shrink-0 items-center gap-2 rounded-full border border-accent-v2 px-6 py-3 font-mono text-[11px] uppercase tracking-[0.2em] text-accent-v2 transition-colors hover:bg-accent-soft-v2"
+          className="inline-flex shrink-0 items-center gap-2 rounded-full bg-accent-v2 px-6 py-3 font-mono text-[11px] uppercase tracking-[0.2em] text-white transition-colors hover:bg-accent-dim-v2"
         >
           Agendar diagnóstico <span aria-hidden>&#8599;</span>
         </Link>

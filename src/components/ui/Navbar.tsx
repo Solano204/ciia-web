@@ -60,18 +60,7 @@ export function Navbar() {
           ))}
         </nav>
 
-        <a
-          href="#contacto"
-          onClick={(event) => handleAnchorClick(event, "#contacto")}
-          className="group inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.05] px-4 py-2 font-mono text-[11px] font-medium uppercase tracking-[0.22em] text-foreground backdrop-blur-md transition-all duration-200 hover:bg-white/[0.1] active:translate-y-[1px]"
-        >
-          Engage
-          <ArrowUpRight
-            size={14}
-            weight="bold"
-            className="transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-          />
-        </a>
+      
       </div>
     </header>
   );

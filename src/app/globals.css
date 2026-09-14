@@ -10,26 +10,27 @@
   --card-border: rgba(255, 255, 255, 0.08);
   --hud-line: rgba(255, 255, 255, 0.1);
 
-  /* --- v2 glass system: scoped to Solutions/ExecutionCycle/Cases + detail pages --- */
-  --bg-deep-v2: #12121a;
-  --bg-base-v2: #16161f;
-  --surface-1-v2: #1c1c28;
-  --surface-2-v2: #23232f;
-  --surface-3-v2: #2a2a38;
+  /* --- v2 brand system (CII.IA): scoped to Solutions/ExecutionCycle/Cases + detail pages --- */
+  --bg-deep-v2: #000000;
+  --bg-base-v2: #08080c;
+  --surface-1-v2: #0f1018;
+  --surface-2-v2: #16182280;
+  --surface-3-v2: #1c1f2e;
 
-  --text-primary-v2: #e8eaed;
-  --text-secondary-v2: #a0a3b1;
-  --text-muted-v2: #6b6e7e;
-  --text-disabled-v2: #4a4c58;
+  --text-primary-v2: #f0f1f5;
+  --text-secondary-v2: #9a9dab;
+  --text-muted-v2: #6b6f80;
+  --text-disabled-v2: #45485a;
 
-  --accent-v2: #1ec1cb;
-  --accent-bright-v2: #3dd8e2;
-  --accent-dim-v2: #158b93;
-  --accent-deep-v2: #0e5a60;
-  --accent-soft-v2: rgba(30, 193, 203, 0.12);
-  --accent-wash-v2: rgba(30, 193, 203, 0.05);
-  --accent-border-v2: rgba(30, 193, 203, 0.35);
-  --accent-border-strong-v2: rgba(30, 193, 203, 0.55);
+  --accent-v2: #0019ff;
+  --accent-bright-v2: #3d52ff;
+  --accent-light-v2: #7a88ff;
+  --accent-dim-v2: #0014cc;
+  --accent-deep-v2: #000e99;
+  --accent-soft-v2: rgba(0, 25, 255, 0.12);
+  --accent-wash-v2: rgba(0, 25, 255, 0.05);
+  --accent-border-v2: rgba(0, 25, 255, 0.4);
+  --accent-border-strong-v2: rgba(0, 25, 255, 0.65);
 
   --border-v2: rgba(255, 255, 255, 0.07);
   --border-strong-v2: rgba(255, 255, 255, 0.12);
@@ -60,6 +61,7 @@
   --color-text-disabled-v2: var(--text-disabled-v2);
   --color-accent-v2: var(--accent-v2);
   --color-accent-bright-v2: var(--accent-bright-v2);
+  --color-accent-light-v2: var(--accent-light-v2);
   --color-accent-dim-v2: var(--accent-dim-v2);
   --color-accent-deep-v2: var(--accent-deep-v2);
   --color-accent-soft-v2: var(--accent-soft-v2);
@@ -110,21 +112,21 @@ body {
 }
 
 .glass-1-v2 {
-  background: rgba(28, 28, 40, 0.6);
+  background: rgba(15, 16, 24, 0.6);
   backdrop-filter: blur(12px) saturate(120%);
   -webkit-backdrop-filter: blur(12px) saturate(120%);
   border: 1px solid var(--border-v2);
 }
 
 .glass-2-v2 {
-  background: rgba(28, 28, 40, 0.75);
+  background: rgba(15, 16, 24, 0.75);
   backdrop-filter: blur(20px) saturate(140%);
   -webkit-backdrop-filter: blur(20px) saturate(140%);
   border: 1px solid var(--border-strong-v2);
 }
 
 .glass-3-v2 {
-  background: rgba(28, 28, 40, 0.85);
+  background: rgba(15, 16, 24, 0.85);
   backdrop-filter: blur(28px) saturate(160%);
   -webkit-backdrop-filter: blur(28px) saturate(160%);
   border: 1px solid var(--border-stronger-v2);
@@ -156,7 +158,7 @@ body {
   .glass-1-v2,
   .glass-2-v2,
   .glass-3-v2 {
-    background: rgba(28, 28, 40, 0.95);
+    background: rgba(15, 16, 24, 0.95);
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
   }

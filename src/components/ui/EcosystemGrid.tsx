@@ -62,7 +62,7 @@ function PartnerTile({ partner }: TileProps) {
           target="_blank"
           rel="noopener noreferrer"
           aria-label={label}
-          className={`${tileClass} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent`}
+          className={`${tileClass} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-v2`}
         >
           {inner}
           <span className="sr-only">Se abre en una ventana nueva</span>
@@ -275,9 +275,9 @@ function FilterPill({ label, isActive, onSelect }: FilterPillProps) {
       className={[
         "shrink-0 rounded-full border px-4 py-1.5 font-mono text-[11px] uppercase tracking-wide",
         "transition-colors duration-200 motion-reduce:transition-none",
-        "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",
+        "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-v2",
         isActive
-          ? "border-accent text-accent"
+          ? "border-accent-v2 text-accent-bright-v2"
           : "border-white/10 text-zinc-500 hover:border-white/20 hover:text-zinc-300",
       ].join(" ")}
     >

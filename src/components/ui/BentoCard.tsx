@@ -51,7 +51,7 @@ export function BentoCard({
         <span className="font-mono text-xs uppercase tracking-[0.22em] text-foreground">
           {service.title}
         </span>
-        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[var(--border-strong-v2)] text-[var(--text-secondary-v2)] transition-transform duration-200 motion-reduce:transition-none group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent-v2">
+        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[var(--border-strong-v2)] text-[var(--text-secondary-v2)] transition-transform duration-200 motion-reduce:transition-none group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent-light-v2">
           <ArrowUpRight size={14} weight="bold" />
         </span>
       </div>
@@ -74,7 +74,7 @@ export function BentoCard({
         )}
       </div>
 
-      <p className={`font-mono text-sm text-accent-v2 ${size === "sm" ? "line-clamp-1" : ""}`}>
+      <p className={`font-mono text-sm text-accent-bright-v2 ${size === "sm" ? "line-clamp-1" : ""}`}>
         {service.startingPrice}
       </p>
 
