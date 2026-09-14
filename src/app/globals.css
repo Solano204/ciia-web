@@ -9,6 +9,35 @@
   --card-bg: rgba(24, 24, 27, 0.55);
   --card-border: rgba(255, 255, 255, 0.08);
   --hud-line: rgba(255, 255, 255, 0.1);
+
+  /* --- v2 glass system: scoped to Solutions/ExecutionCycle/Cases + detail pages --- */
+  --bg-deep-v2: #12121a;
+  --bg-base-v2: #16161f;
+  --surface-1-v2: #1c1c28;
+  --surface-2-v2: #23232f;
+  --surface-3-v2: #2a2a38;
+
+  --text-primary-v2: #e8eaed;
+  --text-secondary-v2: #a0a3b1;
+  --text-muted-v2: #6b6e7e;
+  --text-disabled-v2: #4a4c58;
+
+  --accent-v2: #1ec1cb;
+  --accent-bright-v2: #3dd8e2;
+  --accent-dim-v2: #158b93;
+  --accent-deep-v2: #0e5a60;
+  --accent-soft-v2: rgba(30, 193, 203, 0.12);
+  --accent-wash-v2: rgba(30, 193, 203, 0.05);
+  --accent-border-v2: rgba(30, 193, 203, 0.35);
+  --accent-border-strong-v2: rgba(30, 193, 203, 0.55);
+
+  --border-v2: rgba(255, 255, 255, 0.07);
+  --border-strong-v2: rgba(255, 255, 255, 0.12);
+  --border-stronger-v2: rgba(255, 255, 255, 0.18);
+
+  --success-v2: #2dd4a7;
+  --warning-v2: #e5a93d;
+  --danger-v2: #e56b6b;
 }
 
 @theme inline {
@@ -19,6 +48,30 @@
   --color-accent-soft: var(--accent-soft);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  --color-bg-deep-v2: var(--bg-deep-v2);
+  --color-bg-base-v2: var(--bg-base-v2);
+  --color-surface-1-v2: var(--surface-1-v2);
+  --color-surface-2-v2: var(--surface-2-v2);
+  --color-surface-3-v2: var(--surface-3-v2);
+  --color-text-primary-v2: var(--text-primary-v2);
+  --color-text-secondary-v2: var(--text-secondary-v2);
+  --color-text-muted-v2: var(--text-muted-v2);
+  --color-text-disabled-v2: var(--text-disabled-v2);
+  --color-accent-v2: var(--accent-v2);
+  --color-accent-bright-v2: var(--accent-bright-v2);
+  --color-accent-dim-v2: var(--accent-dim-v2);
+  --color-accent-deep-v2: var(--accent-deep-v2);
+  --color-accent-soft-v2: var(--accent-soft-v2);
+  --color-accent-wash-v2: var(--accent-wash-v2);
+  --color-accent-border-v2: var(--accent-border-v2);
+  --color-accent-border-strong-v2: var(--accent-border-strong-v2);
+  --color-border-v2: var(--border-v2);
+  --color-border-strong-v2: var(--border-strong-v2);
+  --color-border-stronger-v2: var(--border-stronger-v2);
+  --color-success-v2: var(--success-v2);
+  --color-warning-v2: var(--warning-v2);
+  --color-danger-v2: var(--danger-v2);
 }
 
 html,
@@ -43,6 +96,70 @@ body {
   box-shadow:
     0 1px 0 0 rgba(255, 255, 255, 0.04) inset,
     0 20px 40px -20px rgba(0, 0, 0, 0.6);
+}
+
+/* --- v2 glass system (Solutions/ExecutionCycle/Cases + detail pages only) --- */
+.glass-1-v2,
+.glass-2-v2,
+.glass-3-v2 {
+  border-radius: 16px;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
+  transition:
+    border-color 200ms ease,
+    background-color 200ms ease;
+}
+
+.glass-1-v2 {
+  background: rgba(28, 28, 40, 0.6);
+  backdrop-filter: blur(12px) saturate(120%);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+  border: 1px solid var(--border-v2);
+}
+
+.glass-2-v2 {
+  background: rgba(28, 28, 40, 0.75);
+  backdrop-filter: blur(20px) saturate(140%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%);
+  border: 1px solid var(--border-strong-v2);
+}
+
+.glass-3-v2 {
+  background: rgba(28, 28, 40, 0.85);
+  backdrop-filter: blur(28px) saturate(160%);
+  -webkit-backdrop-filter: blur(28px) saturate(160%);
+  border: 1px solid var(--border-stronger-v2);
+}
+
+/* Paso 5.3: 12 blurred cards over an animated shader tanks scroll perf —
+   the cases grid gets a solid (no backdrop-filter) surface instead of
+   glass-1-v2; blur stays reserved for detail pages + the featured card. */
+.surface-flat-v2 {
+  background: var(--surface-1-v2);
+  border: 1px solid var(--border-v2);
+  border-radius: 16px;
+  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
+  transition:
+    border-color 200ms ease,
+    background-color 200ms ease;
+}
+
+.glass-featured-v2 {
+  border-color: var(--accent-border-v2);
+  background-color: var(--accent-wash-v2);
+}
+
+.glass-hover-v2:hover {
+  border-color: var(--accent-border-strong-v2);
+}
+
+@supports not (backdrop-filter: blur(1px)) {
+  .glass-1-v2,
+  .glass-2-v2,
+  .glass-3-v2 {
+    background: rgba(28, 28, 40, 0.95);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
 }
 
 /* Fundido al cambiar de filtro en el ecosistema. */

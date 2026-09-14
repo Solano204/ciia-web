@@ -1,6 +1,21 @@
-type Props = { children: React.ReactNode; className?: string };
+type Props = { children: React.ReactNode; className?: string; tone?: "amber" | "muted-v2" };
 
-export function EyebrowBadge({ children, className = "" }: Props) {
+// ponytail: `tone` defaults to the original amber look so every existing
+// caller (Hero, Challenge, About, Ecosystem, Contact, SystemsNominal) is
+// unaffected. Only the glass-v2 sections (Solutions, ExecutionCycle, Cases)
+// pass tone="muted-v2" — labels shouldn't compete with the cyan accent.
+export function EyebrowBadge({ children, className = "", tone = "amber" }: Props) {
+  if (tone === "muted-v2") {
+    return (
+      <span
+        className={`inline-flex items-center gap-2 rounded-full border border-[var(--border-strong-v2)] bg-white/[0.04] px-3 py-1.5 font-mono text-[10px] font-medium uppercase tracking-[0.22em] text-[var(--text-muted-v2)] backdrop-blur-md ${className}`}
+      >
+        <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--text-muted-v2)]" />
+        {children}
+      </span>
+    );
+  }
+
   return (
     <span
       className={`inline-flex items-center gap-2 rounded-full border border-white/12 bg-white/[0.04] px-3 py-1.5 font-mono text-[10px] font-medium uppercase tracking-[0.22em] text-accent backdrop-blur-md ${className}`}

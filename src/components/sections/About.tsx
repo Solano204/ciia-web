@@ -7,6 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { EyebrowBadge } from "@/components/ui/EyebrowBadge";
 import { AnimatedItem, AnimatedSection } from "@/components/ui/AnimatedSection";
 import { BlurText } from "@/components/ui/BlurText";
+import { BeamsBackground } from "@/components/ui/BeamsBackground";
 import { useCountUp } from "@/hooks/useCountUp";
 import { useRevealOnScroll } from "@/hooks/useRevealOnScroll";
 import {
@@ -150,7 +151,7 @@ function FoundingPartners() {
   const partners = ABOUT_DATA.foundingPartners;
 
   return (
-    <AnimatedSection className="grid gap-10 border-t border-white/8 pt-20 lg:grid-cols-12">
+    <AnimatedSection className="grid gap-10 border-t border-white/8 pt-20 lg:grid-cols-12 bg-transparent  ">
       <div className="lg:col-span-4 lg:sticky lg:top-24 lg:self-start">
         <BlurText
           as="h3"
@@ -482,10 +483,11 @@ export function About() {
   }, []);
 
   return (
+    <BeamsBackground className="border-t border-white/5">
     <section
       ref={sectionRef}
       id="nosotros"
-      className="border-t border-white/5 px-6 py-24 md:px-10 md:py-32"
+      className="px-6 py-24 md:px-10 md:py-32"
     >
       <div className="mx-auto flex max-w-[1400px] flex-col gap-20">
         <AnimatedSection className="grid grid-cols-1 items-start gap-16 lg:grid-cols-12">
@@ -617,5 +619,6 @@ export function About() {
         </AnimatedSection>
       </div>
     </section>
+    </BeamsBackground>
   );
 }

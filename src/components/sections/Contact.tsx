@@ -3,6 +3,7 @@
 import { useId, useState, type FormEvent } from "react";
 import { EyebrowBadge } from "@/components/ui/EyebrowBadge";
 import { AnimatedItem, AnimatedSection } from "@/components/ui/AnimatedSection";
+import { BeamsBackground } from "@/components/ui/BeamsBackground";
 import { CONTACT_INFO } from "@/lib/ciiia";
 
 const inputClasses =
@@ -34,9 +35,10 @@ export function Contact() {
   };
 
   return (
+    <BeamsBackground className="border-t border-white/5">
     <section
       id="contacto"
-      className="border-t border-white/5 px-6 py-24 md:px-10 md:py-32"
+      className="px-6 py-24 md:px-10 md:py-32"
     >
       <div className="mx-auto flex max-w-[1400px] flex-col gap-12">
         <AnimatedSection className="grid gap-6 md:grid-cols-12">
@@ -182,5 +184,6 @@ export function Contact() {
         </div>
       </div>
     </section>
+    </BeamsBackground>
   );
 }

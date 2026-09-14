@@ -7,8 +7,12 @@ import * as THREE from "three";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { PerspectiveCamera } from "@react-three/drei";
 
-const CanvasWrapper: FC<{ children: ReactNode }> = ({ children }) => (
-  <Canvas dpr={[1, 2]} frameloop="always" className="h-full w-full">
+const CanvasWrapper: FC<{ children: ReactNode; dpr: [number, number]; paused: boolean }> = ({
+  children,
+  dpr,
+  paused,
+}) => (
+  <Canvas dpr={dpr} frameloop={paused ? "never" : "always"} className="h-full w-full">
     {children}
   </Canvas>
 );
@@ -101,9 +105,13 @@ float cnoise(vec3 P){
 // ponytail: self-contained shader instead of hijacking THREE.ShaderLib.physical's
 // internal chunks. That approach (extendMaterial-style helpers, common in showcase
 // snippets) is tightly coupled to a specific three.js version's exact chunk
-// structure/defines and breaks silently (no compile error, just no visible light)
-// when three.js changes those internals. This shader owns its full lighting model,
-// so it can't drift out of sync with three's PBR pipeline.
+// structure/defines AND to three's physically-correct-lighting units — it can
+// compile with zero errors and still render invisible/black if ambient +
+// directional intensities aren't tuned for that pipeline. This shader computes
+// color directly in the 0-1 range from its own lightColor/lightDirection
+// uniforms, so it's guaranteed visible independent of scene lights or
+// tone-mapping mode. Confirmed working after the extendMaterial swap rendered
+// nothing (Canvas + shader compiled fine per console, but no visible output).
 const VERTEX_SHADER = `
 uniform float time;
 uniform float uSpeed;
@@ -215,6 +223,8 @@ interface BeamsProps {
   scale?: number;
   rotation?: number;
   lightMode?: boolean;
+  dpr?: [number, number];
+  paused?: boolean;
 }
 
 const Beams: FC<BeamsProps> = ({
@@ -229,6 +239,8 @@ const Beams: FC<BeamsProps> = ({
   scale = 0.2,
   rotation = 0,
   lightMode = false,
+  dpr = [1, 1.5],
+  paused = false,
 }) => {
   const meshRef = useRef<THREE.Mesh<THREE.BufferGeometry, THREE.ShaderMaterial>>(null!);
 
@@ -238,7 +250,7 @@ const Beams: FC<BeamsProps> = ({
   );
 
   return (
-    <CanvasWrapper>
+    <CanvasWrapper dpr={dpr} paused={paused}>
       <group rotation={[0, 0, THREE.MathUtils.degToRad(rotation)]}>
         <PlaneNoise ref={meshRef} material={beamMaterial} count={beamNumber} width={beamWidth} height={beamHeight} />
       </group>

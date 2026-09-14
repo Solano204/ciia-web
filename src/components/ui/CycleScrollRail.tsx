@@ -78,7 +78,7 @@ export function CycleScrollRail({
           <h2 className="font-sans text-4xl font-semibold tracking-tighter text-foreground md:text-5xl">
             {title}
           </h2>
-          <p className="text-base leading-relaxed text-zinc-400">{description}</p>
+          <p className="text-base leading-relaxed text-[var(--text-secondary-v2)]">{description}</p>
         </div>
 
         <nav aria-label="Progreso del ciclo de ejecución" className="hidden lg:block">
@@ -101,7 +101,9 @@ export function CycleScrollRail({
                     aria-current={active ? "step" : undefined}
                     onClick={() => scrollToStage(index)}
                     className={`pb-7 pt-1.5 text-left font-mono text-xs uppercase tracking-[0.2em] transition-colors duration-200 motion-reduce:transition-none ${
-                      active ? "text-foreground" : "text-zinc-600 hover:text-zinc-400"
+                      active
+                        ? "text-foreground"
+                        : "text-[var(--text-muted-v2)] hover:text-[var(--text-secondary-v2)]"
                     }`}
                   >
                     {stage.name}
@@ -112,7 +114,7 @@ export function CycleScrollRail({
           </ol>
           <p className="pl-[52px] font-mono text-xs">
             <span className="text-foreground">{activeStage.number}</span>
-            <span className="text-zinc-600"> / {totalLabel}</span>
+            <span className="text-[var(--text-muted-v2)]"> / {totalLabel}</span>
           </p>
         </nav>
       </div>
@@ -125,7 +127,7 @@ export function CycleScrollRail({
               panelRefs.current[index] = el;
             }}
             aria-labelledby={`stage-${stage.id}-title`}
-            className="relative flex flex-col gap-6 overflow-hidden rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6 lg:min-h-[85vh] lg:p-10"
+            className="glass-2-v2 relative flex flex-col gap-6 overflow-hidden p-6 lg:min-h-[85vh] lg:p-10"
           >
             <span
               aria-hidden
@@ -135,7 +137,7 @@ export function CycleScrollRail({
             </span>
 
             <div className="relative z-10 flex flex-1 flex-col gap-6">
-              <span className="font-mono text-[11px] uppercase tracking-[0.24em] text-accent">
+              <span className="font-mono text-[11px] uppercase tracking-[0.24em] text-[var(--text-muted-v2)]">
                 <span className="lg:hidden">{stage.number} &middot; </span>
                 {stage.focus}
               </span>
@@ -147,15 +149,15 @@ export function CycleScrollRail({
                 {stage.name}
               </h3>
 
-              <p className="max-w-[60ch] text-[15px] leading-relaxed text-zinc-400 lg:text-[17px]">
+              <p className="max-w-[60ch] text-[15px] leading-relaxed text-[var(--text-secondary-v2)] lg:text-[17px]">
                 {stage.description}
               </p>
 
-              <div className="border-t border-white/8" />
+              <div className="border-t border-[var(--border-v2)]" />
 
               <dl className="grid gap-6 sm:grid-cols-2">
                 <div>
-                  <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-zinc-500">
+                  <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--text-muted-v2)]">
                     Entregable
                   </dt>
                   <dd className="mt-2 text-[15px] leading-relaxed text-foreground">
@@ -163,14 +165,14 @@ export function CycleScrollRail({
                   </dd>
                 </div>
                 <div>
-                  <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-zinc-500">
+                  <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--text-muted-v2)]">
                     Productos
                   </dt>
                   <dd className="mt-2 flex flex-wrap gap-2">
                     {stage.products.map((product) => (
                       <span
                         key={product}
-                        className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-xs text-zinc-300"
+                        className="rounded-full border border-[var(--border-v2)] bg-white/[0.04] px-2.5 py-1 text-xs text-[var(--text-secondary-v2)]"
                       >
                         {product}
                       </span>
@@ -178,7 +180,7 @@ export function CycleScrollRail({
                   </dd>
                 </div>
                 <div>
-                  <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-zinc-500">
+                  <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--text-muted-v2)]">
                     Soluciones que intervienen
                   </dt>
                   <dd className="mt-2 flex flex-col gap-1.5">
@@ -188,7 +190,7 @@ export function CycleScrollRail({
                         <Link
                           key={service.id}
                           href={`/soluciones/${service.id}`}
-                          className="text-sm text-foreground underline decoration-white/20 underline-offset-4 transition-colors motion-reduce:transition-none hover:text-accent hover:decoration-accent"
+                          className="text-sm text-foreground underline decoration-white/20 underline-offset-4 transition-colors motion-reduce:transition-none hover:text-accent-v2 hover:decoration-accent-v2"
                         >
                           {service.title}
                         </Link>
@@ -198,13 +200,13 @@ export function CycleScrollRail({
               </dl>
 
               <div className="mt-auto flex items-center gap-3 pt-4">
-                <div className="h-0.5 flex-1 bg-white/8">
+                <div className="h-0.5 flex-1 bg-[var(--border-v2)]">
                   <div
-                    className="h-full bg-accent"
+                    className="h-full bg-accent-v2"
                     style={{ width: `${((index + 1) / stages.length) * 100}%` }}
                   />
                 </div>
-                <span className="font-mono text-[11px] text-accent">
+                <span className="font-mono text-[11px] text-accent-v2">
                   {Math.round(((index + 1) / stages.length) * 100)}%
                 </span>
               </div>
@@ -218,9 +220,9 @@ export function CycleScrollRail({
 
 function StepConnectorVertical({ isComplete }: { isComplete: boolean }) {
   return (
-    <div className="relative my-1 w-px flex-1 overflow-hidden bg-white/10" style={{ minHeight: "20px" }}>
+    <div className="relative my-1 w-px flex-1 overflow-hidden bg-[var(--border-v2)]" style={{ minHeight: "20px" }}>
       <motion.div
-        className="absolute left-0 top-0 w-full bg-accent"
+        className="absolute left-0 top-0 w-full bg-accent-v2"
         initial={false}
         animate={{ height: isComplete ? "100%" : "0%" }}
         transition={{ duration: 0.4 }}

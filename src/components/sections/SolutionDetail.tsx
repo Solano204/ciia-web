@@ -3,6 +3,7 @@ import path from "node:path";
 import Link from "next/link";
 import { DecayImage } from "@/components/ui/DecayImage";
 import { StageRail } from "@/components/ui/StageRail";
+import { BeamsBackground } from "@/components/ui/BeamsBackground";
 import type { ExecutionStage, ServiceItem } from "@/lib/ciiia";
 
 // ponytail: these three sections only exist as anchors on the home page
@@ -35,10 +36,11 @@ export function SolutionDetail({
   const imageExists = hasLocalImage(service.id);
 
   return (
-    <main className="mx-auto flex max-w-[1400px] flex-col gap-16 px-6 py-24 md:px-10">
+    <BeamsBackground className="min-h-screen">
+    <main className="mx-auto flex max-w-[1400px] flex-col gap-16 px-6 py-24 md:px-10 bg-transparent">
       <Link
         href={SOLUTIONS_HREF}
-        className="inline-flex w-fit items-center gap-2 font-mono text-[11px] uppercase tracking-[0.22em] text-zinc-500 transition-colors hover:text-foreground"
+        className="inline-flex w-fit items-center gap-2 font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--text-muted-v2)] transition-colors hover:text-foreground"
       >
         <span aria-hidden>&larr;</span> Soluciones
       </Link>
@@ -46,25 +48,25 @@ export function SolutionDetail({
       {/* Hero */}
       <div className="grid gap-8 lg:grid-cols-12">
         <div className="flex flex-col gap-4 lg:col-span-7">
-          <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-accent">
+          <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--text-muted-v2)]">
             {service.category}
           </span>
           <h1 className="font-sans text-[56px] font-semibold uppercase leading-[0.95] tracking-tight text-foreground">
             {service.title}
           </h1>
           {service.previousName && (
-            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-zinc-600">
+            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-[var(--text-muted-v2)]">
               ANTES: {stripAntesPrefix(service.previousName)}
             </p>
           )}
           <p className="text-xl font-semibold text-foreground">{service.tagline}</p>
         </div>
 
-        <div className="rounded-2xl border border-[var(--card-border)] p-6 lg:col-span-4 lg:col-start-9">
-          <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-zinc-500">
+        <div className="glass-3-v2 p-6 lg:col-span-4 lg:col-start-9">
+          <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--text-muted-v2)]">
             Inversión de referencia
           </span>
-          <p className="mt-2 text-[22px] font-semibold leading-snug text-accent">
+          <p className="mt-2 text-[22px] font-semibold leading-snug text-accent-v2">
             {service.startingPrice}
           </p>
         </div>
@@ -76,16 +78,16 @@ export function SolutionDetail({
       {/* Body */}
       <div className="grid gap-12 lg:grid-cols-12">
         <div className="flex flex-col gap-8 lg:col-span-6">
-          <p className="text-[17px] leading-relaxed text-zinc-400">{service.description}</p>
+          <p className="text-[17px] leading-relaxed text-[var(--text-secondary-v2)]">{service.description}</p>
 
           <div>
-            <h2 className="font-mono text-[10px] uppercase tracking-[0.22em] text-zinc-500">
+            <h2 className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--text-muted-v2)]">
               Qué incluye
             </h2>
-            <ul className="mt-4 flex flex-col border-t border-white/8">
+            <ul className="mt-4 flex flex-col border-t border-[var(--border-v2)]">
               {service.points.map((point, pointIndex) => (
-                <li key={point} className="flex gap-4 border-b border-white/8 py-3">
-                  <span className="font-mono text-accent">
+                <li key={point} className="flex gap-4 border-b border-[var(--border-v2)] py-3">
+                  <span className="font-mono text-[var(--text-muted-v2)]">
                     {String(pointIndex + 1).padStart(2, "0")}
                   </span>
                   <span className="text-[15px] text-foreground">{point}</span>
@@ -99,7 +101,7 @@ export function SolutionDetail({
               href={service.externalLink.href}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex w-fit items-center gap-1.5 text-sm font-semibold text-accent underline decoration-accent/40 underline-offset-4 transition-colors hover:decoration-accent"
+              className="inline-flex w-fit items-center gap-1.5 text-sm font-semibold text-accent-v2 underline decoration-accent-v2/40 underline-offset-4 transition-colors hover:decoration-accent-v2"
             >
               {service.externalLink.label} <span aria-hidden>&#8599;</span>
               <span className="sr-only"> (abre en otra pestaña)</span>
@@ -107,14 +109,14 @@ export function SolutionDetail({
           )}
 
           <div>
-            <h2 className="font-mono text-[10px] uppercase tracking-[0.22em] text-zinc-500">
+            <h2 className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--text-muted-v2)]">
               Componentes
             </h2>
             <div className="mt-3 flex flex-wrap gap-2">
               {service.technicalSpecs.map((spec) => (
                 <span
                   key={spec}
-                  className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-xs text-zinc-300"
+                  className="rounded-full border border-[var(--border-v2)] bg-white/[0.04] px-2.5 py-1 text-xs text-[var(--text-secondary-v2)]"
                 >
                   {spec}
                 </span>
@@ -124,7 +126,7 @@ export function SolutionDetail({
         </div>
 
         <div className="lg:col-span-5 lg:col-start-8">
-          <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-[var(--card-border)]">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-[var(--border-v2)]">
             {imageExists ? (
               <DecayImage src={`/soluciones/${service.id}.jpg`} alt={service.title} />
             ) : (
@@ -151,17 +153,18 @@ export function SolutionDetail({
       </div>
 
       {/* Closing CTA */}
-      <div className="flex flex-col items-start justify-between gap-6 border-t border-white/8 py-16 sm:flex-row sm:items-center">
+      <div className="flex flex-col items-start justify-between gap-6 border-t border-[var(--border-v2)] py-16 sm:flex-row sm:items-center">
         <h2 className="font-sans text-[28px] font-semibold text-foreground">
           ¿Conversamos sobre tu proyecto?
         </h2>
         <Link
           href={CONTACT_HREF}
-          className="inline-flex shrink-0 items-center gap-2 rounded-full border border-accent px-6 py-3 font-mono text-[11px] uppercase tracking-[0.2em] text-accent transition-colors hover:bg-accent-soft"
+          className="inline-flex shrink-0 items-center gap-2 rounded-full border border-accent-v2 px-6 py-3 font-mono text-[11px] uppercase tracking-[0.2em] text-accent-v2 transition-colors hover:bg-accent-soft-v2"
         >
           Agendar diagnóstico <span aria-hidden>&#8599;</span>
         </Link>
       </div>
     </main>
+    </BeamsBackground>
   );
 }

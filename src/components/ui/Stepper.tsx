@@ -177,9 +177,9 @@ export function StepIndicator({
       animate={status}
       initial={false}
       variants={{
-        inactive: { backgroundColor: "rgba(255,255,255,0.04)", color: "#71717a", borderColor: "rgba(255,255,255,0.12)" },
-        active: { backgroundColor: "rgba(212,162,47,0.14)", color: "#d4a22f", borderColor: "#d4a22f" },
-        complete: { backgroundColor: "#d4a22f", color: "#0a0a0b", borderColor: "#d4a22f" },
+        inactive: { backgroundColor: "rgba(255,255,255,0.04)", color: "#6b6e7e", borderColor: "rgba(255,255,255,0.12)" },
+        active: { backgroundColor: "rgba(30,193,203,0.14)", color: "#1EC1CB", borderColor: "#1EC1CB" },
+        complete: { backgroundColor: "#1EC1CB", color: "#12121A", borderColor: "#1EC1CB" },
       }}
       style={{ border: "1px solid" }}
       transition={{ duration: 0.3 }}
@@ -191,9 +191,9 @@ export function StepIndicator({
 
 function StepConnector({ isComplete }: { isComplete: boolean }) {
   return (
-    <div className="relative mx-1.5 h-px flex-1 overflow-hidden bg-white/10">
+    <div className="relative mx-1.5 h-px flex-1 overflow-hidden bg-[var(--border-v2)]">
       <motion.div
-        className="absolute left-0 top-0 h-full bg-accent"
+        className="absolute left-0 top-0 h-full bg-accent-v2"
         initial={false}
         animate={{ width: isComplete ? "100%" : "0%" }}
         transition={{ duration: 0.4 }}

@@ -13,7 +13,7 @@ function metricPresentation(value: string): { sizeClass: string; colorClass: str
   const isImpact = value.includes("%") || value.startsWith("-") || value.startsWith("+");
   return isImpact
     ? { sizeClass: "text-[56px]", colorClass: "text-foreground" }
-    : { sizeClass: "text-[40px]", colorClass: "text-zinc-300" };
+    : { sizeClass: "text-[40px]", colorClass: "text-[var(--text-secondary-v2)]" };
 }
 
 export function CaseCard({ item }: { item: ProjectCase }) {
@@ -24,15 +24,15 @@ export function CaseCard({ item }: { item: ProjectCase }) {
   return (
     <Link
       href={`/casos/${item.id}`}
-      className="group flex h-full flex-col rounded-2xl border border-[var(--card-border)] bg-[var(--card-bg)] p-6 transition-colors duration-200 motion-reduce:transition-none hover:border-accent/40 hover:bg-accent-soft"
+      className="surface-flat-v2 glass-hover-v2 group flex h-full flex-col p-6 transition-colors duration-200 motion-reduce:transition-none"
     >
       <div className="flex items-center justify-between gap-3">
         <span className="flex flex-wrap items-center gap-x-2 font-mono text-[10px] uppercase tracking-[0.22em]">
-          <span className="text-accent">{item.sector}</span>
-          <span className="text-zinc-600">&middot;</span>
-          <span className="text-zinc-500">{technologyLabel(item.technology)}</span>
+          <span className="text-[var(--text-muted-v2)]">{item.sector}</span>
+          <span className="text-[var(--text-muted-v2)]">&middot;</span>
+          <span className="text-[var(--text-muted-v2)]">{technologyLabel(item.technology)}</span>
         </span>
-        <span className="text-zinc-400 opacity-0 transition-opacity duration-200 motion-reduce:transition-none group-hover:opacity-100">
+        <span className="text-[var(--text-secondary-v2)] opacity-0 transition-opacity duration-200 motion-reduce:transition-none group-hover:opacity-100">
           <ArrowUpRight size={14} weight="bold" />
         </span>
       </div>
@@ -43,29 +43,29 @@ export function CaseCard({ item }: { item: ProjectCase }) {
         >
           {item.metricHighlight}
         </span>
-        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-zinc-500">
+        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--text-muted-v2)]">
           {item.metricLabel}
         </span>
       </div>
 
-      <div className="border-t border-white/8" />
+      <div className="border-t border-[var(--border-v2)]" />
 
       <div className="flex flex-1 flex-col gap-2 pt-4">
         <h3 className="font-sans text-xl font-semibold text-foreground">{item.title}</h3>
-        <p className="line-clamp-2 text-sm leading-relaxed text-zinc-400">{item.challenge}</p>
+        <p className="line-clamp-2 text-sm leading-relaxed text-[var(--text-secondary-v2)]">{item.challenge}</p>
       </div>
 
       <div className="mt-auto flex flex-wrap gap-2 pt-4">
         {visibleTags.map((tag) => (
           <span
             key={tag}
-            className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-[11px] text-zinc-300"
+            className="rounded-full border border-[var(--border-v2)] bg-white/[0.04] px-2.5 py-1 text-[11px] text-[var(--text-secondary-v2)]"
           >
             {tag}
           </span>
         ))}
         {hiddenTagCount > 0 && (
-          <span className="rounded-full border border-white/10 bg-white/[0.04] px-2.5 py-1 text-[11px] text-zinc-300">
+          <span className="rounded-full border border-[var(--border-v2)] bg-white/[0.04] px-2.5 py-1 text-[11px] text-[var(--text-secondary-v2)]">
             +{hiddenTagCount}
           </span>
         )}

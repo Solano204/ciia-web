@@ -9,12 +9,12 @@ const METHODOLOGY_HREF = "/#ciclo";
 
 function nodeClass(active: boolean) {
   return active
-    ? "bg-accent text-background"
-    : "border border-white/15 text-zinc-600";
+    ? "bg-accent-v2 text-[var(--bg-deep-v2)]"
+    : "border border-[var(--border-strong-v2)] text-[var(--text-muted-v2)]";
 }
 
 function labelClass(active: boolean) {
-  return active ? "text-foreground" : "text-zinc-600";
+  return active ? "text-foreground" : "text-[var(--text-muted-v2)]";
 }
 
 export function StageRail({
@@ -45,7 +45,7 @@ export function StageRail({
                   {stage.number}
                 </Link>
                 {!isLast && (
-                  <div className={`h-px w-full ${active && nextActive ? "bg-accent" : "bg-white/10"}`} />
+                  <div className={`h-px w-full ${active && nextActive ? "bg-accent-v2" : "bg-[var(--border-v2)]"}`} />
                 )}
               </Fragment>
             );
@@ -86,7 +86,7 @@ export function StageRail({
                 </Link>
                 {!isLast && (
                   <div
-                    className={`w-px flex-1 ${active && nextActive ? "bg-accent" : "bg-white/10"}`}
+                    className={`w-px flex-1 ${active && nextActive ? "bg-accent-v2" : "bg-[var(--border-v2)]"}`}
                     style={{ minHeight: "24px" }}
                   />
                 )}

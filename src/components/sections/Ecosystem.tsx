@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { EyebrowBadge } from "@/components/ui/EyebrowBadge";
 import { AnimatedItem, AnimatedSection } from "@/components/ui/AnimatedSection";
 import { EcosystemGrid } from "@/components/ui/EcosystemGrid";
+import { BeamsBackground } from "@/components/ui/BeamsBackground";
 import { ECOSYSTEM_INTRO } from "@/lib/ciiia";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -37,45 +38,43 @@ export function Ecosystem() {
   }, []);
 
   return (
-    <section
-      ref={sectionRef}
-      id="ecosistema"
-      className="border-t border-white/5 px-6 py-24 md:px-10 md:py-32"
-    >
-      <div className="mx-auto flex max-w-[1400px] flex-col gap-10">
-        <AnimatedSection className="grid gap-6 lg:grid-cols-12" >
-          <div className="lg:col-span-12" data-fx="eco-header">
-            <span className="block" data-fx="eco-eyebrow">
-              <EyebrowBadge>CII.IA // ECOSISTEMA</EyebrowBadge>
-            </span>
-
-            <div className="mt-5 grid gap-5 lg:grid-cols-12 lg:items-end">
-              <span className="block overflow-hidden pb-[0.08em] lg:col-span-6">
-                <h2
-                  className="font-sans text-[clamp(38px,5vw,52px)] font-medium leading-[1.05] text-foreground"
-                  data-fx="eco-title"
-                >
-                  Ecosistema
-                </h2>
+    <BeamsBackground className="border-t border-white/5">
+      <section ref={sectionRef} id="ecosistema" className="px-6 py-24 md:px-10 md:py-32">
+        <div className="mx-auto flex max-w-[1400px] flex-col gap-10">
+          <AnimatedSection className="grid gap-6 lg:grid-cols-12" >
+            <div className="lg:col-span-12" data-fx="eco-header">
+              <span className="block" data-fx="eco-eyebrow">
+                <EyebrowBadge>CII.IA // ECOSISTEMA</EyebrowBadge>
               </span>
-              <p
-                className="max-w-[420px] text-[15px] leading-relaxed text-zinc-400 lg:col-span-5 lg:col-start-8"
-                data-fx="eco-intro"
-              >
-                {ECOSYSTEM_INTRO}
-              </p>
-            </div>
-          </div>
-        </AnimatedSection>
 
-        <AnimatedSection>
-          <AnimatedItem>
-            <Suspense fallback={<div className="h-px w-full border-y border-white/8" />}>
-              <EcosystemGrid />
-            </Suspense>
-          </AnimatedItem>
-        </AnimatedSection>
-      </div>
-    </section>
+              <div className="mt-5 grid gap-5 lg:grid-cols-12 lg:items-end">
+                <span className="block overflow-hidden pb-[0.08em] lg:col-span-6">
+                  <h2
+                    className="font-sans text-[clamp(38px,5vw,52px)] font-medium leading-[1.05] text-foreground"
+                    data-fx="eco-title"
+                  >
+                    Ecosistema
+                  </h2>
+                </span>
+                <p
+                  className="max-w-[420px] text-[15px] leading-relaxed text-zinc-400 lg:col-span-5 lg:col-start-8"
+                  data-fx="eco-intro"
+                >
+                  {ECOSYSTEM_INTRO}
+                </p>
+              </div>
+            </div>
+          </AnimatedSection>
+
+          <AnimatedSection>
+            <AnimatedItem>
+              <Suspense fallback={<div className="h-px w-full border-y border-white/8" />}>
+                <EcosystemGrid />
+              </Suspense>
+            </AnimatedItem>
+          </AnimatedSection>
+        </div>
+      </section>
+    </BeamsBackground>
   );
 }
