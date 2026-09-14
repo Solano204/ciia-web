@@ -1,0 +1,151 @@
+"use client";
+
+import { useCallback, useEffect, useRef, useState } from "react";
+
+type UseScrollFrameSequenceOptions = {
+  frameCount: number;
+  framePath: (n: number) => string;
+  onProgress?: (progress: number) => void;
+};
+
+export function useScrollFrameSequence({
+  frameCount,
+  framePath,
+  onProgress,
+}: UseScrollFrameSequenceOptions) {
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  const framesRef = useRef<HTMLImageElement[]>([]);
+  const tickingRef = useRef(false);
+  const loadedRef = useRef(false);
+  const lastFrameRef = useRef(-1);
+
+  const [loadProgress, setLoadProgress] = useState(0);
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+    let loadedCount = 0;
+    const imgs: HTMLImageElement[] = [];
+
+    const bump = () => {
+      if (cancelled) return;
+      loadedCount++;
+      setLoadProgress(loadedCount / frameCount);
+      if (loadedCount === frameCount) {
+        loadedRef.current = true;
+        setLoaded(true);
+      }
+    };
+
+    for (let i = 1; i <= frameCount; i++) {
+      const img = new Image();
+      img.src = framePath(i);
+      img.onload = bump;
+      img.onerror = bump;
+      imgs.push(img);
+    }
+    framesRef.current = imgs;
+
+    return () => {
+      cancelled = true;
+    };
+  }, [frameCount, framePath]);
+
+  const drawFrame = useCallback((index: number) => {
+    const canvas = canvasRef.current;
+    const img = framesRef.current[index];
+    if (!canvas || !img || !img.complete || !img.naturalWidth) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    const cw = canvas.width;
+    const ch = canvas.height;
+    const imgRatio = img.naturalWidth / img.naturalHeight;
+    const canvasRatio = cw / ch;
+
+    let drawW: number;
+    let drawH: number;
+    if (canvasRatio > imgRatio) {
+      drawW = cw;
+      drawH = cw / imgRatio;
+    } else {
+      drawH = ch;
+      drawW = ch * imgRatio;
+    }
+
+    if (window.innerWidth <= 768) {
+      drawW *= 1.3;
+      drawH *= 1.3;
+    }
+
+    const drawX = (cw - drawW) / 2;
+    const drawY = (ch - drawH) / 2;
+
+    ctx.clearRect(0, 0, cw, ch);
+    ctx.drawImage(img, drawX, drawY, drawW, drawH);
+  }, []);
+
+  const resizeCanvas = useCallback(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = window.innerWidth * dpr;
+    canvas.height = window.innerHeight * dpr;
+    canvas.style.width = window.innerWidth + "px";
+    canvas.style.height = window.innerHeight + "px";
+    const ctx = canvas.getContext("2d");
+    if (ctx) ctx.scale(1, 1);
+    drawFrame(lastFrameRef.current >= 0 ? lastFrameRef.current : 0);
+  }, [drawFrame]);
+
+  useEffect(() => {
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas);
+    return () => window.removeEventListener("resize", resizeCanvas);
+  }, [resizeCanvas]);
+
+  useEffect(() => {
+    if (!loaded) return;
+    drawFrame(0);
+    lastFrameRef.current = 0;
+  }, [loaded, drawFrame]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (tickingRef.current) return;
+      tickingRef.current = true;
+
+      requestAnimationFrame(() => {
+        tickingRef.current = false;
+        const section = sectionRef.current;
+        if (!section || !loadedRef.current) return;
+
+        const rect = section.getBoundingClientRect();
+        const scrollable = section.offsetHeight - window.innerHeight;
+        const progress =
+          scrollable <= 0
+            ? 0
+            : Math.min(1, Math.max(0, -rect.top / scrollable));
+
+        const frameIndex = Math.min(
+          frameCount - 1,
+          Math.floor(progress * frameCount),
+        );
+        if (frameIndex !== lastFrameRef.current) {
+          lastFrameRef.current = frameIndex;
+          drawFrame(frameIndex);
+        }
+
+        onProgress?.(progress);
+      });
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [drawFrame, frameCount, onProgress]);
+
+  return { sectionRef, canvasRef, loaded, loadProgress };
+}
