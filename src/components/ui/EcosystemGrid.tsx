@@ -11,6 +11,7 @@ import {
   type EcosystemCategoryId,
   type EcosystemPartnerEntry,
 } from "@/lib/ciiia";
+import { logoWidthPercent, type LogoSizing } from "@/lib/logoSizing";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -22,36 +23,40 @@ const isCategoryId = (value: string | null): value is EcosystemCategoryId =>
 /** "Academia e investigación" → "ACADEMIA" para el pill. */
 const pillLabel = (label: string): string => label.split(" ")[0].toUpperCase();
 
+/**
+ * Tile `aspect-[3/2]` en una cuadrícula densa (hasta 6 por fila): menos área
+ * que en Nosotros para que la pared respire.
+ */
+const ECOSYSTEM_LOGO_SIZING: LogoSizing = {
+  tileRatio: 3 / 2,
+  area: 0.28,
+  maxWidth: 0.78,
+  maxHeight: 0.6,
+};
+
 type TileProps = { partner: EcosystemPartnerEntry };
 
 function PartnerTile({ partner }: TileProps) {
   const [logoFailed, setLogoFailed] = useState(false);
   const label = partner.note ? `${partner.name} — ${partner.note}` : partner.name;
+  const logo = logoFailed ? undefined : partner.logo;
 
+  // Tile claro, mismo tratamiento que las instituciones fundadoras: varios SVG
+  // son azul marino o negro (FIME, AMT, Intel, el texto de NVIDIA) y sobre el
+  // fondo oscuro desaparecían. Así cada marca conserva su color real.
   const tileClass = [
-    "group/tile flex aspect-[3/2] items-center justify-center rounded-[10px] border border-white/8 bg-white/[0.02] p-4",
+    "group/tile relative flex aspect-[3/2] items-center justify-center overflow-hidden rounded-[10px] border",
+    "border-white/10 bg-foreground",
     "transition-[background-color,border-color] duration-300 motion-reduce:transition-none",
-    "hover:border-white/25 hover:bg-white/[0.05] focus-visible:border-white/25 focus-visible:bg-white/[0.05]",
+    "hover:border-white/40 hover:bg-zinc-100 focus-visible:border-white/40 focus-visible:bg-zinc-100",
   ].join(" ");
 
-  const inner = logoFailed ? (
-    <span className="line-clamp-2 text-center font-mono text-[10px] uppercase leading-tight tracking-wide text-zinc-600">
+  const inner = logo ? (
+    <LogoCrop logo={logo} name={partner.name} onError={() => setLogoFailed(true)} />
+  ) : (
+    <span className="line-clamp-2 px-3 text-center font-mono text-[11px] uppercase leading-tight tracking-wide text-zinc-700">
       {partner.name}
     </span>
-  ) : (
-    <Image
-      src={partner.logo}
-      alt={partner.name}
-      width={160}
-      height={80}
-      onError={() => setLogoFailed(true)}
-      className={[
-        "h-auto w-auto max-h-8 max-w-full object-contain opacity-50 grayscale",
-        "transition-all duration-300 motion-reduce:transition-none",
-        "group-hover/tile:opacity-100 group-hover/tile:grayscale-0",
-        "group-focus-visible/tile:opacity-100 group-focus-visible/tile:grayscale-0",
-      ].join(" ")}
-    />
   );
 
   return (
@@ -89,6 +94,52 @@ function PartnerTile({ partner }: TileProps) {
         ) : null}
       </span>
     </div>
+  );
+}
+
+type LogoCropProps = {
+  logo: NonNullable<EcosystemPartnerEntry["logo"]>;
+  name: string;
+  onError: () => void;
+};
+
+/**
+ * Muestra sólo la caja del contenido del SVG. El marco tiene la razón de la
+ * marca y la imagen, más grande, se desplaza para que la caja lo llene:
+ * ancho = 1/w, izquierda = -x/w (los `%` horizontales son del ancho del marco
+ * y los verticales, de su alto).
+ */
+function LogoCrop({ logo, name, onError }: LogoCropProps) {
+  const { box } = logo;
+  const logoRatio = (box.w / box.h) * box.canvasRatio;
+
+  return (
+    <span
+      data-fx="eco-logo"
+      className={[
+        "relative block overflow-hidden",
+        "transition-transform duration-300 ease-out motion-reduce:transition-none",
+        "group-hover/tile:scale-[1.04] group-focus-visible/tile:scale-[1.04] motion-reduce:scale-100",
+      ].join(" ")}
+      style={{
+        width: `${logoWidthPercent(logoRatio, ECOSYSTEM_LOGO_SIZING)}%`,
+        aspectRatio: logoRatio,
+      }}
+    >
+      <Image
+        src={logo.src}
+        alt={name}
+        width={1000}
+        height={Math.round(1000 / box.canvasRatio)}
+        onError={onError}
+        className="absolute h-auto max-w-none"
+        style={{
+          width: `${100 / box.w}%`,
+          left: `${(-box.x / box.w) * 100}%`,
+          top: `${(-box.y / box.h) * 100}%`,
+        }}
+      />
+    </span>
   );
 }
 
@@ -158,6 +209,26 @@ export function EcosystemGrid() {
               },
               0.08,
             );
+        });
+
+        // Cada logo toma su color conforme su tile sube por el viewport: entra
+        // desaturado y tenue y llega a color pleno antes de la mitad de la
+        // pantalla. Ligado al scroll (`scrub`), así que se descubren al ritmo
+        // del usuario y se revierten si vuelve hacia arriba. Sólo `grayscale`
+        // y `opacity`, que no alteran las proporciones ni el tono de la marca.
+        scope.querySelectorAll<HTMLElement>("[data-fx='eco-cell']").forEach((cell) => {
+          const logo = cell.querySelector("[data-fx='eco-logo']");
+          if (!logo) return;
+          gsap.fromTo(
+            logo,
+            { filter: "grayscale(1)", opacity: 0.45 },
+            {
+              filter: "grayscale(0)",
+              opacity: 1,
+              ease: "power1.out",
+              scrollTrigger: { trigger: cell, start: "top 95%", end: "center 60%", scrub: 0.8 },
+            },
+          );
         });
       }, scope);
 

@@ -98,8 +98,10 @@ export type AboutFoundingPartner = {
   logoHeight: number;
   url?: string;
   /**
-   * El asset viene con fondo claro y marca oscura, así que hay que invertirlo
-   * para que se lea sobre el tile oscuro. Innecesario con un SVG transparente.
+   * El asset viene con fondo blanco y colores de marca pensados para fondo
+   * claro: va sobre un tile claro, en su color original. Sin este flag el
+   * asset trae su propio fondo oscuro (PROSOFT, con su halo) y se muestra a
+   * sangre, cubriendo el tile; por eso su razón debe rondar el 3:2 del tile.
    */
   logoOnLight?: boolean;
 };
@@ -170,7 +172,9 @@ export const ABOUT_DATA: AboutData = {
     "El centro se inauguró en 2021 dentro del programa federal de Centros de Innovación Industrial. Monterrey IT Clúster se encarga de su administración.",
   // TODO: sustituir los PNG por SVG con fondo transparente. Los assets
   // actuales traen fondo opaco (blanco, salvo PROSOFT que es negro), por eso
-  // llevan `logoOnLight` y el tratamiento de mezcla en el componente.
+  // llevan `logoOnLight` y el tratamiento de mezcla en el componente. Los PNG
+  // de fondo blanco (`-trim`) están recortados a su contenido para que el
+  // tamaño óptico sea parejo; PROSOFT va sin recortar para no cortar su halo.
   foundingPartners: [
     {
       id: "prosoft",
@@ -193,27 +197,27 @@ export const ABOUT_DATA: AboutData = {
       id: "mitc",
       name: "Monterrey IT Clúster (Csoftmty)",
       role: "Administración del centro y vinculación con la industria de TI",
-      logo: "/logos/mitc.png",
-      logoWidth: 350,
-      logoHeight: 350,
+      logo: "/logos/mitc-trim.png",
+      logoWidth: 246,
+      logoHeight: 81,
       logoOnLight: true,
     },
     {
       id: "uanl",
       name: "Universidad Autónoma de Nuevo León",
       role: "Formación de talento y transferencia tecnológica",
-      logo: "/logos/uanl.png",
-      logoWidth: 697,
-      logoHeight: 360,
+      logo: "/logos/uanl-trim.png",
+      logoWidth: 579,
+      logoHeight: 252,
       logoOnLight: true,
     },
     {
       id: "cimat",
       name: "CIMAT",
       role: "Centro de Investigación en Matemáticas",
-      logo: "/logos/cimat.png",
-      logoWidth: 395,
-      logoHeight: 506,
+      logo: "/logos/cimat-trim.png",
+      logoWidth: 356,
+      logoHeight: 475,
       logoOnLight: true,
     },
   ],
@@ -324,12 +328,27 @@ export type EcosystemCategory = {
   label: string;
 };
 
+/**
+ * Caja del contenido real dentro del lienzo del SVG, en fracciones (0–1) del
+ * lienzo. Los SVG vienen de trazados con márgenes muy dispares (AMT ocupa el
+ * 24% del alto de su lienzo cuadrado): con la caja, el tile recorta el margen
+ * por CSS sin tocar el archivo y todos los logos se dimensionan por su marca.
+ */
+export type LogoBox = {
+  /** Razón ancho/alto del lienzo (atributos `width`/`height` del SVG). */
+  canvasRatio: number;
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+};
+
 export type EcosystemPartnerEntry = {
   id: string;
   name: string;
   categoryId: EcosystemCategoryId;
-  /** Ruta en `public/logos/ecosistema/`, derivada del id. */
-  logo: string;
+  /** Sin logo, el tile muestra el nombre en mono. */
+  logo?: { src: string; box: LogoBox };
   /** Solo cuando aporta algo que la categoría no comunica ya. */
   note?: string;
   url?: string;
@@ -343,17 +362,52 @@ export const ECOSYSTEM_CATEGORIES: EcosystemCategory[] = [
   { id: "empresas", label: "Empresas socias" },
 ];
 
-const ecosystemLogo = (id: string): string => `/logos/ecosistema/${id}.svg`;
+/**
+ * Cajas medidas rasterizando cada SVG (canal alfa > 3%). Si se reemplaza un
+ * archivo, hay que volver a medirlo: una caja vieja recorta la marca.
+ */
+const ECOSYSTEM_LOGO_BOXES = {
+  atm: { canvasRatio: 1, x: 0.015, y: 0.3812, w: 0.9688, h: 0.2387 },
+  aveva: { canvasRatio: 1800 / 411, x: 0, y: 0.0055, w: 1, h: 0.9945 },
+  aws: { canvasRatio: 1, x: 0.0387, y: 0.2238, w: 0.9237, h: 0.5525 },
+  claut: { canvasRatio: 600 / 173, x: 0, y: 0.0058, w: 1, h: 0.9942 },
+  clelac: { canvasRatio: 500 / 196, x: 0, y: 0.0043, w: 1, h: 0.9957 },
+  "externado-colombia": { canvasRatio: 1, x: 0.0663, y: 0.3812, w: 0.8675, h: 0.2375 },
+  "fime-uanl": { canvasRatio: 600 / 273, x: 0.11, y: 0.1099, w: 0.78, h: 0.7802 },
+  "google-cloud": { canvasRatio: 1, x: 0, y: 0.0975, w: 1, h: 0.805 },
+  "h2o-ai": { canvasRatio: 500 / 280, x: 0.02, y: 0.1696, w: 0.96, h: 0.6607 },
+  ibm: { canvasRatio: 2, x: 0.125, y: 0.2983, w: 0.75, h: 0.4033 },
+  incmty: { canvasRatio: 474 / 186, x: 0, y: 0, w: 1, h: 1 },
+  intel: { canvasRatio: 1, x: 0, y: 0.17, w: 1, h: 0.66 },
+  kernel: { canvasRatio: 600 / 221, x: 0.0467, y: 0.1471, w: 0.9067, h: 0.7059 },
+  kuka: { canvasRatio: 600 / 103, x: 0.0013, y: 0, w: 0.995, h: 0.9927 },
+  microsip: { canvasRatio: 600 / 257, x: 0, y: 0, w: 0.9992, h: 1 },
+  "microsoft-azure": { canvasRatio: 1, x: 0, y: 0.1888, w: 1, h: 0.6225 },
+  microsoft: { canvasRatio: 1, x: 0, y: 0.3925, w: 1, h: 0.215 },
+  mxti: { canvasRatio: 2, x: 0.0358, y: 0.2383, w: 0.9308, h: 0.52 },
+  northware: { canvasRatio: 600 / 139, x: 0.0167, y: 0.0935, w: 0.9617, h: 0.8165 },
+  novalan: { canvasRatio: 488 / 80, x: 0.0467, y: 0.0508, w: 0.9042, h: 0.8985 },
+  "nuevo-leon-40": { canvasRatio: 600 / 501, x: 0.025, y: 0.0195, w: 0.975, h: 0.9521 },
+  nvidia: { canvasRatio: 351.46 / 258.785, x: 0, y: 0, w: 1, h: 1 },
+  pcg: { canvasRatio: 3, x: 0.0025, y: 0.0075, w: 0.9975, h: 0.99 },
+  qualcomm: { canvasRatio: 2048 / 1152, x: 0.1688, y: 0.0156, w: 0.6625, h: 0.9689 },
+  rekor: { canvasRatio: 1800 / 420, x: 0, y: 0, w: 1, h: 1 },
+  "sit-consultores": { canvasRatio: 500 / 265, x: 0.2175, y: 0.022, w: 0.565, h: 0.9575 },
+  "tec-monterrey": { canvasRatio: 1, x: 0.0187, y: 0.37, w: 0.97, h: 0.26 },
+  "universite-montreal": { canvasRatio: 600 / 333, x: 0.02, y: 0.1689, w: 0.9587, h: 0.6622 },
+} satisfies Record<string, LogoBox>;
+
+const ecosystemLogo = (file: keyof typeof ECOSYSTEM_LOGO_BOXES) => ({
+  src: `/logos/ecosistema/${file}.svg`,
+  box: ECOSYSTEM_LOGO_BOXES[file],
+});
 
 /**
- * TODO: faltan los 28 SVG en `public/logos/ecosistema/`. Mientras no existan,
- * cada tile cae al fallback con el nombre en mono. Archivos esperados:
- * nvidia.svg, ibm.svg, microsoft.svg, intel.svg, qualcomm.svg, kuka.svg,
- * microsoft-azure.svg, aws.svg, google-cloud.svg, h2o-ai.svg, aveva.svg,
- * rekor.svg, tec-monterrey.svg, fime-uanl.svg, universite-montreal.svg,
- * externado-colombia.svg, incmty.svg, nuevo-leon-40.svg, claut.svg,
- * clelac.svg, amt.svg, mxti.svg, kernel.svg, microsip.svg, novalan.svg,
- * northware.svg, sit-consultores.svg, pcg.svg
+ * `atm.svg` es el logo de AMT con el nombre de archivo invertido.
+ *
+ * Agregar un logo nuevo requiere dos pasos: medir su caja en
+ * ECOSYSTEM_LOGO_BOXES y poner `logo: ecosystemLogo("<archivo>")` en su fila.
+ * Soltar el SVG en la carpeta no basta.
  */
 export const ECOSYSTEM_PARTNERS: EcosystemPartnerEntry[] = [
   { id: "nvidia", name: "NVIDIA", categoryId: "tecnologia", logo: ecosystemLogo("nvidia"), note: "Deep Learning Institute" },
@@ -379,7 +433,7 @@ export const ECOSYSTEM_PARTNERS: EcosystemPartnerEntry[] = [
   { id: "nuevo-leon-40", name: "Nuevo León 4.0", categoryId: "industria", logo: ecosystemLogo("nuevo-leon-40"), note: "Iniciativa estatal de Industria 4.0" },
   { id: "claut", name: "CLAUT", categoryId: "industria", logo: ecosystemLogo("claut"), note: "Clúster automotriz" },
   { id: "clelac", name: "CLELAC", categoryId: "industria", logo: ecosystemLogo("clelac"), note: "Clúster de electrodomésticos" },
-  { id: "amt", name: "AMT", categoryId: "industria", logo: ecosystemLogo("amt") },
+  { id: "amt", name: "AMT", categoryId: "industria", logo: ecosystemLogo("atm") },
   { id: "mxti", name: "mxTI", categoryId: "industria", logo: ecosystemLogo("mxti"), note: "Consejo nacional de clústeres de TI" },
 
   { id: "kernel", name: "Kernel", categoryId: "empresas", logo: ecosystemLogo("kernel"), note: "Desarrolla y opera HIVA" },

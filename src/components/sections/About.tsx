@@ -10,6 +10,7 @@ import { BlurText } from "@/components/ui/BlurText";
 import { BeamsBackground } from "@/components/ui/BeamsBackground";
 import { useCountUp } from "@/hooks/useCountUp";
 import { useRevealOnScroll } from "@/hooks/useRevealOnScroll";
+import { logoWidthPercent, type LogoSizing } from "@/lib/logoSizing";
 import {
   ABOUT_DATA,
   CLIENT_QUOTES,
@@ -71,60 +72,114 @@ type PartnerTileProps = {
   onActivate: () => void;
 };
 
+/** Tile `aspect-[3/2]` con pocos logos: se les da bastante presencia. */
+const PARTNER_LOGO_SIZING: LogoSizing = {
+  tileRatio: 3 / 2,
+  area: 0.34,
+  maxWidth: 0.8,
+  maxHeight: 0.66,
+};
+
 function PartnerTile({ partner, isActive, onActivate }: PartnerTileProps) {
   const [logoFailed, setLogoFailed] = useState(false);
+  const onLight = partner.logoOnLight ?? false;
 
-  // El fondo va opaco (`bg-background` + capa de tinte) porque el tile crea su
-  // propio contexto de apilado: sin un backdrop opaco, `mix-blend-screen` del
-  // logo no tiene contra qué mezclar y el fondo invertido se ve como recuadro.
+  // Los PNG traen fondo opaco y los colores de marca dependen de él: los de
+  // fondo blanco van en un tile claro (el `foreground` del sitio, no blanco
+  // puro) y PROSOFT, que trae su propio fondo negro con halo, cubre un tile
+  // oscuro. `isolate` fija el contexto de apilado en el tile para que la
+  // mezcla del logo sea contra su fondo y no contra lo que haya detrás.
   const tileClass = [
-    "relative flex aspect-[3/2] items-center justify-center overflow-hidden rounded-xl border bg-background p-5",
-    "transition-colors duration-200 motion-reduce:transition-none",
-    isActive ? "border-white/25" : "border-white/8",
+    "relative isolate flex aspect-[3/2] items-center justify-center overflow-hidden rounded-xl border",
+    // Anchos a juego con el `gap-3` (12px) del contenedor: 2 · 3 · 5 por fila.
+    "w-[calc((100%_-_12px)/2)] sm:w-[calc((100%_-_24px)/3)] xl:w-[calc((100%_-_48px)/5)]",
+    // Hover: el tile se eleva un poco con sombra corta. Tailwind v4 escribe
+    // `translate` (propiedad propia), así que no choca con el `transform`
+    // que deja la entrada de GSAP en el mismo elemento.
+    "transition-[translate,box-shadow,background-color,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]",
+    "motion-reduce:transition-none",
+    isActive
+      ? "-translate-y-1 shadow-[0_14px_28px_-14px_rgba(0,0,0,0.75)] motion-reduce:translate-y-0"
+      : "translate-y-0",
+    onLight
+      ? isActive
+        ? "border-white/40 bg-zinc-100"
+        : "border-white/10 bg-foreground"
+      : isActive
+        ? "border-white/25 bg-[#151516]"
+        : "border-white/8 bg-[#0f0f10]",
   ].join(" ");
 
-  const tint = (
+  const hoverScale = [
+    "transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none",
+    isActive ? "scale-[1.06] motion-reduce:scale-100" : "scale-100",
+  ].join(" ");
+
+  // Misma señal que la fila activa de la lista (`border-l-accent`): una línea
+  // de acento que se dibuja de izquierda a derecha en el borde inferior.
+  const accentLine = (
     <span
       aria-hidden
-      className={`absolute inset-0 transition-colors duration-200 motion-reduce:transition-none ${
-        isActive ? "bg-white/[0.05]" : "bg-white/[0.02]"
-      }`}
+      className={[
+        "absolute inset-x-0 bottom-0 h-[2px] origin-left bg-accent",
+        "transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none",
+        isActive ? "scale-x-100" : "scale-x-0",
+      ].join(" ")}
     />
   );
 
   const content = logoFailed ? (
-    <span className="relative font-mono text-sm uppercase tracking-[0.18em] text-zinc-600">
+    <span
+      className={`font-mono text-sm uppercase tracking-[0.18em] ${onLight ? "text-zinc-600" : "text-zinc-400"}`}
+    >
       {initialsOf(partner.name)}
     </span>
+  ) : onLight ? (
+    // La mezcla vive en este wrapper y no en la imagen: el `scale` del hover
+    // crea un contexto de apilado, y si la mezcla quedara dentro, el fondo
+    // blanco del PNG se vería como recuadro. `multiply` lo deja en el color
+    // del tile sin tocar los colores de la marca.
+    <span
+      className={`flex items-center justify-center mix-blend-multiply ${hoverScale}`}
+      style={{
+        width: `${logoWidthPercent(partner.logoWidth / partner.logoHeight, PARTNER_LOGO_SIZING)}%`,
+      }}
+    >
+      {/* GSAP escribe `filter`/`opacity` inline aquí (ver `About`); sin JS o
+          con reduced motion el logo queda en su color original. */}
+      <Image
+        src={partner.logo}
+        alt={partner.name}
+        width={partner.logoWidth}
+        height={partner.logoHeight}
+        sizes="(min-width: 1280px) 10vw, (min-width: 640px) 22vw, 36vw"
+        onError={() => setLogoFailed(true)}
+        data-fx="partner-logo"
+        className="h-auto w-full"
+      />
+    </span>
   ) : (
-    <Image
-      src={partner.logo}
-      alt={partner.name}
-      width={partner.logoWidth}
-      height={partner.logoHeight}
-      sizes="(min-width: 1024px) 12vw, (min-width: 768px) 22vw, 40vw"
-      onError={() => setLogoFailed(true)}
-      className={[
-        // `max-h-14` en vez de `max-h-10`: los PNG traen margen interno propio,
-        // así que a 40px la marca real quedaba diminuta dentro del tile.
-        "relative h-auto w-auto max-h-14 max-w-full object-contain",
-        "transition-[opacity,filter] duration-300 motion-reduce:transition-none",
-        // Los assets traen fondo opaco: `screen` lo funde con el tile y
-        // `invert` sube las marcas oscuras a claras.
-        partner.logoOnLight ? "mix-blend-screen grayscale invert" : "mix-blend-screen grayscale",
-        isActive ? "opacity-100" : "opacity-50",
-        isActive && !partner.logoOnLight ? "grayscale-0" : "",
-      ]
-        .filter(Boolean)
-        .join(" ")}
-    />
+    // A sangre: el fondo negro y el halo son parte del asset, así que cubre el
+    // tile completo en vez de flotar como un rectángulo dentro de él.
+    <span className={`absolute inset-0 ${hoverScale}`}>
+      <Image
+        src={partner.logo}
+        alt={partner.name}
+        width={partner.logoWidth}
+        height={partner.logoHeight}
+        sizes="(min-width: 1280px) 14vw, (min-width: 640px) 30vw, 50vw"
+        onError={() => setLogoFailed(true)}
+        data-fx="partner-logo"
+        className="h-full w-full object-cover"
+      />
+    </span>
   );
 
   if (!partner.url) {
     return (
       <div className={tileClass} data-fx="partner-tile" onMouseEnter={onActivate}>
-        {tint}
         {content}
+        {accentLine}
       </div>
     );
   }
@@ -139,8 +194,8 @@ function PartnerTile({ partner, isActive, onActivate }: PartnerTileProps) {
       onFocus={onActivate}
       className={`${tileClass} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent`}
     >
-      {tint}
       {content}
+      {accentLine}
       <span className="sr-only">{partner.name} — se abre en una ventana nueva</span>
     </a>
   );
@@ -167,7 +222,9 @@ function FoundingPartners() {
       </div>
 
       <div className="space-y-10 lg:col-span-8" onMouseLeave={() => setActiveId(null)}>
-        <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-5" data-fx="partner-tiles">
+        {/* Flex centrado en vez de grid: con 5 logos, las filas incompletas
+            (2+2+1 en móvil, 3+2 en tablet) quedan centradas y no cojas. */}
+        <div className="flex flex-wrap justify-center gap-3" data-fx="partner-tiles">
           {partners.map((partner) => (
             <PartnerTile
               key={partner.id}
@@ -412,12 +469,35 @@ export function About() {
           duration: 0.7,
           ease: "power3.out",
           stagger: 0.07,
+          // GSAP deja `translate: none` inline al terminar, lo que anula la
+          // elevación del hover (`-translate-y-1`). Se limpia al acabar.
+          clearProps: "transform,translate,scale,opacity",
         })
         .from(
           "[data-fx='partner-row']",
           { opacity: 0, x: -18, duration: 0.6, ease: "power2.out", stagger: 0.06 },
           0.25,
         );
+
+      // Logos: entran algo desaturados y recuperan su color conforme el tile
+      // sube por el viewport. Sólo `grayscale` y `opacity`: filtros como
+      // `contrast` o `brightness` alterarían el blanco/negro del PNG y el fondo
+      // opaco dejaría de fundirse con el tile. Un trigger por tile para que en
+      // móvil cada fila se revele cuando realmente entra.
+      scope.querySelectorAll<HTMLElement>("[data-fx='partner-tile']").forEach((tile) => {
+        const logo = tile.querySelector("[data-fx='partner-logo']");
+        if (!logo) return;
+        gsap.fromTo(
+          logo,
+          { filter: "grayscale(0.9)", opacity: 0.55 },
+          {
+            filter: "grayscale(0)",
+            opacity: 1,
+            ease: "none",
+            scrollTrigger: { trigger: tile, start: "top 92%", end: "center 60%", scrub: 0.6 },
+          },
+        );
+      });
 
       // Encabezado del manifiesto: el título sube enmascarado tras el badge.
       // Las nueve líneas las revela `useRevealOnScroll`, una por una.
