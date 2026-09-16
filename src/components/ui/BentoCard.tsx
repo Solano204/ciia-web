@@ -13,16 +13,21 @@ function sizeFromSpan(col: number): Size {
   return "sm";
 }
 
+// El tamaño se deriva del ancho en escritorio, pero por debajo de `lg` todas
+// las tarjetas caben a media anchura o menos: sin el escalón, el titular de la
+// destacada se partía en cuatro líneas en tablet.
 const TAGLINE_CLASS: Record<Size, string> = {
-  lg: "text-[32px]",
-  md: "text-[24px]",
-  sm: "text-[20px]",
+  lg: "text-[22px] lg:text-[32px]",
+  md: "text-[20px] lg:text-[24px]",
+  sm: "text-[18px] lg:text-[20px]",
 };
 
+// La destacada lleva la franja panorámica; el resto comparten 16:9. `square`
+// dejaba las tarjetas de una tercera parte de ancho con una imagen altísima.
 const MEDIA_ASPECT: Record<Size, MediaAspect> = {
   lg: "wide",
   md: "video",
-  sm: "square",
+  sm: "video",
 };
 
 export function BentoCard({

@@ -536,7 +536,10 @@ export const SERVICES_DATA: ServiceItem[] = [
     stageMapping: ["descubrir", "disenar"],
     technicalSpecs: ["Masterclass ejecutiva", "Workshop de 6–8 h", "Roadmap priorizado"],
     media: { kind: "image", src: "/soluciones/ai-execution.jpg", alt: "" },
-    span: { col: 5, row: 1 },
+    // Retícula de 12: fila 1 = 4+4+4, fila 2 = 7+5. Ninguna tarjeta ocupa dos
+    // filas; desde que el cuerpo de texto vive en la página interna, una
+    // tarjeta de dos filas se queda medio vacía.
+    span: { col: 4, row: 1 },
   },
   {
     id: "ai-lab",
@@ -556,7 +559,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     stageMapping: ["disenar", "desarrollar"],
     technicalSpecs: ["Celda de manufactura", "Robótica y drones", "Realidad virtual", "Edge y data center"],
     media: { kind: "image", src: "/soluciones/ai-lab.jpg", alt: "" },
-    span: { col: 5, row: 1 },
+    span: { col: 4, row: 1 },
   },
   {
     id: "academy",
@@ -596,7 +599,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     stageMapping: ["desplegar", "escalar"],
     technicalSpecs: ["SaaS multi-tenant", "Instancia dedicada", "On-premise", "Seguridad empresarial"],
     media: { kind: "image", src: "/soluciones/hiva.jpg", alt: "" },
-    span: { col: 7, row: 2 },
+    span: { col: 7, row: 1 },
     featured: true,
   },
   {
@@ -617,7 +620,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     stageMapping: ["descubrir", "desarrollar"],
     technicalSpecs: ["Diagnóstico", "MVP funcional", "Acompañamiento"],
     media: { kind: "image", src: "/soluciones/pymes.jpg", alt: "" },
-    span: { col: 3, row: 1 },
+    span: { col: 5, row: 1 },
   },
 ];
 

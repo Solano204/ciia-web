@@ -29,13 +29,18 @@ const ROW_SPAN: Record<number, string> = {
 
 export function BentoGrid({ services }: { services: ServiceItem[] }) {
   return (
-    <div className="grid grid-cols-12 gap-4 [grid-auto-flow:dense] auto-rows-[minmax(180px,auto)]">
-      {services.map((service) => (
+    <div className="grid grid-cols-12 gap-4 auto-rows-[minmax(180px,auto)]">
+      {services.map((service, index) => (
         <TiltCard
           key={service.id}
-          className={`col-span-12 ${COL_SPAN[service.span.col] ?? ""} ${
-            ROW_SPAN[service.span.row] ?? ""
-          }`}
+          // En tablet van dos por fila; si el total es impar, la última ocupa
+          // el ancho completo para no dejar media fila coja. Sin esto el salto
+          // era de una columna directamente a cinco.
+          className={`col-span-12 ${
+            index === services.length - 1 && services.length % 2 === 1
+              ? "md:col-span-12"
+              : "md:col-span-6"
+          } ${COL_SPAN[service.span.col] ?? ""} ${ROW_SPAN[service.span.row] ?? ""}`}
         >
           <BentoCard service={service} />
         </TiltCard>
