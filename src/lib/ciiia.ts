@@ -795,3 +795,19 @@ export const CONTACT_INFO = {
     { label: "YouTube", href: "https://www.youtube.com/channel/UCz3SuYojOMFFs5re1oMRiBg" },
   ],
 };
+
+/**
+ * URL del aviso de privacidad. Pendiente de confirmación institucional: mientras
+ * esté vacía, el pie de página omite el enlace en vez de apuntar a un 404.
+ */
+export const PRIVACY_NOTICE_HREF = "";
+
+/** Enlaces de navegación compartidos por el nav y el pie de página. */
+export const NAV_LINKS: { href: string; label: string }[] = [
+  { href: "#soluciones", label: "Soluciones" },
+  { href: "#ciclo", label: "Ciclo" },
+  { href: "#casos", label: "Casos" },
+  { href: "#nosotros", label: "Nosotros" },
+  { href: "#ecosistema", label: "Ecosistema" },
+  { href: "#contacto", label: "Contacto" },
+];

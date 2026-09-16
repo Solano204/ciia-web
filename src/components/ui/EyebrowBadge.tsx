@@ -1,7 +1,7 @@
 type Props = { children: React.ReactNode; className?: string; tone?: "amber" | "muted-v2" };
 
 // ponytail: `tone` defaults to the original amber look so every existing
-// caller (Hero, Challenge, About, Ecosystem, Contact, SystemsNominal) is
+// caller (Hero, Challenge, About, Ecosystem, Contact) is
 // unaffected. Only the glass-v2 sections (Solutions, ExecutionCycle, Cases)
 // pass tone="muted-v2" — labels shouldn't compete with the cyan accent.
 export function EyebrowBadge({ children, className = "", tone = "amber" }: Props) {

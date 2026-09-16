@@ -174,7 +174,7 @@ export function Hero() {
                 <figcaption className="mt-4 flex items-center justify-between">
                   <span className="font-sans text-sm text-zinc-300">{d.speaker}</span>
                   <span className="font-mono text-[10px] uppercase tracking-[0.24em] text-accent">
-                    {d.film}
+                    {d.source}
                   </span>
                 </figcaption>
               </figure>
@@ -202,7 +202,7 @@ export function Hero() {
                     {d.speaker}
                   </span>
                   <span className="font-mono text-[9px] uppercase tracking-[0.2em] text-accent">
-                    {d.film}
+                    {d.source}
                   </span>
                 </figcaption>
               </figure>

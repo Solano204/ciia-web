@@ -11,7 +11,7 @@ export type Dialogue = {
   hide: number;
   quote: string;
   speaker: string;
-  film: string;
+  source: string;
 };
 
 const DIALOGUE_WINDOWS: [number, number][] = [
@@ -25,7 +25,7 @@ export const DIALOGUES: Dialogue[] = CLIENT_QUOTES.map((q, i) => ({
   hide: DIALOGUE_WINDOWS[i][1],
   quote: q.quote,
   speaker: "Voz de cliente",
-  film: "CII.IA",
+  source: "CII.IA",
 }));
 
 export const HERO_TEXT_FADE_END = 0.08;
