@@ -581,7 +581,9 @@ export function About() {
         <AnimatedSection className="grid grid-cols-1 items-start gap-16 lg:grid-cols-12">
           {/* Columna izquierda. En móvil se disuelve (`contents`) para que sus
               bloques se intercalen con los de la derecha vía `order`. */}
-          <div className="contents lg:col-span-6 lg:block">
+          {/* 5/7 en vez de 6/6: la foto del laboratorio es el elemento con más
+              peso de la sección, así que se queda con la columna ancha. */}
+          <div className="contents lg:col-span-5 lg:block">
             <AnimatedItem className="order-1">
               <EyebrowBadge>{ABOUT_DATA.eyebrow}</EyebrowBadge>
             </AnimatedItem>
@@ -621,9 +623,9 @@ export function About() {
           </div>
 
           {/* Columna derecha. */}
-          <div className="contents lg:col-span-6 lg:block">
+          <div className="contents lg:col-span-7 lg:block">
             <AnimatedItem className="order-3">
-              <p className="text-[17px] leading-relaxed text-foreground">
+              <p className="max-w-[46ch] text-[19px] leading-snug text-foreground">
                 {ABOUT_DATA.leadParagraph}
               </p>
             </AnimatedItem>
@@ -631,20 +633,20 @@ export function About() {
             <div className="order-4 lg:mt-10">
               <figure>
                 <div
-                  className="relative aspect-[16/10] overflow-hidden rounded-xl border border-white/8 bg-white/[0.02]"
+                  className="relative aspect-[4/3] overflow-hidden rounded-xl border border-white/8 bg-white/[0.02]"
                   data-fx="lab-frame"
                 >
                   <Image
                     src={ABOUT_DATA.labImageSrc}
                     alt={ABOUT_DATA.labImageAlt}
                     fill
-                    sizes="(min-width: 1024px) 50vw, 100vw"
+                    sizes="(min-width: 1024px) 58vw, 100vw"
                     className="object-cover"
                     data-fx="lab-image"
                   />
                 </div>
                 <figcaption
-                  className="mt-5 text-sm leading-relaxed text-zinc-500"
+                  className="mt-5 max-w-[60ch] text-sm leading-relaxed text-zinc-400"
                   data-fx="lab-caption"
                 >
                   {ABOUT_DATA.labCaption}

@@ -25,8 +25,6 @@ const MEDIA_ASPECT: Record<Size, MediaAspect> = {
   sm: "square",
 };
 
-const MAX_CHIPS_MEDIUM = 3;
-
 export function BentoCard({
   service,
   className = "",
@@ -35,10 +33,6 @@ export function BentoCard({
   className?: string;
 }) {
   const size = sizeFromSpan(service.span.col);
-  const showBody = size !== "sm";
-  const chips =
-    size === "lg" ? service.technicalSpecs : service.technicalSpecs.slice(0, MAX_CHIPS_MEDIUM);
-  const hiddenChipCount = service.technicalSpecs.length - chips.length;
 
   return (
     <Link
@@ -56,8 +50,15 @@ export function BentoCard({
         </span>
       </div>
 
-      <CardMedia media={service.media ?? { kind: "none" }} aspect={MEDIA_ASPECT[size]} />
+      {/* El zoom del hover vive aquí, contenido por el `overflow-hidden` del
+          propio CardMedia. 3% en 500ms: por debajo del umbral de movimiento
+          que marca el cursor, y anulado con reduced motion. */}
+      <div className="overflow-hidden rounded-xl [&_img]:transition-transform [&_img]:duration-500 [&_img]:ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:[&_img]:scale-[1.03] motion-reduce:[&_img]:transition-none motion-reduce:group-hover:[&_img]:scale-100">
+        <CardMedia media={service.media ?? { kind: "none" }} aspect={MEDIA_ASPECT[size]} />
+      </div>
 
+      {/* Regla de la tarjeta: título + una frase + dato clave. La descripción,
+          los puntos y las specs viven en /soluciones/[id]. */}
       <div className="flex flex-col gap-2">
         <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--text-muted-v2)]">
           {service.category}
@@ -67,34 +68,13 @@ export function BentoCard({
         >
           {service.tagline}
         </h3>
-        {showBody && (
-          <p className="line-clamp-2 text-sm leading-relaxed text-[var(--text-secondary-v2)]">
-            {service.description}
-          </p>
-        )}
       </div>
 
-      <p className={`font-mono text-sm text-accent-bright-v2 ${size === "sm" ? "line-clamp-1" : ""}`}>
+      <p
+        className={`mt-auto font-mono text-sm text-accent-bright-v2 ${size === "sm" ? "line-clamp-2" : ""}`}
+      >
         {service.startingPrice}
       </p>
-
-      {showBody && (
-        <div className="mt-auto flex flex-wrap gap-2">
-          {chips.map((spec) => (
-            <span
-              key={spec}
-              className="rounded-full border border-[var(--border-v2)] bg-white/[0.04] px-2.5 py-1 text-xs text-[var(--text-secondary-v2)]"
-            >
-              {spec}
-            </span>
-          ))}
-          {hiddenChipCount > 0 && (
-            <span className="rounded-full border border-[var(--border-v2)] bg-white/[0.04] px-2.5 py-1 text-xs text-[var(--text-secondary-v2)]">
-              +{hiddenChipCount}
-            </span>
-          )}
-        </div>
-      )}
     </Link>
   );
 }

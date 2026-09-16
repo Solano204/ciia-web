@@ -1,11 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { ArrowUpRight } from "@phosphor-icons/react";
 import { technologyLabel } from "@/lib/cases";
-import type { ProjectCase } from "@/lib/ciiia";
-
-const MAX_TAGS = 2;
+import { caseImageSrc, type ProjectCase } from "@/lib/ciiia";
 
 // ponytail: char checks, not regex — a "%" or a leading -/+ marks an impact
 // result (e.g. "-55%", "+3.4x"); a bare count (e.g. "3", "7") reads smaller.
@@ -18,8 +17,6 @@ function metricPresentation(value: string): { sizeClass: string; colorClass: str
 
 export function CaseCard({ item }: { item: ProjectCase }) {
   const metric = metricPresentation(item.metricHighlight);
-  const visibleTags = item.tags.slice(0, MAX_TAGS);
-  const hiddenTagCount = item.tags.length - visibleTags.length;
 
   return (
     <Link
@@ -37,7 +34,19 @@ export function CaseCard({ item }: { item: ProjectCase }) {
         </span>
       </div>
 
-      <div className="flex flex-col items-center gap-1 py-10 text-center">
+      {/* El visual va arriba del número clave. Mismo zoom contenido del 3% que
+          las tarjetas de Soluciones, anulado con reduced motion. */}
+      <div className="relative mt-4 aspect-video overflow-hidden rounded-xl bg-white/[0.03]">
+        <Image
+          src={caseImageSrc(item.id)}
+          alt=""
+          fill
+          sizes="(min-width: 1024px) 420px, (min-width: 768px) 45vw, 100vw"
+          className="object-cover transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
+        />
+      </div>
+
+      <div className="flex flex-col items-center gap-1 py-7 text-center">
         <span
           className={`font-sans font-semibold leading-none tracking-tight ${metric.colorClass} ${metric.sizeClass}`}
         >
@@ -50,25 +59,13 @@ export function CaseCard({ item }: { item: ProjectCase }) {
 
       <div className="border-t border-[var(--border-v2)]" />
 
+      {/* Título + una frase. El reto completo, el enfoque, el resultado y las
+          etiquetas viven en /casos/[id]. */}
       <div className="flex flex-1 flex-col gap-2 pt-4">
         <h3 className="font-sans text-xl font-semibold text-foreground">{item.title}</h3>
-        <p className="line-clamp-2 text-sm leading-relaxed text-[var(--text-secondary-v2)]">{item.challenge}</p>
-      </div>
-
-      <div className="mt-auto flex flex-wrap gap-2 pt-4">
-        {visibleTags.map((tag) => (
-          <span
-            key={tag}
-            className="rounded-full border border-[var(--border-v2)] bg-white/[0.04] px-2.5 py-1 text-[11px] text-[var(--text-secondary-v2)]"
-          >
-            {tag}
-          </span>
-        ))}
-        {hiddenTagCount > 0 && (
-          <span className="rounded-full border border-[var(--border-v2)] bg-white/[0.04] px-2.5 py-1 text-[11px] text-[var(--text-secondary-v2)]">
-            +{hiddenTagCount}
-          </span>
-        )}
+        <p className="line-clamp-2 text-sm leading-relaxed text-[var(--text-secondary-v2)]">
+          {item.challenge}
+        </p>
       </div>
     </Link>
   );

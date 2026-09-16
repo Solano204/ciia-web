@@ -1,40 +1,60 @@
-# IMÁGENES NECESARIAS — CII.IA (iron-man)
+# IMÁGENES — CII.IA
 
-## SOLUCIONES (5 imágenes)
+## Estado actual
 
-Carpeta: `public/soluciones/`
-Formato: `.jpg` | Proporción: 4:3 | Efecto: DecayImage
+### SOLUCIONES (5/5 disponibles y conectadas)
 
-1. `ai-execution.jpg` -> AI Execution
-2. `ai-lab.jpg` -> AI Lab / Prototyping
-3. `academy.jpg` -> CII.IA Academy
-4. `hiva.jpg` -> HIVA
-5. `pymes.jpg` -> IA para PyMEs
+Carpeta: `public/soluciones/` · Formato `.jpg` · Se muestran en `BentoCard`
+con las proporciones del bento (`wide` / `video` / `square`).
 
-Si falta el archivo, se muestra un número gigante de placeholder en vez de foto real.
+| Archivo | Tarjeta |
+| --- | --- |
+| `ai-execution.jpg` | AI Execution |
+| `ai-lab.jpg` | AI Lab / Prototyping |
+| `academy.jpg` | CII.IA Academy |
+| `hiva.jpg` | HIVA |
+| `pymes.jpg` | IA para PyMEs |
 
-## CICLO (0 imágenes)
+### CASOS (12/12 disponibles y conectados)
 
-No requiere ninguna imagen. Las 5 etapas (DESCUBRIR, DISEÑAR, DESARROLLAR, DESPLEGAR, ESCALAR) son solo texto y números.
+Carpeta: `public/casos/` · Formato `.jpg` · Proporción 16:9 · Se muestran en
+`CaseCard` arriba del número clave. La ruta se deriva del `id` del caso
+(`caseImageSrc` en `src/lib/ciiia.ts`), así que un archivo nuevo sólo tiene que
+llamarse `caso-NN.jpg`.
 
-## CASOS (12 imágenes)
+`caso-01.jpg` … `caso-12.jpg` → los doce casos de `PROJECT_CASES`.
 
-Carpeta: `public/casos/`
-Formato: `.jpg` | Proporción: 16:9 (aspect-video) | Efecto: DecayImage
+### NOSOTROS (1/1 disponible)
 
-1. `caso-01.jpg` -> Sistema de Inspección
-2. `caso-02.jpg` -> Mantenimiento Predictivo
-3. `caso-03.jpg` -> Plataforma Inteligente de Producción
-4. `caso-04.jpg` -> Inspección de Calidad
-5. `caso-05.jpg` -> Plataforma de Asistentes Virtuales
-6. `caso-06.jpg` -> Sistema de Recomendación
-7. `caso-07.jpg` -> Sistema de Visión Retail
-8. `caso-08.jpg` -> Sistema de Visión para Seguridad
-9. `caso-09.jpg` -> Detección de Intrusos
-10. `caso-10.jpg` -> Análisis de Comportamiento de Cartera
-11. `caso-11.jpg` -> Detección de Anomalías y Planeación de Demanda
-12. `caso-12.jpg` -> Plataforma de Incidencia Delictiva
+`public/nosotros-encabezado.jpg` → foto del laboratorio del PIIT.
 
-## Total
+### CICLO (0 disponibles)
 
-**17 imágenes `.jpg`** (5 soluciones + 12 casos). Ninguna existe todavía: `public/soluciones/` y `public/casos/` no existen en el proyecto.
+Las 5 etapas no tienen imagen todavía. Ver «Pendientes».
+
+## Dirección de arte: pendiente de reemplazo
+
+Los 17 renders actuales de Soluciones y Casos son **objetos abstractos en 3D**
+(pieza de ajedrez, lente, placas de vidrio) sobre fondo negro con luz cian. Son
+coherentes entre sí, pero **no son el robot humanoide del hero**.
+
+Decisión tomada: **se regeneran los 17 con el robot como protagonista.**
+Los prompts, la ficha del personaje y las referencias extraídas del hero están
+en [`design/PROMPTS-ROBOT.md`](design/PROMPTS-ROBOT.md) y
+`design/robot-referencia/`. Al entregar los archivos no hay que tocar código:
+basta con respetar los nombres.
+
+## Pendientes
+
+### Ciclo de ejecución (5) y Contacto (1)
+
+Nunca han existido. Escenas y prompts en
+[`design/PROMPTS-ROBOT.md`](design/PROMPTS-ROBOT.md), sección 6:
+`public/ciclo/{descubrir,disenar,desarrollar,desplegar,escalar}.jpg` (4:3) y
+`public/contacto.jpg` (16:9).
+
+### Ecosistema (logos)
+
+`public/logos/ecosistema/` ya tiene 28 archivos `.svg`. Falta verificar que
+cubran a todas las organizaciones de `ECOSYSTEM_PARTNERS` y que se lean con
+contraste suficiente sobre el fondo oscuro.

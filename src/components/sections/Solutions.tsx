@@ -20,9 +20,8 @@ export function Solutions() {
             </AnimatedItem>
             <AnimatedItem className="md:col-span-5 md:col-start-8 md:self-end">
               <p className="text-base leading-relaxed text-[var(--text-secondary-v2)]">
-                Cinco líneas de trabajo que cubren el ciclo completo: decidir qué merece
-                construirse, probarlo en laboratorio, ponerlo a operar y dejar la capacidad
-                instalada en tu organización.
+                Cinco líneas de trabajo que cubren el ciclo completo, de decidir qué merece
+                construirse a dejar la capacidad instalada.
               </p>
             </AnimatedItem>
           </AnimatedSection>

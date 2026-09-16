@@ -156,13 +156,15 @@ export const ABOUT_DATA: AboutData = {
   highlightValue: "5%",
   highlightCopy:
     "de las empresas de Nuevo León cuenta con equipos internos de ciencia de datos",
+  // Dos líneas en escritorio: el desarrollo del argumento vive en el resto de
+  // la sección, no en este párrafo.
   leadParagraph:
-    "En CII.IA, entendemos que el verdadero desafío no radica en la creación de algoritmos avanzados, sino en la implementación efectiva de estas soluciones en el entorno empresarial real. Nuestra misión es cerrar esa brecha crítica.",
+    "El desafío no está en crear algoritmos, sino en ponerlos a operar. Nuestra misión es cerrar esa brecha.",
   labImageSrc: ABOUT_LAB_IMAGE_SRC,
   labImageAlt:
     "Laboratorio del CII.IA en el PIIT: celda de manufactura con brazos robóticos industriales",
   labCaption:
-    "Nuestra infraestructura de laboratorio, ubicada en el PIIT, es el núcleo de nuestros desarrollos tangibles. Desde aquí, conectamos con ecosistemas globales para acelerar la adopción de IA de vanguardia en la industria regional, asegurando que cada proyecto llegue al final de la milla.",
+    "Laboratorio propio en el PIIT: aquí se prototipa y se valida antes de tocar la línea de producción.",
   stats: INSTITUTIONAL_METRICS.map((metric) => ({
     ...metric,
     isDate: metric.id === "i4",
@@ -455,6 +457,13 @@ export const ECOSYSTEM_GROUPS: { category: EcosystemPartner["category"]; title: 
   { category: "Shareholders", title: "Empresas socias" },
 ];
 
+/**
+ * Render del robot para cada etapa del ciclo. Los archivos aún no existen
+ * (ver `design/PROMPTS-ROBOT.md`): mientras falten, la tarjeta cae al número
+ * gigante de la etapa en vez de mostrar un hueco roto.
+ */
+export const cycleImageSrc = (id: string) => `/ciclo/${id}.jpg`;
+
 export const EXECUTION_STAGES: ExecutionStage[] = [
   {
     id: "descubrir",
@@ -526,7 +535,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     startingPrice: "Workshop desde MXN $85,000",
     stageMapping: ["descubrir", "disenar"],
     technicalSpecs: ["Masterclass ejecutiva", "Workshop de 6–8 h", "Roadmap priorizado"],
-    media: { kind: "none" },
+    media: { kind: "image", src: "/soluciones/ai-execution.jpg", alt: "" },
     span: { col: 5, row: 1 },
   },
   {
@@ -546,7 +555,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     startingPrice: "A cotizar según alcance",
     stageMapping: ["disenar", "desarrollar"],
     technicalSpecs: ["Celda de manufactura", "Robótica y drones", "Realidad virtual", "Edge y data center"],
-    media: { kind: "none" },
+    media: { kind: "image", src: "/soluciones/ai-lab.jpg", alt: "" },
     span: { col: 5, row: 1 },
   },
   {
@@ -567,7 +576,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     stageMapping: ["desplegar", "escalar"],
     technicalSpecs: ["NVIDIA DLI", "Programas ejecutivos", "Programas corporativos"],
     externalLink: { label: "Certificación NVIDIA DLI en ciiia.mx", href: "https://ciiia.mx/nvidia" },
-    media: { kind: "none" },
+    media: { kind: "image", src: "/soluciones/academy.jpg", alt: "" },
     span: { col: 4, row: 1 },
   },
   {
@@ -586,7 +595,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     startingPrice: "Licencia anual USD $7,950 + implementación USD $3,500",
     stageMapping: ["desplegar", "escalar"],
     technicalSpecs: ["SaaS multi-tenant", "Instancia dedicada", "On-premise", "Seguridad empresarial"],
-    media: { kind: "none" },
+    media: { kind: "image", src: "/soluciones/hiva.jpg", alt: "" },
     span: { col: 7, row: 2 },
     featured: true,
   },
@@ -607,10 +616,16 @@ export const SERVICES_DATA: ServiceItem[] = [
     startingPrice: "Valor estimado del proyecto MXN $100,000 · con apoyo institucional",
     stageMapping: ["descubrir", "desarrollar"],
     technicalSpecs: ["Diagnóstico", "MVP funcional", "Acompañamiento"],
-    media: { kind: "none" },
+    media: { kind: "image", src: "/soluciones/pymes.jpg", alt: "" },
     span: { col: 3, row: 1 },
   },
 ];
+
+/**
+ * Render de portada de cada caso. Los archivos de `public/casos/` llevan el
+ * mismo nombre que el `id`, así que la ruta se deriva en vez de duplicarse.
+ */
+export const caseImageSrc = (id: string) => `/casos/${id}.jpg`;
 
 export const PROJECT_CASES: ProjectCase[] = [
   {
