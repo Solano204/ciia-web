@@ -25,7 +25,7 @@ export function Cases() {
   );
 
   return (
-    <BeamsBackground className="border-t border-[var(--border-v2)]">
+    <BeamsBackground className="section-seam">
       <section id="casos" className="px-6 py-24 md:px-10 md:py-32">
         <div className="mx-auto flex max-w-[1400px] flex-col gap-12">
           <AnimatedSection className="grid gap-6 md:grid-cols-12">

@@ -19,11 +19,17 @@
 
   --text-primary-v2: #f0f1f5;
   --text-secondary-v2: #9a9dab;
-  --text-muted-v2: #6b6f80;
+  /* Era #6b6f80: 3.80:1 sobre las superficies de cristal, por debajo del 4.5:1
+     que exige WCAG AA. Lo llevan casi todas las etiquetas pequeñas del sitio,
+     así que subirlo aquí corrige 44 elementos de una sola vez. Ahora 4.97:1. */
+  --text-muted-v2: #7d8296;
   --text-disabled-v2: #45485a;
 
   --accent-v2: #0019ff;
-  --accent-bright-v2: #3d52ff;
+  /* Era #3d52ff: azul muy saturado pero de luminancia baja, 3.54:1 sobre
+     cristal. Sólo se usa para texto (precios y el paso activo del ciclo), así
+     que se aclara sin afectar a bordes ni rellenos. Ahora 5.37:1. */
+  --accent-bright-v2: #6b7cff;
   --accent-light-v2: #7a88ff;
   --accent-dim-v2: #0014cc;
   --accent-deep-v2: #000e99;
@@ -188,6 +194,39 @@ body {
   .scroll-animation {
     height: 300vh;
   }
+}
+
+/* Costura entre secciones. Sustituye al `border-t` de un píxel a sangre, que
+   cortaba el tono en seco de un bloque al siguiente. La línea se apaga hacia
+   los bordes y la acompaña un lavado vertical corto, de modo que el paso se
+   lee como un degradado y no como un corte. */
+.section-seam {
+  position: relative;
+}
+
+.section-seam::before,
+.section-seam::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  pointer-events: none;
+}
+
+.section-seam::before {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.11) 22%,
+    rgba(255, 255, 255, 0.11) 78%,
+    transparent
+  );
+}
+
+.section-seam::after {
+  height: 180px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.025), transparent);
 }
 
 .hud-tick {

@@ -22,10 +22,14 @@ export function Navbar() {
 
   return (
     <header
+      // El fondo al hacer scroll no es sólo estética: la secuencia de «El reto»
+      // termina en un fotograma casi blanco y sin él los enlaces quedan
+      // ilegibles encima. Las dos ramas estaban comentadas, de modo que la
+      // plantilla interpolaba `scrolled` y colaba `true`/`false` como clase.
       className={`fixed inset-x-0 top-0 z-40 transition-[background-color,backdrop-filter,border-color] duration-300 ${
         scrolled
-          // ? "border-b border-white/10 bg-black/60 backdrop-blur-2xl backdrop-saturate-150"
-          // : "border-b border-transparent bg-transparent"
+          ? "border-b border-white/10 bg-black/60 backdrop-blur-2xl backdrop-saturate-150"
+          : "border-b border-transparent bg-transparent"
       }`}
     >
       <div className="mx-auto flex max-w-[1400px] items-center justify-between px-6 py-4 md:px-8 md:py-5">

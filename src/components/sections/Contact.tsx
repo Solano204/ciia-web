@@ -35,7 +35,7 @@ export function Contact() {
   };
 
   return (
-    <BeamsBackground className="border-t border-white/5">
+    <BeamsBackground className="section-seam">
     <section
       id="contacto"
       className="px-6 py-24 md:px-10 md:py-32"
@@ -107,7 +107,7 @@ export function Contact() {
                 >
                   Preparar correo
                 </button>
-                <p className="mt-3 max-w-[48ch] text-xs text-zinc-500">
+                <p className="mt-3 max-w-[48ch] text-xs text-[var(--text-muted-v2)]">
                   Se abrirá tu aplicación de correo con el mensaje listo para enviarlo a{" "}
                   {CONTACT_INFO.email}.
                 </p>
@@ -128,7 +128,7 @@ export function Contact() {
             <h3 className="font-sans text-lg font-semibold text-foreground">Contacto directo</h3>
             <dl className="mt-5 flex flex-col divide-y divide-white/8 border-y border-white/8">
               <div className="py-4">
-                <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-zinc-500">
+                <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--text-muted-v2)]">
                   Correo
                 </dt>
                 <dd className="mt-1">
@@ -141,7 +141,7 @@ export function Contact() {
                 </dd>
               </div>
               <div className="py-4">
-                <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-zinc-500">
+                <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--text-muted-v2)]">
                   Teléfono
                 </dt>
                 <dd className="mt-1">
@@ -154,7 +154,7 @@ export function Contact() {
                 </dd>
               </div>
               <div className="py-4">
-                <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-zinc-500">
+                <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--text-muted-v2)]">
                   Sede
                 </dt>
                 <dd className="mt-1 text-sm leading-snug text-foreground">
@@ -162,7 +162,7 @@ export function Contact() {
                 </dd>
               </div>
               <div className="py-4">
-                <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-zinc-500">
+                <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--text-muted-v2)]">
                   Redes
                 </dt>
                 <dd className="mt-2 flex flex-wrap gap-x-5 gap-y-2">

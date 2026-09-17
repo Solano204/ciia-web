@@ -5,7 +5,7 @@ import { EXECUTION_STAGES, SERVICES_DATA } from "@/lib/ciiia";
 
 export function ExecutionCycle() {
   return (
-    <BeamsBackground className="border-t border-[var(--border-v2)]">
+    <BeamsBackground className="section-seam">
       <section id="ciclo" className="px-6 py-24 md:px-10 md:py-32">
         <div className="mx-auto max-w-[1400px]">
           <CycleCarousel

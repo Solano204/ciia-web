@@ -15,7 +15,7 @@ export function Footer() {
     scrollToAnchor(event, href, lenis);
 
   return (
-    <BeamsBackground className="border-t border-white/5">
+    <BeamsBackground className="section-seam">
       <footer id="footer" className="px-6 py-14 md:px-10 md:py-16">
         <div className="mx-auto flex max-w-[1400px] flex-col gap-10">
           <div className="flex flex-col justify-between gap-10 md:flex-row md:items-start">

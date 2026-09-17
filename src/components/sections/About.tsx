@@ -304,7 +304,10 @@ function WorkPrincipleLine({ principle, index }: { principle: WorkPrinciple; ind
             "w-7 shrink-0 font-mono text-xs tabular-nums",
             "transition-colors duration-600 ease-out motion-reduce:transition-none",
             "[transition-delay:calc(var(--reveal-delay)+150ms)]",
-            isVisible ? "text-zinc-700" : "text-zinc-800",
+            // El estado revelado debe cumplir AA: la jerarquía frente a la
+            // palabra de 48px la da el tamaño, no un gris ilegible (antes
+            // zinc-700, 1.33:1). El estado previo es transitorio.
+            isVisible ? "text-[var(--text-muted-v2)]" : "text-zinc-800",
           ].join(" ")}
         >
           {order}
@@ -319,14 +322,16 @@ function WorkPrincipleLine({ principle, index }: { principle: WorkPrinciple; ind
         </span>
 
         <span className="ml-11 flex basis-full items-baseline gap-3 md:ml-0 md:basis-auto">
-          <span aria-hidden className="text-[clamp(15px,2vw,22px)] text-zinc-700">
+          <span aria-hidden className="text-[clamp(15px,2vw,22px)] text-[var(--text-muted-v2)]">
             /
           </span>
           {/* El tachado es un ::after animable; `no-underline` quita el
               line-through nativo de <s>, que no se puede animar. */}
           <s
             className={[
-              "relative text-[clamp(15px,2vw,22px)] italic text-zinc-600 no-underline",
+              // Contenido real («no diagnosticamos»), no decoración: zinc-600
+              // daba 2.56:1. Sigue siendo el tono más apagado que cumple AA.
+              "relative text-[clamp(15px,2vw,22px)] italic text-[var(--text-muted-v2)] no-underline",
               "after:absolute after:left-0 after:top-1/2 after:h-[1.5px] after:w-full",
               "after:origin-left after:bg-white/25 after:content-['']",
               "after:transition-transform after:duration-500 after:ease-out",
@@ -489,7 +494,7 @@ export function About() {
         if (!logo) return;
         gsap.fromTo(
           logo,
-          { filter: "grayscale(0.9)", opacity: 0.55 },
+          { filter: "grayscale(0.65)", opacity: 0.75 },
           {
             filter: "grayscale(0)",
             opacity: 1,
@@ -571,7 +576,7 @@ export function About() {
   }, []);
 
   return (
-    <BeamsBackground className="border-t border-white/5">
+    <BeamsBackground className="section-seam">
     <section
       ref={sectionRef}
       id="nosotros"
@@ -681,7 +686,7 @@ export function About() {
                   />
                 </span>
                 <span
-                  className="mt-3 block font-mono text-[10px] uppercase leading-relaxed tracking-[0.15em] text-zinc-500"
+                  className="mt-3 block font-mono text-[10px] uppercase leading-relaxed tracking-[0.15em] text-[var(--text-muted-v2)]"
                   data-fx="stat-label"
                 >
                   {stat.label}
@@ -702,7 +707,7 @@ export function About() {
                   <blockquote className="font-sans text-lg italic leading-snug text-foreground">
                   &ldquo;{item.quote}&rdquo;
                 </blockquote>
-                <figcaption className="mt-4 text-sm text-zinc-500">{item.role}</figcaption>
+                <figcaption className="mt-4 text-sm text-[var(--text-muted-v2)]">{item.role}</figcaption>
               </figure>
             </AnimatedItem>
           ))}

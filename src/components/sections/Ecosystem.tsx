@@ -38,7 +38,7 @@ export function Ecosystem() {
   }, []);
 
   return (
-    <BeamsBackground className="border-t border-white/5">
+    <BeamsBackground className="section-seam">
       <section ref={sectionRef} id="ecosistema" className="px-6 py-24 md:px-10 md:py-32">
         <div className="mx-auto flex max-w-[1400px] flex-col gap-10">
           <AnimatedSection className="grid gap-6 lg:grid-cols-12" >

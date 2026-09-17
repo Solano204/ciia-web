@@ -84,7 +84,7 @@ function PartnerTile({ partner }: TileProps) {
         {partner.note ? (
           <span
             className={[
-              "block truncate font-mono text-[11px] leading-4 text-zinc-500 opacity-0",
+              "block truncate font-mono text-[11px] leading-4 text-[var(--text-muted-v2)] opacity-0",
               "transition-opacity duration-300 motion-reduce:transition-none",
               "group-hover/cell:opacity-100 group-focus-within/cell:opacity-100",
             ].join(" ")}
@@ -221,7 +221,10 @@ export function EcosystemGrid() {
           if (!logo) return;
           gsap.fromTo(
             logo,
-            { filter: "grayscale(1)", opacity: 0.45 },
+            // Suelo más alto que el original (grayscale 1 / opacidad 0.45): la
+            // pared de logos entraba tan apagada que las marcas no se
+            // reconocían hasta casi la mitad del recorrido.
+            { filter: "grayscale(0.7)", opacity: 0.7 },
             {
               filter: "grayscale(0)",
               opacity: 1,
@@ -289,7 +292,7 @@ export function EcosystemGrid() {
           ))}
         </div>
 
-        <span className="shrink-0 font-mono text-[11px] tracking-wide text-zinc-600" aria-live="polite">
+        <span className="shrink-0 font-mono text-[11px] tracking-wide text-[var(--text-muted-v2)]" aria-live="polite">
           {visibleCount} DE {ECOSYSTEM_PARTNERS.length}
         </span>
       </div>
@@ -349,7 +352,7 @@ function FilterPill({ label, isActive, onSelect }: FilterPillProps) {
         "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-v2",
         isActive
           ? "border-accent-v2 text-accent-bright-v2"
-          : "border-white/10 text-zinc-500 hover:border-white/20 hover:text-zinc-300",
+          : "border-white/10 text-[var(--text-muted-v2)] hover:border-white/20 hover:text-zinc-300",
       ].join(" ")}
     >
       {label}

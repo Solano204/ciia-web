@@ -143,7 +143,7 @@ export function Hero() {
               style={{ transform: "scaleX(0)", transition: "transform 80ms linear" }}
             />
           </div>
-          <div className="mx-6 flex items-center justify-between pb-4 font-mono text-[10px] uppercase tracking-[0.28em] text-zinc-500 md:mx-10">
+          <div className="mx-6 flex items-center justify-between pb-4 font-mono text-[10px] uppercase tracking-[0.28em] text-[var(--text-muted-v2)] md:mx-10">
             <span>SEQ 001 / 169</span>
             <span>CII.IA // DIAGN&Oacute;STICO</span>
             <span>Despl&aacute;zate &darr;</span>
@@ -219,7 +219,7 @@ export function Hero() {
                 style={{ width: `${Math.round(loadProgress * 100)}%` }}
               />
             </div>
-            <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-zinc-500">
+            <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-[var(--text-muted-v2)]">
               Cargando CII.IA &nbsp;&middot;&nbsp; {Math.round(loadProgress * 100)}%
             </p>
           </div>

@@ -4,6 +4,8 @@ import { useCallback, useRef } from "react";
 import { EyebrowBadge } from "@/components/ui/EyebrowBadge";
 import { HudFrame } from "@/components/ui/HudFrame";
 import {
+  CHALLENGE_ENTER_FADE_END,
+  CHALLENGE_EXIT_FADE_START,
   CHALLENGE_FRAME_COUNT,
   CHALLENGE_TEXT_FADE_IN_END,
   challengeFramePath,
@@ -16,6 +18,8 @@ const FOUNDING_METRIC = INSTITUTIONAL_METRICS[3];
 export function Challenge() {
   const textRef = useRef<HTMLDivElement | null>(null);
   const progressFillRef = useRef<HTMLDivElement | null>(null);
+  const enterVeilRef = useRef<HTMLDivElement | null>(null);
+  const exitVeilRef = useRef<HTMLDivElement | null>(null);
 
   const handleProgress = useCallback((progress: number) => {
     if (textRef.current) {
@@ -26,6 +30,20 @@ export function Challenge() {
 
     if (progressFillRef.current) {
       progressFillRef.current.style.transform = `scaleX(${progress})`;
+    }
+
+    // Se escriben directamente en el estilo, igual que el resto de esta
+    // sección: van atadas al scroll y no deben provocar un render por frame.
+    if (enterVeilRef.current) {
+      enterVeilRef.current.style.opacity = String(
+        1 - Math.min(1, progress / CHALLENGE_ENTER_FADE_END),
+      );
+    }
+
+    if (exitVeilRef.current) {
+      exitVeilRef.current.style.opacity = String(
+        Math.max(0, (progress - CHALLENGE_EXIT_FADE_START) / (1 - CHALLENGE_EXIT_FADE_START)),
+      );
     }
   }, []);
 
@@ -53,6 +71,21 @@ export function Challenge() {
             background:
               "radial-gradient(120% 80% at 50% 10%, transparent 30%, rgba(10,10,11,0.45) 70%, rgba(10,10,11,0.85) 100%)",
           }}
+        />
+
+        {/* Velos de empalme. Van sobre el lienzo pero bajo el texto (z-10),
+            para que la copia siga legible mientras la escena se funde. */}
+        <div
+          ref={enterVeilRef}
+          aria-hidden
+          className="pointer-events-none absolute inset-0 z-[5] bg-background"
+          style={{ opacity: 1 }}
+        />
+        <div
+          ref={exitVeilRef}
+          aria-hidden
+          className="pointer-events-none absolute inset-0 z-[5] bg-background"
+          style={{ opacity: 0 }}
         />
 
         <div className="pointer-events-none absolute left-6 top-24 text-accent md:left-10 md:top-28">
@@ -95,7 +128,7 @@ export function Challenge() {
               style={{ transform: "scaleX(0)", transition: "transform 80ms linear" }}
             />
           </div>
-          <div className="mx-6 flex items-center justify-between pb-4 font-mono text-[10px] uppercase tracking-[0.28em] text-zinc-500 md:mx-10">
+          <div className="mx-6 flex items-center justify-between pb-4 font-mono text-[10px] uppercase tracking-[0.28em] text-[var(--text-muted-v2)] md:mx-10">
             <span>SEQ 002 / 169</span>
             <span>CII.IA // CONTEXTO</span>
             <span>Despl&aacute;zate &darr;</span>
@@ -111,7 +144,7 @@ export function Challenge() {
                 style={{ width: `${Math.round(loadProgress * 100)}%` }}
               />
             </div>
-            <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-zinc-500">
+            <p className="font-mono text-[11px] uppercase tracking-[0.28em] text-[var(--text-muted-v2)]">
               Cargando CII.IA &nbsp;&middot;&nbsp; {Math.round(loadProgress * 100)}%
             </p>
           </div>
