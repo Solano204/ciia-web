@@ -1,9 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowUpRight } from "@phosphor-icons/react";
+import { ArrowUpRightIcon } from "@phosphor-icons/react";
 import { CardMedia, type MediaAspect } from "@/components/ui/CardMedia";
-import type { ServiceItem } from "@/lib/ciiia";
+import { CtaLink } from "@/components/ui/Cta";
+import { CTA_COPY, type ServiceItem } from "@/lib/ciiia";
 
 type Size = "lg" | "md" | "sm";
 
@@ -40,9 +41,12 @@ export function BentoCard({
   const size = sizeFromSpan(service.span.col);
 
   return (
-    <Link
-      href={`/soluciones/${service.id}`}
-      className={`group flex h-full flex-col gap-4 rounded-2xl transition-colors duration-200 motion-reduce:transition-none glass-hover-v2 ${
+    // Deja de ser un <a> que envuelve toda la tarjeta: con el CTA dentro eso
+    // anidaría enlaces, que es HTML inválido. En su lugar, el titular lleva el
+    // enlace y su ::after cubre la tarjeta entera, de modo que sigue siendo
+    // clicable completa; el CTA se eleva por encima con z-10.
+    <article
+      className={`group relative flex h-full flex-col gap-4 rounded-2xl transition-colors duration-200 motion-reduce:transition-none glass-hover-v2 ${
         service.featured ? "glass-2-v2 glass-featured-v2" : "glass-1-v2"
       } ${size === "sm" ? "p-5" : "p-6"} ${className}`}
     >
@@ -51,7 +55,7 @@ export function BentoCard({
           {service.title}
         </span>
         <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[var(--border-strong-v2)] text-[var(--text-secondary-v2)] transition-transform duration-200 motion-reduce:transition-none group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent-light-v2">
-          <ArrowUpRight size={14} weight="bold" />
+          <ArrowUpRightIcon size={14} weight="bold" />
         </span>
       </div>
 
@@ -71,7 +75,12 @@ export function BentoCard({
         <h3
           className={`font-sans font-semibold leading-tight tracking-tight text-foreground ${TAGLINE_CLASS[size]}`}
         >
-          {service.tagline}
+          <Link
+            href={`/soluciones/${service.id}`}
+            className="outline-none after:absolute after:inset-0 after:rounded-2xl after:content-[''] focus-visible:after:ring-2 focus-visible:after:ring-accent-light-v2"
+          >
+            {service.tagline}
+          </Link>
         </h3>
       </div>
 
@@ -80,6 +89,14 @@ export function BentoCard({
       >
         {service.startingPrice}
       </p>
-    </Link>
+
+      {/* Por encima del ::after del enlace extendido, para que sea clicable
+          por separado en vez de llevar también a la página de la solución. */}
+      <div className="relative z-10">
+        <CtaLink href="#contacto" className="py-0 text-[10px]">
+          {CTA_COPY.asesoria}
+        </CtaLink>
+      </div>
+    </article>
   );
 }

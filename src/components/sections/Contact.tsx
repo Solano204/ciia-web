@@ -4,7 +4,8 @@ import { useId, useState, type FormEvent } from "react";
 import { EyebrowBadge } from "@/components/ui/EyebrowBadge";
 import { AnimatedItem, AnimatedSection } from "@/components/ui/AnimatedSection";
 import { BeamsBackground } from "@/components/ui/BeamsBackground";
-import { CONTACT_INFO } from "@/lib/ciiia";
+import { CtaButton } from "@/components/ui/Cta";
+import { CONTACT_INFO, CTA_COPY, SCHEDULING_URL } from "@/lib/ciiia";
 
 const inputClasses =
   "mt-2 block w-full rounded-lg border border-white/10 bg-white/[0.03] px-3.5 py-2.5 text-sm text-foreground outline-none transition-colors focus:border-accent";
@@ -103,7 +104,7 @@ export function Contact() {
               <div>
                 <button
                   type="submit"
-                  className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.05] px-5 py-2.5 font-mono text-[11px] uppercase tracking-[0.22em] text-foreground transition-colors hover:bg-white/[0.1]"
+                  className="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 font-mono text-[11px] font-semibold uppercase tracking-[0.22em] text-background outline-none transition-[filter] duration-200 motion-reduce:transition-none hover:brightness-110 focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 >
                   Preparar correo
                 </button>
@@ -125,6 +126,22 @@ export function Contact() {
           </AnimatedItem>
 
           <AnimatedItem className="md:col-span-4 md:col-start-9">
+            {/* Sólo aparece cuando hay agenda configurada: sin URL sería un
+                botón que no lleva a ninguna parte. Ver SCHEDULING_URL. */}
+            {SCHEDULING_URL && (
+              <div className="mb-8 rounded-xl border border-white/10 bg-white/[0.03] p-5">
+                <h3 className="font-sans text-lg font-semibold text-foreground">
+                  ¿Prefieres una reunión?
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary-v2)]">
+                  Elige un horario y hablamos de tu caso.
+                </p>
+                <CtaButton href={SCHEDULING_URL} className="mt-4">
+                  {CTA_COPY.agenda}
+                </CtaButton>
+              </div>
+            )}
+
             <h3 className="font-sans text-lg font-semibold text-foreground">Contacto directo</h3>
             <dl className="mt-5 flex flex-col divide-y divide-white/8 border-y border-white/8">
               <div className="py-4">

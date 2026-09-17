@@ -7,7 +7,8 @@ import { EyebrowBadge } from "@/components/ui/EyebrowBadge";
 import { AnimatedItem, AnimatedSection } from "@/components/ui/AnimatedSection";
 import { EcosystemGrid } from "@/components/ui/EcosystemGrid";
 import { BeamsBackground } from "@/components/ui/BeamsBackground";
-import { ECOSYSTEM_INTRO } from "@/lib/ciiia";
+import { CtaButton, CtaLink, SectionCta } from "@/components/ui/Cta";
+import { CTA_COPY, ECOSYSTEM_INTRO, schedulingHref } from "@/lib/ciiia";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -73,6 +74,11 @@ export function Ecosystem() {
               </Suspense>
             </AnimatedItem>
           </AnimatedSection>
+
+          <SectionCta className="border-white/8">
+            <CtaButton href="#contacto">{CTA_COPY.contacto}</CtaButton>
+            <CtaLink href={schedulingHref()}>{CTA_COPY.agenda}</CtaLink>
+          </SectionCta>
         </div>
       </section>
     </BeamsBackground>

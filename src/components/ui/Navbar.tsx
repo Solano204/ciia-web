@@ -2,9 +2,10 @@
 
 import Link from "next/link";
 import { useEffect, useState, type MouseEvent } from "react";
-import { ArrowUpRight } from "@phosphor-icons/react";
 import { useLenis } from "@/components/providers/SmoothScrollProvider";
 import { scrollToAnchor } from "@/lib/smooth-anchor";
+import { CtaButton } from "@/components/ui/Cta";
+import { CTA_COPY, NAV_LINKS, schedulingHref } from "@/lib/ciiia";
 
 export function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -32,27 +33,20 @@ export function Navbar() {
           : "border-b border-transparent bg-transparent"
       }`}
     >
-      <div className="mx-auto flex max-w-[1400px] items-center justify-between px-6 py-4 md:px-8 md:py-5">
+      <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-4 px-6 py-4 md:px-8 md:py-5">
         <Link
           href="/"
-          className="flex items-center gap-2.5 font-mono text-[11px] font-semibold uppercase tracking-[0.32em] text-foreground"
+          className="flex shrink-0 items-center gap-2.5 font-mono text-[11px] font-semibold uppercase tracking-[0.32em] text-foreground"
         >
           <span
             aria-hidden
             className="inline-block h-2 w-2 rounded-full bg-accent shadow-[0_0_12px_rgba(212,162,47,0.9)]"
           />
-          
+          CII.IA
         </Link>
 
         <nav className="hidden items-center gap-5 lg:flex xl:gap-7">
-          {[
-            ["#soluciones", "Soluciones"],
-            ["#ciclo", "Ciclo"],
-            ["#casos", "Casos"],
-            ["#nosotros", "Nosotros"],
-            ["#ecosistema", "Ecosistema"],
-            ["#contacto", "Contacto"],
-          ].map(([href, label]) => (
+          {NAV_LINKS.map(({ href, label }) => (
             <a
               key={href}
               href={href}
@@ -64,7 +58,14 @@ export function Navbar() {
           ))}
         </nav>
 
-      
+        {/* CTA fijo. En móvil se recorta a «Agenda» para no empujar la marca
+            fuera de pantalla; el nombre completo queda para lectores. */}
+        <CtaButton href={schedulingHref()} className="shrink-0 max-sm:px-4">
+          <span aria-hidden className="sm:hidden">
+            Agenda
+          </span>
+          <span className="max-sm:sr-only">{CTA_COPY.agenda}</span>
+        </CtaButton>
       </div>
     </header>
   );

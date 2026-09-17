@@ -2,7 +2,8 @@ import { EyebrowBadge } from "@/components/ui/EyebrowBadge";
 import { AnimatedItem, AnimatedSection } from "@/components/ui/AnimatedSection";
 import { BentoGrid } from "@/components/ui/BentoGrid";
 import { BeamsBackground } from "@/components/ui/BeamsBackground";
-import { SERVICES_DATA } from "@/lib/ciiia";
+import { CtaButton, CtaLink, SectionCta } from "@/components/ui/Cta";
+import { CTA_COPY, SERVICES_DATA } from "@/lib/ciiia";
 
 export function Solutions() {
   return (
@@ -29,6 +30,11 @@ export function Solutions() {
           <AnimatedItem>
             <BentoGrid services={SERVICES_DATA} />
           </AnimatedItem>
+
+          <SectionCta>
+            <CtaButton href="#contacto">{CTA_COPY.asesoria}</CtaButton>
+            <CtaLink href="#ciclo">Ver cómo trabajamos</CtaLink>
+          </SectionCta>
         </div>
       </section>
     </BeamsBackground>

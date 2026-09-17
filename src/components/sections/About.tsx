@@ -8,12 +8,14 @@ import { EyebrowBadge } from "@/components/ui/EyebrowBadge";
 import { AnimatedItem, AnimatedSection } from "@/components/ui/AnimatedSection";
 import { BlurText } from "@/components/ui/BlurText";
 import { BeamsBackground } from "@/components/ui/BeamsBackground";
+import { CtaButton, CtaLink, SectionCta } from "@/components/ui/Cta";
 import { useCountUp } from "@/hooks/useCountUp";
 import { useRevealOnScroll } from "@/hooks/useRevealOnScroll";
 import { logoWidthPercent, type LogoSizing } from "@/lib/logoSizing";
 import {
   ABOUT_DATA,
   CLIENT_QUOTES,
+  CTA_COPY,
   type AboutFoundingPartner,
   type WorkPrinciple,
 } from "@/lib/ciiia";
@@ -699,6 +701,11 @@ export function About() {
         <FoundingPartners />
 
         <WorkPrinciples />
+
+        <SectionCta className="border-white/8">
+          <CtaButton href="#contacto">{CTA_COPY.contacto}</CtaButton>
+          <CtaLink href="#ecosistema">Ver el ecosistema</CtaLink>
+        </SectionCta>
 
         <AnimatedSection className="grid gap-10 border-t border-white/8 pt-12 md:grid-cols-2">
           {CLIENT_QUOTES.map((item) => (

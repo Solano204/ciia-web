@@ -3,8 +3,9 @@
 import { useCallback, useRef, useState } from "react";
 import { EyebrowBadge } from "@/components/ui/EyebrowBadge";
 import { HudFrame } from "@/components/ui/HudFrame";
+import { CtaButton, CtaLink } from "@/components/ui/Cta";
 import { DIALOGUES, FRAME_COUNT, HERO_TEXT_FADE_END, framePath } from "@/lib/hero";
-import { INSTITUTIONAL_METRICS, MANIFESTO } from "@/lib/ciiia";
+import { CTA_COPY, INSTITUTIONAL_METRICS, MANIFESTO, schedulingHref } from "@/lib/ciiia";
 import { useScrollFrameSequence } from "@/hooks/use-scroll-frame-sequence";
 
 export function Hero() {
@@ -96,6 +97,11 @@ export function Hero() {
           <p className="max-w-[56ch] font-sans text-sm leading-relaxed text-zinc-400 md:text-base">
             {MANIFESTO.lead}
           </p>
+
+          <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
+            <CtaButton href={schedulingHref()}>{CTA_COPY.agenda}</CtaButton>
+            <CtaLink href="#soluciones">Ver soluciones</CtaLink>
+          </div>
         </div>
 
         <div

@@ -818,7 +818,29 @@ export const CONTACT_INFO = {
  * URL del aviso de privacidad. Pendiente de confirmación institucional: mientras
  * esté vacía, el pie de página omite el enlace en vez de apuntar a un 404.
  */
-export const PRIVACY_NOTICE_HREF = "";
+export const PRIVACY_NOTICE_HREF: string = "";
+
+/**
+ * Copys de llamada a la acción. Son los únicos aprobados: no crear variantes
+ * ni reescribirlos por sección.
+ */
+export const CTA_COPY = {
+  agenda: "Agenda con nosotros",
+  asesoria: "Busca una asesoría",
+  asesoriaCaso: "Busca una asesoría para tu caso",
+  contacto: "Contáctanos",
+} as const;
+
+/**
+ * Enlace de agenda. Pendiente de confirmación institucional: mientras esté
+ * vacío, «Agenda con nosotros» lleva a la sección de contacto —desde donde sí
+ * se puede pedir una reunión— y el bloque de agendar de Contacto no se
+ * muestra, en vez de ofrecer un botón que no lleva a ninguna parte.
+ */
+export const SCHEDULING_URL: string = "";
+
+/** Destino de «Agenda con nosotros», con respaldo mientras falte la agenda. */
+export const schedulingHref = (): string => SCHEDULING_URL || "#contacto";
 
 /** Enlaces de navegación compartidos por el nav y el pie de página. */
 export const NAV_LINKS: { href: string; label: string }[] = [

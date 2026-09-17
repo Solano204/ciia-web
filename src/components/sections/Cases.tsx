@@ -8,7 +8,8 @@ import { CaseFilters, type CaseFilterState } from "@/components/ui/CaseFilters";
 import { CaseCard } from "@/components/ui/CaseCard";
 import { TiltCard } from "@/components/ui/TiltCard";
 import { BeamsBackground } from "@/components/ui/BeamsBackground";
-import { PROJECT_CASES } from "@/lib/ciiia";
+import { CtaButton, CtaLink, SectionCta } from "@/components/ui/Cta";
+import { CTA_COPY, PROJECT_CASES, schedulingHref } from "@/lib/ciiia";
 
 export function Cases() {
   const [filters, setFilters] = useState<CaseFilterState>({ sector: "todos", technology: "todas" });
@@ -73,6 +74,11 @@ export function Cases() {
               </AnimatePresence>
             </div>
           )}
+
+          <SectionCta>
+            <CtaButton href="#contacto">{CTA_COPY.asesoriaCaso}</CtaButton>
+            <CtaLink href={schedulingHref()}>{CTA_COPY.agenda}</CtaLink>
+          </SectionCta>
         </div>
       </section>
     </BeamsBackground>

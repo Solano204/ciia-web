@@ -13,7 +13,14 @@ import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 // Los alias sin sufijo (`CaretLeft`) están deprecados en phosphor v2.1.
 import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react";
-import { cycleImageSrc, type ExecutionStage, type ServiceItem } from "@/lib/ciiia";
+import { CtaButton } from "@/components/ui/Cta";
+import {
+  CTA_COPY,
+  cycleImageSrc,
+  schedulingHref,
+  type ExecutionStage,
+  type ServiceItem,
+} from "@/lib/ciiia";
 
 /** Desplazamiento de la transición. El tope lo marca el efecto del cursor. */
 const SHIFT_PX = 12;
@@ -133,9 +140,13 @@ export function CycleCarousel({
       </div>
 
       <div className="grid gap-8 lg:grid-cols-12 lg:gap-6">
-        <div className="flex flex-col gap-8 lg:col-span-3">
+        {/* `min-w-0` en toda la cadena: sin él, el `min-width:auto` que traen
+            por defecto los ítems de grid y flex impide que el riel se encoja,
+            el `overflow-x-auto` no llega a aplicarse y las cinco etapas
+            desbordaban la página casi 375px a lo ancho en móvil. */}
+        <div className="flex min-w-0 flex-col gap-8 lg:col-span-3">
           {/* Riel: horizontal y desplazable en móvil, vertical en escritorio. */}
-          <div className="relative">
+          <div className="relative min-w-0">
             <span
               aria-hidden
               className="absolute left-[17px] top-6 bottom-6 hidden w-px bg-[var(--border-v2)] lg:block"
@@ -151,7 +162,7 @@ export function CycleCarousel({
               aria-label="Etapas del ciclo de ejecución"
               aria-orientation="vertical"
               onKeyDown={handleTabKeyDown}
-              className="flex gap-2 overflow-x-auto pb-2 lg:flex-col lg:gap-0 lg:overflow-x-visible lg:pb-0"
+              className="flex min-w-0 gap-2 overflow-x-auto pb-2 lg:flex-col lg:gap-0 lg:overflow-x-visible lg:pb-0"
             >
               {stages.map((stage, index) => {
                 const isActive = index === activeIndex;
@@ -227,7 +238,7 @@ export function CycleCarousel({
         </div>
 
         <div
-          className="lg:col-span-9"
+          className="min-w-0 lg:col-span-9"
           onTouchStart={(event) => {
             const touch = event.changedTouches[0];
             touchStart.current = { x: touch.clientX, y: touch.clientY };
@@ -316,7 +327,13 @@ export function CycleCarousel({
                   )}
                 </dl>
 
-                <div className="mt-auto flex items-center gap-3 pt-4">
+                {/* El guardia de `handleCardClick` ignora los clics que caen
+                    sobre un enlace, así que este CTA no avanza de etapa. */}
+                <div className="mt-auto pt-2">
+                  <CtaButton href={schedulingHref()}>{CTA_COPY.agenda}</CtaButton>
+                </div>
+
+                <div className="flex items-center gap-3 pt-4">
                   <div className="h-0.5 flex-1 bg-[var(--border-v2)]">
                     <div
                       className="h-full bg-accent-v2 transition-[width] duration-300 ease-out motion-reduce:transition-none"
