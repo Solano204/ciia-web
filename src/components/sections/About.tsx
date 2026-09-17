@@ -547,28 +547,26 @@ export function About() {
         lines.forEach((line, index) => {
           // Direcciones alternas: la lista avanza en zigzag al hacer scroll.
           const direction = index % 2 === 0 ? 1 : -1;
-          try {
-            gsap.fromTo(
-              line,
-              { x: -travel * direction },
-              {
-                x: travel * direction,
-                ease: "none",
-                scrollTrigger: {
-                  trigger: line,
-                  start: "top bottom",
-                  end: "bottom top",
-                  scrub: 1,
-                },
+          // Aquí había un try/catch que se tragaba
+          // «Cannot read properties of undefined (reading 'end')». La causa no
+          // estaba en esta línea sino en EcosystemGrid, que forzaba un
+          // `ScrollTrigger.refresh()` síncrono dentro de su `matchMedia` y
+          // reventaba el trigger que se estuviera creando en ese momento.
+          // Resuelto allí; aquí ya no hace falta enmascarar nada.
+          gsap.fromTo(
+            line,
+            { x: -travel * direction },
+            {
+              x: travel * direction,
+              ease: "none",
+              scrollTrigger: {
+                trigger: line,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 1,
               },
-            );
-          } catch {
-            // ponytail: this ScrollTrigger setup intermittently throws
-            // ("Cannot read properties of undefined (reading 'end')") in dev
-            // for a cause not yet root-caused (registration/Lenis sync both
-            // ruled out). Swallow it so it can't take down the whole page —
-            // worst case this one line loses its parallax drift.
-          }
+            },
+          );
         });
       },
       scope,

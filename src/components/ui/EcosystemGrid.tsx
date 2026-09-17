@@ -235,7 +235,14 @@ export function EcosystemGrid() {
         });
       }, scope);
 
-      ScrollTrigger.refresh();
+      // Aquí había un `ScrollTrigger.refresh()`. Era redundante —GSAP ya
+      // agrupa un `_refreshAll` en el siguiente frame cada vez que se crean
+      // triggers (`_queueRefreshAll`)— y además dañino: forzaba un refresco
+      // SÍNCRONO desde dentro del callback de `matchMedia`, que es justo
+      // cuando hay triggers a medio construir. El bucle de refresco lee
+      // `t.vars.end` de cada trigger registrado y reventaba con
+      // «Cannot read properties of undefined (reading 'end')», a veces en
+      // este componente y a veces en About, según cuál estuviera creándose.
       return () => ctx.revert();
     });
 
