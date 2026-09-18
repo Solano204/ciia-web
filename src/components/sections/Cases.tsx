@@ -1,19 +1,16 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { EyebrowBadge } from "@/components/ui/EyebrowBadge";
 import { AnimatedItem, AnimatedSection } from "@/components/ui/AnimatedSection";
 import { CaseFilters, type CaseFilterState } from "@/components/ui/CaseFilters";
-import { CaseCard } from "@/components/ui/CaseCard";
-import { TiltCard } from "@/components/ui/TiltCard";
+import { CasesDeck } from "@/components/ui/CasesDeck";
 import { BeamsBackground } from "@/components/ui/BeamsBackground";
 import { CtaButton, CtaLink, SectionCta } from "@/components/ui/Cta";
 import { CTA_COPY, PROJECT_CASES, schedulingHref } from "@/lib/ciiia";
 
 export function Cases() {
   const [filters, setFilters] = useState<CaseFilterState>({ sector: "todos", technology: "todas" });
-  const prefersReducedMotion = useReducedMotion();
 
   const filtered = useMemo(
     () =>
@@ -55,24 +52,10 @@ export function Cases() {
               Ningún caso coincide con esa combinación de filtros.
             </p>
           ) : (
-            <div className="grid grid-cols-1 items-stretch gap-4 md:grid-cols-2 lg:grid-cols-3">
-              <AnimatePresence initial={false}>
-                {filtered.map((item) => (
-                  <motion.div
-                    key={item.id}
-                    className="h-full"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: prefersReducedMotion ? 0 : 0.2 }}
-                  >
-                    <TiltCard>
-                      <CaseCard item={item} />
-                    </TiltCard>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
-            </div>
+            <CasesDeck
+              cases={filtered}
+              resetKey={`${filters.sector}|${filters.technology}`}
+            />
           )}
 
           <SectionCta>

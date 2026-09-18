@@ -1,72 +1,117 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
-import { ArrowUpRight } from "@phosphor-icons/react";
+import { useRouter } from "next/navigation";
+import type { KeyboardEvent, MouseEvent } from "react";
+import { ArrowRightIcon } from "@phosphor-icons/react";
+import { deckTransition } from "@/hooks/useDeckCarousel";
 import { technologyLabel } from "@/lib/cases";
-import { caseImageSrc, type ProjectCase } from "@/lib/ciiia";
+import type { ProjectCase } from "@/lib/ciiia";
 
-// ponytail: char checks, not regex — a "%" or a leading -/+ marks an impact
-// result (e.g. "-55%", "+3.4x"); a bare count (e.g. "3", "7") reads smaller.
-function metricPresentation(value: string): { sizeClass: string; colorClass: string } {
-  const isImpact = value.includes("%") || value.startsWith("-") || value.startsWith("+");
-  return isImpact
-    ? { sizeClass: "text-[56px]", colorClass: "text-foreground" }
-    : { sizeClass: "text-[40px]", colorClass: "text-[var(--text-secondary-v2)]" };
-}
+export type CaseCardProps = {
+  item: ProjectCase;
+  index: number;
+  isActive: boolean;
+  /** Trae al centro una tarjeta lateral. No navega. */
+  onSelect: (index: number) => void;
+  /** El foco nunca debe quedarse en algo recortado por el borde del riel. */
+  onFocusCard: (index: number) => void;
+  animated: boolean;
+};
 
-export function CaseCard({ item }: { item: ProjectCase }) {
-  const metric = metricPresentation(item.metricHighlight);
+export function CaseCard({
+  item,
+  index,
+  isActive,
+  onSelect,
+  onFocusCard,
+  animated,
+}: CaseCardProps) {
+  const router = useRouter();
+  const href = `/casos/${item.id}`;
+
+  // Un solo punto de decisión: lateral centra, activa navega. La tarjeta no
+  // puede envolverse en un enlace o el primer clic se iría a la ficha.
+  const activate = () => {
+    if (isActive) router.push(href);
+    else onSelect(index);
+  };
+
+  const handleClick = (event: MouseEvent<HTMLElement>) => {
+    // «Ver caso» es un enlace de verdad y ya lleva su propio `stopPropagation`;
+    // esto cubre el caso de que el clic nazca en un descendiente suyo.
+    if ((event.target as HTMLElement).closest("a")) return;
+    activate();
+  };
+
+  const handleKeyDown = (event: KeyboardEvent<HTMLElement>) => {
+    if (event.key !== "Enter" && event.key !== " ") return;
+    if ((event.target as HTMLElement).closest("a")) return;
+    event.preventDefault();
+    activate();
+  };
 
   return (
-    <Link
-      href={`/casos/${item.id}`}
-      className="surface-flat-v2 glass-hover-v2 group flex h-full flex-col p-6 transition-colors duration-200 motion-reduce:transition-none"
+    <article
+      data-deck-index={index}
+      tabIndex={0}
+      aria-current={isActive ? "true" : undefined}
+      aria-label={`${item.title}. ${item.sector}, ${technologyLabel(item.technology)}.`}
+      onClick={handleClick}
+      onKeyDown={handleKeyDown}
+      onFocus={() => onFocusCard(index)}
+      style={deckTransition(animated)}
+      className={[
+        // El 85% deja asomar los separadores del riel a ambos lados y es el
+        // número del que salen sus anchos: (100% − 85%) / 2.
+        "group relative flex w-[85%] shrink-0 cursor-pointer snap-center flex-col",
+        "rounded-2xl border border-white/8 bg-white/[0.02] p-9",
+        "min-h-[400px] lg:min-h-[440px] lg:w-[520px]",
+        // Tailwind v4 emite `scale-*` como la propiedad `scale`, no dentro de
+        // `transform`: la transición tiene que nombrarla o el cambio es seco.
+        "outline-none transition-[opacity,scale] focus-visible:ring-2 focus-visible:ring-[var(--accent)]",
+        // El atenuado de las vecinas vive en CSS y sólo desde `lg`, para que no
+        // haya un parpadeo entre el HTML del servidor y la primera medición.
+        isActive ? "lg:scale-100 lg:opacity-100" : "lg:scale-[0.96] lg:opacity-[0.35]",
+      ].join(" ")}
     >
-      <div className="flex items-center justify-between gap-3">
-        <span className="flex flex-wrap items-center gap-x-2 font-mono text-[10px] uppercase tracking-[0.22em]">
-          <span className="text-[var(--text-muted-v2)]">{item.sector}</span>
-          <span className="text-[var(--text-muted-v2)]">&middot;</span>
-          <span className="text-[var(--text-muted-v2)]">{technologyLabel(item.technology)}</span>
-        </span>
-        <span className="text-[var(--text-secondary-v2)] opacity-0 transition-opacity duration-200 motion-reduce:transition-none group-hover:opacity-100">
-          <ArrowUpRight size={14} weight="bold" />
-        </span>
-      </div>
+      <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--text-muted-v2)]">
+        {item.sector} &middot; {technologyLabel(item.technology)}
+      </span>
 
-      {/* El visual va arriba del número clave. Mismo zoom contenido del 3% que
-          las tarjetas de Soluciones, anulado con reduced motion. */}
-      <div className="relative mt-4 aspect-video overflow-hidden rounded-xl bg-white/[0.03]">
-        <Image
-          src={caseImageSrc(item.id)}
-          alt=""
-          fill
-          sizes="(min-width: 1024px) 420px, (min-width: 768px) 45vw, 100vw"
-          className="object-cover transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100"
-        />
-      </div>
+      <span className="mt-6 font-sans text-[56px] font-bold leading-none tabular-nums text-accent lg:text-[72px]">
+        {item.metricHighlight}
+      </span>
+      <span className="mt-3 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--text-muted-v2)]">
+        {item.metricLabel}
+      </span>
 
-      <div className="flex flex-col items-center gap-1 py-7 text-center">
-        <span
-          className={`font-sans font-semibold leading-none tracking-tight ${metric.colorClass} ${metric.sizeClass}`}
+      <div className="my-6 h-px w-full bg-white/8" />
+
+      <h3 className="font-sans text-[20px] font-medium text-foreground lg:text-[24px]">
+        {item.title}
+      </h3>
+      <p className="mt-3 line-clamp-3 text-[15px] leading-relaxed text-[var(--text-secondary-v2)]">
+        {item.challenge}
+      </p>
+
+      {/* El enlace se renderiza en las doce tarjetas y sólo se oculta con
+          opacidad: si no está en el DOM, el rastreador no ve la ficha. Al
+          recibir foco, su tarjeta se trae al centro y se hace visible. */}
+      <div className="mt-auto flex justify-end pt-6">
+        <Link
+          href={href}
+          onClick={(event) => event.stopPropagation()}
+          onFocus={() => onFocusCard(index)}
+          style={deckTransition(animated)}
+          className={`inline-flex items-center gap-1.5 text-[13px] text-[var(--text-secondary-v2)] outline-none transition-opacity hover:text-foreground focus-visible:ring-2 focus-visible:ring-[var(--accent)] ${
+            isActive ? "opacity-100" : "pointer-events-none opacity-0"
+          }`}
         >
-          {item.metricHighlight}
-        </span>
-        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--text-muted-v2)]">
-          {item.metricLabel}
-        </span>
+          Ver caso
+          <ArrowRightIcon size={14} weight="bold" aria-hidden />
+        </Link>
       </div>
-
-      <div className="border-t border-[var(--border-v2)]" />
-
-      {/* Título + una frase. El reto completo, el enfoque, el resultado y las
-          etiquetas viven en /casos/[id]. */}
-      <div className="flex flex-1 flex-col gap-2 pt-4">
-        <h3 className="font-sans text-xl font-semibold text-foreground">{item.title}</h3>
-        <p className="line-clamp-2 text-sm leading-relaxed text-[var(--text-secondary-v2)]">
-          {item.challenge}
-        </p>
-      </div>
-    </Link>
+    </article>
   );
 }

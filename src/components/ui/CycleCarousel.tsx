@@ -378,34 +378,35 @@ function CycleArrow({
 }
 
 /**
- * Render del robot de la etapa. Mientras `public/ciclo/` no exista, cae al
- * número gigante en vez de dejar un hueco roto.
+ * Render del robot de la etapa, con el número gigante como reserva mientras
+ * `public/ciclo/` siga vacío.
+ *
+ * La reserva está SIEMPRE en el DOM y el fallo sólo apaga la imagen. Antes eran
+ * dos árboles distintos y `onError` cambiaba de uno a otro: como las cinco
+ * imágenes dan 404, el cambio caía en mitad de la hidratación y descuadraba el
+ * subárbol del Ciclo, que React denunciaba en el nodo vecino que le tocara
+ * —normalmente el botón «Etapa anterior», por su atributo `disabled`—. Con una
+ * sola forma de DOM, `failed` sólo alterna una clase y no hay nada que
+ * descuadrar.
  */
 function StageImage({ stage }: { stage: ExecutionStage }) {
   const [failed, setFailed] = useState(false);
 
-  if (failed) {
-    return (
-      <div className="relative flex aspect-video items-center justify-center overflow-hidden rounded-xl border border-[var(--border-v2)] bg-white/[0.02] md:aspect-[4/3]">
-        <span
-          aria-hidden
-          className="select-none font-sans text-[72px] font-semibold leading-none text-white/5"
-        >
-          {stage.number}
-        </span>
-      </div>
-    );
-  }
-
   return (
-    <div className="relative aspect-video overflow-hidden rounded-xl bg-white/[0.03] md:aspect-[4/3]">
+    <div className="relative flex aspect-video items-center justify-center overflow-hidden rounded-xl border border-[var(--border-v2)] bg-white/[0.02] md:aspect-[4/3]">
+      <span
+        aria-hidden
+        className="select-none font-sans text-[72px] font-semibold leading-none text-white/5"
+      >
+        {stage.number}
+      </span>
       <Image
         src={cycleImageSrc(stage.id)}
         alt=""
         fill
         sizes="(min-width: 1024px) 420px, 100vw"
-        className="object-cover"
         onError={() => setFailed(true)}
+        className={`object-cover ${failed ? "opacity-0" : "opacity-100"}`}
       />
     </div>
   );
