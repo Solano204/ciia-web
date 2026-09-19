@@ -1,11 +1,25 @@
 import type { Metadata } from "next";
-import { GeistSans } from "geist/font/sans";
+import localFont from "next/font/local";
 import { GeistMono } from "geist/font/mono";
 import "./globals.css";
 import { SmoothScrollProvider } from "@/components/providers/SmoothScrollProvider";
 import { SplashCursorMount } from "@/components/providers/SplashCursorMount";
 import { BeamsGlobalMount } from "@/components/providers/BeamsGlobalMount";
 import { SITE_URL } from "@/lib/ciiia";
+
+const clashDisplay = localFont({
+  src: "../fonts/ClashDisplay-Variable.woff2",
+  variable: "--font-clash",
+  weight: "200 700",
+  display: "swap",
+});
+
+const satoshi = localFont({
+  src: "../fonts/Satoshi-Variable.woff2",
+  variable: "--font-satoshi",
+  weight: "300 900",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "CII.IA | De la idea a la operación",
@@ -20,7 +34,7 @@ export default function RootLayout({
   return (
     <html
       lang="es-MX"
-      className={`${GeistSans.variable} ${GeistMono.variable} h-full antialiased`}
+      className={`${clashDisplay.variable} ${satoshi.variable} ${GeistMono.variable} h-full antialiased`}
     >
       <body className="relative min-h-full bg-background text-foreground grain">
         <BeamsGlobalMount />

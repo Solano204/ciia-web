@@ -108,10 +108,10 @@ export function Challenge() {
         >
           <EyebrowBadge>CII.IA // EL RETO</EyebrowBadge>
           <div className="flex flex-wrap items-end gap-5">
-            <span className="font-sans font-semibold leading-none tracking-tighter text-accent text-[clamp(4rem,10vw,9rem)]">
+            <span className="font-display font-semibold leading-none text-accent text-[clamp(4rem,10vw,9rem)]">
               {FOUNDING_METRIC.value}
             </span>
-            <span className="max-w-[24ch] pb-2 font-mono text-xs uppercase leading-snug tracking-[0.08em] text-zinc-400 md:text-sm">
+            <span className="max-w-[24ch] pb-2 font-sans text-xs uppercase leading-snug tracking-[0.08em] text-zinc-400 md:text-sm">
               {FOUNDING_METRIC.label}
             </span>
           </div>
@@ -144,7 +144,7 @@ export function Challenge() {
                 style={{ width: `${Math.round(loadProgress * 100)}%` }}
               />
             </div>
-            <p className="font-mono text-[12px] uppercase tracking-[0.08em] text-muted">
+            <p className="font-sans text-[12px] uppercase tracking-[0.08em] text-muted">
               Cargando CII.IA &nbsp;&middot;&nbsp; {Math.round(loadProgress * 100)}%
             </p>
           </div>

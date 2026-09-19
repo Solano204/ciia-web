@@ -54,7 +54,7 @@ function PartnerTile({ partner }: TileProps) {
   const inner = logo ? (
     <LogoCrop logo={logo} name={partner.name} onError={() => setLogoFailed(true)} />
   ) : (
-    <span className="line-clamp-2 px-3 text-center font-mono text-[12px] uppercase leading-tight tracking-wide text-zinc-700">
+    <span className="line-clamp-2 px-3 text-center font-sans text-[12px] uppercase leading-tight tracking-wide text-zinc-700">
       {partner.name}
     </span>
   );
@@ -84,7 +84,7 @@ function PartnerTile({ partner }: TileProps) {
         {partner.note ? (
           <span
             className={[
-              "block truncate font-mono text-[12px] leading-4 text-muted opacity-0",
+              "block truncate font-sans text-[12px] leading-4 text-muted opacity-0",
               "transition-opacity duration-300 motion-reduce:transition-none",
               "group-hover/cell:opacity-100 group-focus-within/cell:opacity-100",
             ].join(" ")}
@@ -354,7 +354,7 @@ function FilterPill({ label, isActive, onSelect }: FilterPillProps) {
       onClick={onSelect}
       data-fx="eco-pill"
       className={[
-        "shrink-0 rounded-full border px-4 py-1.5 font-mono text-[12px] uppercase tracking-wide",
+        "shrink-0 rounded-full border px-4 py-1.5 font-sans text-[12px] uppercase tracking-wide",
         "transition-colors duration-200 motion-reduce:transition-none",
         "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",
         isActive

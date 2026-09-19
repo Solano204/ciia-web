@@ -55,7 +55,7 @@ function CtaAnchor({ href, className, children }: CtaProps) {
 }
 
 const BASE =
-  "inline-flex items-center gap-2 rounded-full font-mono text-[12px] font-semibold uppercase tracking-[0.08em] outline-none transition-[background-color,color,filter] duration-200 motion-reduce:transition-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background";
+  "inline-flex items-center gap-2 rounded-full font-sans text-[12px] font-semibold uppercase tracking-[0.08em] outline-none transition-[background-color,color,filter] duration-200 motion-reduce:transition-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background";
 
 /**
  * CTA principal: botón dorado. El texto va en el color de fondo del sitio

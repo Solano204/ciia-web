@@ -47,7 +47,7 @@ export function Contact() {
             <EyebrowBadge>CII.IA // CONTACTO</EyebrowBadge>
           </AnimatedItem>
           <AnimatedItem className="md:col-span-6">
-            <h2 className="mt-4 font-sans text-4xl font-semibold tracking-tighter text-foreground md:text-5xl">
+            <h2 className="mt-4 font-display text-4xl font-semibold text-foreground md:text-5xl">
               Contacto
             </h2>
           </AnimatedItem>
@@ -104,7 +104,7 @@ export function Contact() {
               <div>
                 <button
                   type="submit"
-                  className="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 font-mono text-[12px] font-semibold uppercase tracking-[0.08em] text-background outline-none transition-[filter] duration-200 motion-reduce:transition-none hover:brightness-110 focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                  className="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 font-sans text-[12px] font-semibold uppercase tracking-[0.08em] text-background outline-none transition-[filter] duration-200 motion-reduce:transition-none hover:brightness-110 focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 >
                   Preparar correo
                 </button>
@@ -130,7 +130,7 @@ export function Contact() {
                 botón que no lleva a ninguna parte. Ver SCHEDULING_URL. */}
             {SCHEDULING_URL && (
               <div className="mb-8 rounded-xl border border-white/10 bg-white/[0.03] p-5">
-                <h3 className="font-sans text-lg font-semibold text-foreground">
+                <h3 className="font-display text-lg font-semibold text-foreground">
                   ¿Prefieres una reunión?
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">
@@ -142,10 +142,10 @@ export function Contact() {
               </div>
             )}
 
-            <h3 className="font-sans text-lg font-semibold text-foreground">Contacto directo</h3>
+            <h3 className="font-display text-lg font-semibold text-foreground">Contacto directo</h3>
             <dl className="mt-5 flex flex-col divide-y divide-white/8 border-y border-white/8">
               <div className="py-4">
-                <dt className="font-mono text-[12px] uppercase tracking-[0.08em] text-muted">
+                <dt className="font-sans text-[12px] uppercase tracking-[0.08em] text-muted">
                   Correo
                 </dt>
                 <dd className="mt-1">
@@ -158,7 +158,7 @@ export function Contact() {
                 </dd>
               </div>
               <div className="py-4">
-                <dt className="font-mono text-[12px] uppercase tracking-[0.08em] text-muted">
+                <dt className="font-sans text-[12px] uppercase tracking-[0.08em] text-muted">
                   Teléfono
                 </dt>
                 <dd className="mt-1">
@@ -171,7 +171,7 @@ export function Contact() {
                 </dd>
               </div>
               <div className="py-4">
-                <dt className="font-mono text-[12px] uppercase tracking-[0.08em] text-muted">
+                <dt className="font-sans text-[12px] uppercase tracking-[0.08em] text-muted">
                   Sede
                 </dt>
                 <dd className="mt-1 text-sm leading-snug text-foreground">
@@ -179,7 +179,7 @@ export function Contact() {
                 </dd>
               </div>
               <div className="py-4">
-                <dt className="font-mono text-[12px] uppercase tracking-[0.08em] text-muted">
+                <dt className="font-sans text-[12px] uppercase tracking-[0.08em] text-muted">
                   Redes
                 </dt>
                 <dd className="mt-2 flex flex-wrap gap-x-5 gap-y-2">

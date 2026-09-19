@@ -89,7 +89,7 @@ export function Hero() {
           style={{ transition: "opacity 80ms linear" }}
         >
           <EyebrowBadge>{MANIFESTO.eyebrow}</EyebrowBadge>
-          <h1 className="max-w-[16ch] font-sans text-5xl font-semibold leading-[0.95] tracking-tighter text-foreground md:text-7xl lg:text-8xl">
+          <h1 className="max-w-[16ch] font-display text-5xl font-semibold leading-[0.95] text-foreground md:text-7xl lg:text-8xl">
             {MANIFESTO.problem[0]}
             <br />
             <span className="text-accent">{MANIFESTO.problem[1]}</span>
@@ -109,11 +109,11 @@ export function Hero() {
           className="pointer-events-none absolute bottom-24 left-6 z-10 hidden max-w-[58%] flex-col gap-5 md:flex md:bottom-28 md:left-12"
           style={{ opacity: 0, transition: "opacity 80ms linear" }}
         >
-          <span className="inline-flex items-center gap-2.5 font-mono text-[12px] uppercase tracking-[0.08em] text-accent">
+          <span className="inline-flex items-center gap-2.5 font-sans text-[12px] uppercase tracking-[0.08em] text-accent">
             <span aria-hidden className="inline-block h-1.5 w-1.5 rounded-full bg-accent shadow-[0_0_10px_rgba(212,162,47,0.85)]" />
             PIIT &middot; Nuevo Le&oacute;n
           </span>
-          <h2 className="font-sans font-semibold leading-[0.88] tracking-tighter text-foreground text-[clamp(4rem,9.5vw,9rem)]">
+          <h2 className="font-display font-semibold leading-[0.88] text-foreground text-[clamp(4rem,9.5vw,9rem)]">
             De la idea
             <br />
             a la <span className="text-accent">operaci&oacute;n</span>.
@@ -126,13 +126,13 @@ export function Hero() {
 
         <div className="pointer-events-none absolute left-6 top-20 z-10 flex items-center gap-2 md:left-10 md:top-24">
           <div className="h-px w-8 bg-accent/60" />
-          <span className="font-mono text-[12px] uppercase tracking-[0.08em] text-zinc-400">
+          <span className="font-sans text-[12px] uppercase tracking-[0.08em] text-zinc-400">
             CII.IA &mdash; En vivo
           </span>
         </div>
 
         <div className="pointer-events-none absolute right-6 top-20 z-10 flex items-center gap-3 md:right-10 md:top-24">
-          <span className="font-mono text-[12px] uppercase tracking-[0.08em] text-zinc-400">
+          <span className="font-sans text-[12px] uppercase tracking-[0.08em] text-zinc-400">
             {INSTITUTIONAL_METRICS[2].label}
           </span>
           <span className="font-mono text-[12px] uppercase tracking-[0.08em] text-accent">
@@ -179,7 +179,7 @@ export function Hero() {
                 </blockquote>
                 <figcaption className="mt-4 flex items-center justify-between">
                   <span className="font-sans text-sm text-zinc-300">{d.speaker}</span>
-                  <span className="font-mono text-[12px] uppercase tracking-[0.08em] text-accent">
+                  <span className="font-sans text-[12px] uppercase tracking-[0.08em] text-accent">
                     {d.source}
                   </span>
                 </figcaption>
@@ -207,7 +207,7 @@ export function Hero() {
                   <span className="font-sans text-xs text-zinc-300">
                     {d.speaker}
                   </span>
-                  <span className="font-mono text-[12px] uppercase tracking-[0.08em] text-accent">
+                  <span className="font-sans text-[12px] uppercase tracking-[0.08em] text-accent">
                     {d.source}
                   </span>
                 </figcaption>

@@ -37,12 +37,21 @@ Una sola escala neutra (zinc) para superficies y texto; sustituye a las dos esca
 - Los estados de interacción (hover, presionado, deshabilitado) se definen con los componentes en la Fase 1B.
 
 ## Tipografía — PROVISIONAL
-- **Display:** Clash Display. **Texto:** Satoshi. Ambas de Fontshare, servidas con `next/font/local`.
-- **Mono:** solo para números y datos. Nunca en etiquetas largas ni en mayúsculas espaciadas.
-- **Verificar la licencia de Fontshare antes de publicar.**
-- Hasta la Fase 1 el sitio usa Geist (paquete local `geist`), sin cambio visual.
-- Escala: display, H2, cuerpo y dato. Tamaños por definir en la Fase 1.
-- Máximo 2 familias. Un H1 por página.
+- **Display:** Clash Display (`font-display`; h1, h2 y h3 por defecto, y cifras grandes). **Texto y etiquetas:** Satoshi (`font-sans`). Ambas de Fontshare, servidas con `next/font/local` desde `src/fonts/`. **PROVISIONAL** hasta que el cliente elija (comparativa en `/lab/tipografia`, solo en desarrollo).
+- **Mono:** Geist Mono (`font-mono`) solo para cifras y datos: precios, contadores, números de paso y porcentajes. Las etiquetas van en Satoshi.
+- Máximo 2 familias de texto, más la mono de datos. Un H1 por página.
+- Etiquetas: 12 px mínimo y tracking ≤ 0.08em.
+- Escala en tokens `--text-*`. Se aplica a los componentes en la Fase 1B:
+
+| Token | Valor | Interlineado |
+|---|---|---|
+| `display` | `clamp(3rem, 7vw, 6.5rem)` | 0.95 |
+| `h2` | `clamp(2rem, 4vw, 3.5rem)` | 1.05 |
+| `h3` | `1.5rem` | 1.3 |
+| `body` | `1rem` | 1.6 |
+| `small` | `0.8125rem` | 1.5 |
+
+- Licencia: ITF Free Font License 2.0 (Fontshare). Permite uso comercial y web con `@font-face` autoalojado. Prohíbe modificar los archivos (incluye subsetting y convertir formato) y redistribuirlos, también en repositorios públicos: las `.woff2` no se versionan mientras el repo sea público.
 
 ## Sin cajas
 Se separa con espacio, líneas finas e imágenes a sangre.

@@ -51,7 +51,7 @@ export function Ecosystem() {
               <div className="mt-5 grid gap-5 lg:grid-cols-12 lg:items-end">
                 <span className="block overflow-hidden pb-[0.08em] lg:col-span-6">
                   <h2
-                    className="font-sans text-[clamp(38px,5vw,52px)] font-medium leading-[1.05] text-foreground"
+                    className="font-display text-[clamp(38px,5vw,52px)] font-medium leading-[1.05] text-foreground"
                     data-fx="eco-title"
                   >
                     Ecosistema

@@ -128,7 +128,7 @@ export function CycleCarousel({
       <div className="grid gap-6 md:grid-cols-12">
         <div className="md:col-span-12">{eyebrow}</div>
         <div className="md:col-span-6">
-          <h2 className="mt-4 font-sans text-4xl font-semibold tracking-tighter text-foreground md:text-5xl">
+          <h2 className="mt-4 font-display text-4xl font-semibold text-foreground md:text-5xl">
             {title}
           </h2>
         </div>
@@ -197,7 +197,7 @@ export function CycleCarousel({
                     </span>
                     <span
                       className={[
-                        "whitespace-nowrap font-mono text-xs uppercase tracking-[0.08em]",
+                        "whitespace-nowrap font-sans text-xs uppercase tracking-[0.08em]",
                         "transition-colors duration-200 motion-reduce:transition-none",
                         isActive
                           ? "text-foreground"
@@ -269,11 +269,11 @@ export function CycleCarousel({
               </div>
 
               <div className="flex flex-col gap-5 md:col-span-7">
-                <span className="font-mono text-[12px] uppercase tracking-[0.08em] text-muted">
+                <span className="font-sans text-[12px] uppercase tracking-[0.08em] text-muted">
                   {activeStage.focus}
                 </span>
 
-                <h3 className="font-sans text-3xl font-semibold uppercase leading-[0.95] tracking-tight text-foreground lg:text-[44px]">
+                <h3 className="font-display text-3xl font-semibold uppercase leading-[0.95] text-foreground lg:text-[44px]">
                   {activeStage.name}
                 </h3>
 
@@ -285,7 +285,7 @@ export function CycleCarousel({
 
                 <dl className="grid gap-5 sm:grid-cols-2">
                   <div>
-                    <dt className="font-mono text-[12px] uppercase tracking-[0.08em] text-muted">
+                    <dt className="font-sans text-[12px] uppercase tracking-[0.08em] text-muted">
                       Entregable
                     </dt>
                     <dd className="mt-2 text-[15px] leading-relaxed text-foreground">
@@ -293,7 +293,7 @@ export function CycleCarousel({
                     </dd>
                   </div>
                   <div>
-                    <dt className="font-mono text-[12px] uppercase tracking-[0.08em] text-muted">
+                    <dt className="font-sans text-[12px] uppercase tracking-[0.08em] text-muted">
                       Productos
                     </dt>
                     <dd className="mt-2 flex flex-wrap gap-2">
@@ -309,7 +309,7 @@ export function CycleCarousel({
                   </div>
                   {relatedServices.length > 0 && (
                     <div className="sm:col-span-2">
-                      <dt className="font-mono text-[12px] uppercase tracking-[0.08em] text-muted">
+                      <dt className="font-sans text-[12px] uppercase tracking-[0.08em] text-muted">
                         Soluciones que intervienen
                       </dt>
                       <dd className="mt-2 flex flex-wrap gap-x-5 gap-y-1.5">
@@ -396,7 +396,7 @@ function StageImage({ stage }: { stage: ExecutionStage }) {
     <div className="relative flex aspect-video items-center justify-center overflow-hidden rounded-xl border border-[var(--line)] bg-white/[0.02] md:aspect-[4/3]">
       <span
         aria-hidden
-        className="select-none font-sans text-[72px] font-semibold leading-none text-white/5"
+        className="select-none font-display text-[72px] font-semibold leading-none text-white/5"
       >
         {stage.number}
       </span>

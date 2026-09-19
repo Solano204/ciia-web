@@ -132,7 +132,7 @@ function PartnerTile({ partner, isActive, onActivate }: PartnerTileProps) {
 
   const content = logoFailed ? (
     <span
-      className={`font-mono text-sm uppercase tracking-[0.08em] ${onLight ? "text-zinc-600" : "text-zinc-400"}`}
+      className={`font-sans text-sm uppercase tracking-[0.08em] ${onLight ? "text-zinc-600" : "text-zinc-400"}`}
     >
       {initialsOf(partner.name)}
     </span>
@@ -214,7 +214,7 @@ function FoundingPartners() {
           as="h3"
           text={ABOUT_DATA.foundingPartnersTitle}
           delay={70}
-          className="font-sans text-[30px] font-medium leading-tight text-foreground"
+          className="font-display text-[30px] font-medium leading-tight text-foreground"
         />
         <AnimatedItem>
           <p className="mt-5 max-w-[340px] text-[15px] leading-relaxed text-zinc-400">
@@ -316,7 +316,7 @@ function WorkPrincipleLine({ principle, index }: { principle: WorkPrinciple; ind
         </span>
 
         <span
-          className={`font-sans text-[clamp(26px,4.2vw,48px)] font-bold uppercase leading-[1.05] tracking-tight ${
+          className={`font-display text-[clamp(26px,4.2vw,48px)] font-bold uppercase leading-[1.05] ${
             principle.highlighted ? "text-accent" : "text-foreground"
           }`}
         >
@@ -359,7 +359,7 @@ function WorkPrinciples() {
         </span>
         <span className="mt-5 block overflow-hidden pb-[0.08em]">
           <h3
-            className="font-sans text-[36px] font-medium leading-tight text-foreground"
+            className="font-display text-[36px] font-medium leading-tight text-foreground"
             data-fx="principles-title"
           >
             {ABOUT_DATA.principlesTitle}
@@ -594,7 +594,7 @@ export function About() {
             </AnimatedItem>
 
             <AnimatedItem className="order-2 lg:mt-8">
-              <h2 className="font-sans text-[40px] font-bold leading-[1.05] tracking-tight text-foreground lg:text-[56px]">
+              <h2 className="font-display text-[40px] font-bold leading-[1.05] text-foreground lg:text-[56px]">
                 {ABOUT_DATA.headlineLines.map((line, index) => (
                   <BlurText
                     key={line}
@@ -615,7 +615,7 @@ export function About() {
                   value={ABOUT_DATA.highlightValue}
                   animate
                   fx="highlight-value"
-                  className="block font-sans text-[clamp(72px,8vw,112px)] font-bold leading-none tracking-tight text-accent tabular-nums"
+                  className="block font-display text-[clamp(72px,8vw,112px)] font-bold leading-none text-accent tabular-nums"
                 />
               </span>
               <p
@@ -682,11 +682,11 @@ export function About() {
                     value={stat.value}
                     animate={!stat.isDate}
                     fx="stat-value"
-                    className="block font-sans text-[44px] font-medium leading-none tracking-tight text-foreground tabular-nums"
+                    className="block font-display text-[44px] font-medium leading-none text-foreground tabular-nums"
                   />
                 </span>
                 <span
-                  className="mt-3 block font-mono text-[12px] uppercase leading-relaxed tracking-[0.08em] text-muted"
+                  className="mt-3 block font-sans text-[12px] uppercase leading-relaxed tracking-[0.08em] text-muted"
                   data-fx="stat-label"
                 >
                   {stat.label}

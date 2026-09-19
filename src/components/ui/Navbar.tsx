@@ -36,7 +36,7 @@ export function Navbar() {
       <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-4 px-6 py-4 md:px-8 md:py-5">
         <Link
           href="/"
-          className="flex shrink-0 items-center gap-2.5 font-mono text-[12px] font-semibold uppercase tracking-[0.08em] text-foreground"
+          className="flex shrink-0 items-center gap-2.5 font-sans text-[12px] font-semibold uppercase tracking-[0.08em] text-foreground"
         >
           <span
             aria-hidden
@@ -51,7 +51,7 @@ export function Navbar() {
               key={href}
               href={href}
               onClick={(event) => handleAnchorClick(event, href)}
-              className="font-mono text-[12px] uppercase tracking-[0.08em] text-zinc-400 transition-colors hover:text-foreground"
+              className="font-sans text-[12px] uppercase tracking-[0.08em] text-zinc-400 transition-colors hover:text-foreground"
             >
               {label}
             </a>

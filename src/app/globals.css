@@ -38,17 +38,38 @@
   --color-muted: var(--muted);
   --color-accent: var(--accent);
   --color-accent-soft: var(--accent-soft);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-satoshi);
+  --font-display: var(--font-clash);
   --font-mono: var(--font-geist-mono);
 
   --color-on-accent: var(--on-accent);
+
+  /* Escala tipográfica (ver DESIGN.md). */
+  --text-display: clamp(3rem, 7vw, 6.5rem);
+  --text-display--line-height: 0.95;
+  --text-h2: clamp(2rem, 4vw, 3.5rem);
+  --text-h2--line-height: 1.05;
+  --text-h3: 1.5rem;
+  --text-h3--line-height: 1.3;
+  --text-body: 1rem;
+  --text-body--line-height: 1.6;
+  --text-small: 0.8125rem;
+  --text-small--line-height: 1.5;
+}
+
+@layer base {
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-clash), system-ui, sans-serif;
+  }
 }
 
 html,
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--font-satoshi), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

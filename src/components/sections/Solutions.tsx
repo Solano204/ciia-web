@@ -15,7 +15,7 @@ export function Solutions() {
               <EyebrowBadge tone="muted-v2">CII.IA // SOLUCIONES</EyebrowBadge>
             </AnimatedItem>
             <AnimatedItem className="md:col-span-6">
-              <h2 className="mt-4 font-sans text-4xl font-semibold tracking-tighter text-foreground md:text-5xl">
+              <h2 className="mt-4 font-display text-4xl font-semibold text-foreground md:text-5xl">
                 Soluciones
               </h2>
             </AnimatedItem>

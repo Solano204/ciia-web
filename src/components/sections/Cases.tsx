@@ -31,7 +31,7 @@ export function Cases() {
               <EyebrowBadge tone="muted-v2">CII.IA // CASOS</EyebrowBadge>
             </AnimatedItem>
             <AnimatedItem className="md:col-span-6">
-              <h2 className="mt-4 font-sans text-4xl font-semibold tracking-tighter text-foreground md:text-5xl">
+              <h2 className="mt-4 font-display text-4xl font-semibold text-foreground md:text-5xl">
                 Casos
               </h2>
             </AnimatedItem>
@@ -48,7 +48,7 @@ export function Cases() {
           </AnimatedItem>
 
           {filtered.length === 0 ? (
-            <p className="font-mono text-sm text-muted">
+            <p className="font-sans text-sm text-muted">
               Ningún caso coincide con esa combinación de filtros.
             </p>
           ) : (
