@@ -4,15 +4,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { CtaButton } from "@/components/ui/Cta";
+import { MobileMenu } from "@/components/ui/MobileMenu";
+import { linkState } from "@/lib/nav";
 import { CTA_COPY, NAV_LINKS, schedulingHref } from "@/lib/ciiia";
-
-type LinkState = "page" | "section" | null;
-
-// Las fichas (/casos/caso-01) marcan como activa la sección a la que pertenecen.
-function linkState(pathname: string, href: string): LinkState {
-  if (pathname === href) return "page";
-  return pathname.startsWith(`${href}/`) ? "section" : null;
-}
 
 export function Navbar() {
   const pathname = usePathname();
@@ -68,12 +62,15 @@ export function Navbar() {
 
         {/* CTA fijo. En móvil se recorta a «Agenda» para no empujar la marca
             fuera de pantalla; el nombre completo queda para lectores. */}
-        <CtaButton href={schedulingHref()} className="shrink-0 max-sm:px-4">
-          <span aria-hidden className="sm:hidden">
-            Agenda
-          </span>
-          <span className="max-sm:sr-only">{CTA_COPY.agenda}</span>
-        </CtaButton>
+        <div className="flex shrink-0 items-center gap-3">
+          <CtaButton href={schedulingHref()} className="shrink-0 max-sm:px-4">
+            <span aria-hidden className="sm:hidden">
+              Agenda
+            </span>
+            <span className="max-sm:sr-only">{CTA_COPY.agenda}</span>
+          </CtaButton>
+          <MobileMenu links={NAV_LINKS} />
+        </div>
       </div>
     </header>
   );
