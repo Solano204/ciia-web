@@ -51,7 +51,7 @@ Se separa con espacio, líneas finas e imágenes a sangre.
 - Robot: protagonista de todas las imágenes (`design/PROMPTS-ROBOT.md`).
 
 ## Motion
-Sutil. Máximo 1 efecto de impacto por página. Se queda el cursor de fluido, recoloreado a un dorado oscuro y tenue (`COLOR="#7A5C1A"`, a afinar con el cliente; alternativa más suave: `#5C4514`). Solo cambia el color, no su intensidad de simulación.
+Sutil. Máximo 1 efecto de impacto por página. Se queda el cursor de fluido, recoloreado a un dorado oscuro y tenue (`COLOR="#5C4514"`, a afinar con el cliente; el primer intento, `#7A5C1A`, salía más luminoso que el azul original). Solo cambia el color, no su intensidad de simulación.
 
 Tokens iniciales, ajustables solo desde este archivo:
 ```css
