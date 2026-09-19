@@ -133,7 +133,7 @@ export function CycleCarousel({
           </h2>
         </div>
         <div className="md:col-span-5 md:col-start-8 md:self-end">
-          <p className="text-base leading-relaxed text-[var(--text-secondary-v2)]">
+          <p className="text-base leading-relaxed text-[var(--text-secondary)]">
             {description}
           </p>
         </div>
@@ -149,11 +149,11 @@ export function CycleCarousel({
           <div className="relative min-w-0">
             <span
               aria-hidden
-              className="absolute left-[17px] top-6 bottom-6 hidden w-px bg-[var(--border-v2)] lg:block"
+              className="absolute left-[17px] top-6 bottom-6 hidden w-px bg-[var(--line)] lg:block"
             />
             <span
               aria-hidden
-              className="absolute left-[17px] top-6 hidden w-px origin-top bg-accent-v2 transition-[height] duration-300 ease-out motion-reduce:transition-none lg:block"
+              className="absolute left-[17px] top-6 hidden w-px origin-top bg-accent transition-[height] duration-300 ease-out motion-reduce:transition-none lg:block"
               style={{ height: `calc((100% - 48px) * ${railRatio})` }}
             />
 
@@ -180,17 +180,17 @@ export function CycleCarousel({
                     aria-controls={`ciclo-panel-${stage.id}`}
                     tabIndex={isActive ? 0 : -1}
                     onClick={() => goTo(index)}
-                    className="group relative z-10 flex shrink-0 items-center gap-3 rounded-full px-1 py-1 text-left outline-none focus-visible:ring-2 focus-visible:ring-accent-light-v2 lg:rounded-none lg:py-2.5"
+                    className="group relative z-10 flex shrink-0 items-center gap-3 rounded-full px-1 py-1 text-left outline-none focus-visible:ring-2 focus-visible:ring-accent lg:rounded-none lg:py-2.5"
                   >
                     <span
                       className={[
                         "flex h-9 w-9 shrink-0 items-center justify-center rounded-full border font-mono text-xs",
                         "transition-colors duration-300 motion-reduce:transition-none",
                         isActive
-                          ? "border-accent-v2 bg-accent-soft-v2 text-accent-bright-v2"
+                          ? "border-accent bg-accent-soft text-accent"
                           : isDone
-                            ? "border-accent-v2 bg-accent-v2 text-white"
-                            : "border-[var(--border-strong-v2)] bg-white/[0.04] text-[var(--text-muted-v2)]",
+                            ? "border-accent bg-accent text-on-accent"
+                            : "border-[var(--line-strong)] bg-white/[0.04] text-muted",
                       ].join(" ")}
                     >
                       {stage.number}
@@ -201,7 +201,7 @@ export function CycleCarousel({
                         "transition-colors duration-200 motion-reduce:transition-none",
                         isActive
                           ? "text-foreground"
-                          : "text-[var(--text-muted-v2)] group-hover:text-[var(--text-secondary-v2)]",
+                          : "text-muted group-hover:text-[var(--text-secondary)]",
                       ].join(" ")}
                     >
                       {stage.name}
@@ -232,7 +232,7 @@ export function CycleCarousel({
 
             <p className="font-mono text-xs" aria-live="polite">
               <span className="text-foreground">{activeStage.number}</span>
-              <span className="text-[var(--text-muted-v2)]"> / {totalLabel}</span>
+              <span className="text-muted"> / {totalLabel}</span>
             </p>
           </div>
         </div>
@@ -260,7 +260,7 @@ export function CycleCarousel({
               // El alto mínimo iguala al de la etapa más larga (DISEÑAR): sin
               // él la tarjeta oscilaba unos 58px al cambiar y arrastraba todo
               // lo que viene debajo.
-              className="glass-2-v2 relative grid cursor-pointer gap-6 overflow-hidden p-6 outline-none focus-visible:ring-2 focus-visible:ring-accent-light-v2 md:grid-cols-12 md:gap-8 lg:min-h-[512px] lg:p-8"
+              className="glass-2-v2 relative grid cursor-pointer gap-6 overflow-hidden p-6 outline-none focus-visible:ring-2 focus-visible:ring-accent md:grid-cols-12 md:gap-8 lg:min-h-[512px] lg:p-8"
             >
               {/* La imagen va al costado desde tablet: apilada encima hacía la
                   tarjeta casi el doble de alta de lo que pide su contenido. */}
@@ -269,7 +269,7 @@ export function CycleCarousel({
               </div>
 
               <div className="flex flex-col gap-5 md:col-span-7">
-                <span className="font-mono text-[11px] uppercase tracking-[0.24em] text-[var(--text-muted-v2)]">
+                <span className="font-mono text-[11px] uppercase tracking-[0.24em] text-muted">
                   {activeStage.focus}
                 </span>
 
@@ -277,15 +277,15 @@ export function CycleCarousel({
                   {activeStage.name}
                 </h3>
 
-                <p className="max-w-[60ch] text-[15px] leading-relaxed text-[var(--text-secondary-v2)]">
+                <p className="max-w-[60ch] text-[15px] leading-relaxed text-[var(--text-secondary)]">
                   {activeStage.description}
                 </p>
 
-                <div className="border-t border-[var(--border-v2)]" />
+                <div className="border-t border-[var(--line)]" />
 
                 <dl className="grid gap-5 sm:grid-cols-2">
                   <div>
-                    <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--text-muted-v2)]">
+                    <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
                       Entregable
                     </dt>
                     <dd className="mt-2 text-[15px] leading-relaxed text-foreground">
@@ -293,14 +293,14 @@ export function CycleCarousel({
                     </dd>
                   </div>
                   <div>
-                    <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--text-muted-v2)]">
+                    <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
                       Productos
                     </dt>
                     <dd className="mt-2 flex flex-wrap gap-2">
                       {activeStage.products.map((product) => (
                         <span
                           key={product}
-                          className="rounded-full border border-[var(--border-v2)] bg-white/[0.04] px-2.5 py-1 text-xs text-[var(--text-secondary-v2)]"
+                          className="rounded-full border border-[var(--line)] bg-white/[0.04] px-2.5 py-1 text-xs text-[var(--text-secondary)]"
                         >
                           {product}
                         </span>
@@ -309,7 +309,7 @@ export function CycleCarousel({
                   </div>
                   {relatedServices.length > 0 && (
                     <div className="sm:col-span-2">
-                      <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--text-muted-v2)]">
+                      <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
                         Soluciones que intervienen
                       </dt>
                       <dd className="mt-2 flex flex-wrap gap-x-5 gap-y-1.5">
@@ -317,7 +317,7 @@ export function CycleCarousel({
                           <Link
                             key={service.id}
                             href={`/soluciones/${service.id}`}
-                            className="text-sm text-foreground underline decoration-white/20 underline-offset-4 transition-colors motion-reduce:transition-none hover:text-accent-light-v2 hover:decoration-accent-light-v2"
+                            className="text-sm text-foreground underline decoration-white/20 underline-offset-4 transition-colors motion-reduce:transition-none hover:text-accent hover:decoration-accent"
                           >
                             {service.title}
                           </Link>
@@ -334,13 +334,13 @@ export function CycleCarousel({
                 </div>
 
                 <div className="flex items-center gap-3 pt-4">
-                  <div className="h-0.5 flex-1 bg-[var(--border-v2)]">
+                  <div className="h-0.5 flex-1 bg-[var(--line)]">
                     <div
-                      className="h-full bg-accent-v2 transition-[width] duration-300 ease-out motion-reduce:transition-none"
+                      className="h-full bg-accent transition-[width] duration-300 ease-out motion-reduce:transition-none"
                       style={{ width: `${progress}%` }}
                     />
                   </div>
-                  <span className="font-mono text-[11px] text-accent-light-v2">
+                  <span className="font-mono text-[11px] font-semibold text-foreground">
                     {Math.round(progress)}%
                   </span>
                 </div>
@@ -370,7 +370,7 @@ function CycleArrow({
       aria-label={label}
       disabled={disabled}
       onClick={onClick}
-      className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border-strong-v2)] bg-white/[0.04] text-[var(--text-secondary-v2)] outline-none transition-colors duration-200 motion-reduce:transition-none hover:bg-white/[0.08] hover:text-foreground focus-visible:ring-2 focus-visible:ring-accent-light-v2 disabled:pointer-events-none disabled:opacity-30"
+      className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--line-strong)] bg-white/[0.04] text-[var(--text-secondary)] outline-none transition-colors duration-200 motion-reduce:transition-none hover:bg-white/[0.08] hover:text-foreground focus-visible:ring-2 focus-visible:ring-accent disabled:pointer-events-none disabled:opacity-30"
     >
       {children}
     </button>
@@ -393,7 +393,7 @@ function StageImage({ stage }: { stage: ExecutionStage }) {
   const [failed, setFailed] = useState(false);
 
   return (
-    <div className="relative flex aspect-video items-center justify-center overflow-hidden rounded-xl border border-[var(--border-v2)] bg-white/[0.02] md:aspect-[4/3]">
+    <div className="relative flex aspect-video items-center justify-center overflow-hidden rounded-xl border border-[var(--line)] bg-white/[0.02] md:aspect-[4/3]">
       <span
         aria-hidden
         className="select-none font-sans text-[72px] font-semibold leading-none text-white/5"

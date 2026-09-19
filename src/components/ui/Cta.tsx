@@ -99,7 +99,7 @@ export function SectionCta({
 }) {
   return (
     <div
-      className={`flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-[var(--border-v2)] pt-8 ${className}`}
+      className={`flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-[var(--line)] pt-8 ${className}`}
     >
       {children}
     </div>

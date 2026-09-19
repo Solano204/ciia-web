@@ -8,9 +8,9 @@ export function EyebrowBadge({ children, className = "", tone = "amber" }: Props
   if (tone === "muted-v2") {
     return (
       <span
-        className={`inline-flex items-center gap-2 rounded-full border border-[var(--border-strong-v2)] bg-white/[0.04] px-3 py-1.5 font-mono text-[10px] font-medium uppercase tracking-[0.22em] text-[var(--text-muted-v2)] backdrop-blur-md ${className}`}
+        className={`inline-flex items-center gap-2 rounded-full border border-[var(--line-strong)] bg-white/[0.04] px-3 py-1.5 font-mono text-[10px] font-medium uppercase tracking-[0.22em] text-muted backdrop-blur-md ${className}`}
       >
-        <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--text-muted-v2)]" />
+        <span className="inline-block h-1.5 w-1.5 rounded-full bg-[var(--muted)]" />
         {children}
       </span>
     );

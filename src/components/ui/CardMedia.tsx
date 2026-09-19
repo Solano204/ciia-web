@@ -100,13 +100,13 @@ export function CardMedia({ media, aspect }: { media: CardMediaData; aspect: Med
       return <FramesMedia media={media} aspect={aspect} />;
     case "text":
       return (
-        <p className="font-mono text-xs leading-relaxed text-[var(--text-secondary-v2)]">{media.content}</p>
+        <p className="font-mono text-xs leading-relaxed text-[var(--text-secondary)]">{media.content}</p>
       );
     case "stat":
       return (
         <div className="flex flex-col gap-1">
           <span className="font-sans text-4xl font-semibold text-foreground">{media.value}</span>
-          <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--text-muted-v2)]">
+          <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
             {media.label}
           </span>
         </div>

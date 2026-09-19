@@ -54,7 +54,7 @@ export function BentoCard({
         <span className="font-mono text-xs uppercase tracking-[0.22em] text-foreground">
           {service.title}
         </span>
-        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[var(--border-strong-v2)] text-[var(--text-secondary-v2)] transition-transform duration-200 motion-reduce:transition-none group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-accent-light-v2">
+        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[var(--line-strong)] text-[var(--text-secondary)] transition-transform duration-200 motion-reduce:transition-none group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-foreground">
           <ArrowUpRightIcon size={14} weight="bold" />
         </span>
       </div>
@@ -69,7 +69,7 @@ export function BentoCard({
       {/* Regla de la tarjeta: título + una frase + dato clave. La descripción,
           los puntos y las specs viven en /soluciones/[id]. */}
       <div className="flex flex-col gap-2">
-        <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--text-muted-v2)]">
+        <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
           {service.category}
         </span>
         <h3
@@ -77,7 +77,7 @@ export function BentoCard({
         >
           <Link
             href={`/soluciones/${service.id}`}
-            className="outline-none after:absolute after:inset-0 after:rounded-2xl after:content-[''] focus-visible:after:ring-2 focus-visible:after:ring-accent-light-v2"
+            className="outline-none after:absolute after:inset-0 after:rounded-2xl after:content-[''] focus-visible:after:ring-2 focus-visible:after:ring-accent"
           >
             {service.tagline}
           </Link>
@@ -85,7 +85,7 @@ export function BentoCard({
       </div>
 
       <p
-        className={`mt-auto font-mono text-sm text-accent-bright-v2 ${size === "sm" ? "line-clamp-2" : ""}`}
+        className={`mt-auto font-mono text-sm font-semibold text-foreground ${size === "sm" ? "line-clamp-2" : ""}`}
       >
         {service.startingPrice}
       </p>

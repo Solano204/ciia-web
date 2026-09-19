@@ -108,7 +108,7 @@ export function Contact() {
                 >
                   Preparar correo
                 </button>
-                <p className="mt-3 max-w-[48ch] text-xs text-[var(--text-muted-v2)]">
+                <p className="mt-3 max-w-[48ch] text-xs text-muted">
                   Se abrirá tu aplicación de correo con el mensaje listo para enviarlo a{" "}
                   {CONTACT_INFO.email}.
                 </p>
@@ -133,7 +133,7 @@ export function Contact() {
                 <h3 className="font-sans text-lg font-semibold text-foreground">
                   ¿Prefieres una reunión?
                 </h3>
-                <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary-v2)]">
+                <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">
                   Elige un horario y hablamos de tu caso.
                 </p>
                 <CtaButton href={SCHEDULING_URL} className="mt-4">
@@ -145,7 +145,7 @@ export function Contact() {
             <h3 className="font-sans text-lg font-semibold text-foreground">Contacto directo</h3>
             <dl className="mt-5 flex flex-col divide-y divide-white/8 border-y border-white/8">
               <div className="py-4">
-                <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--text-muted-v2)]">
+                <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
                   Correo
                 </dt>
                 <dd className="mt-1">
@@ -158,7 +158,7 @@ export function Contact() {
                 </dd>
               </div>
               <div className="py-4">
-                <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--text-muted-v2)]">
+                <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
                   Teléfono
                 </dt>
                 <dd className="mt-1">
@@ -171,7 +171,7 @@ export function Contact() {
                 </dd>
               </div>
               <div className="py-4">
-                <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--text-muted-v2)]">
+                <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
                   Sede
                 </dt>
                 <dd className="mt-1 text-sm leading-snug text-foreground">
@@ -179,7 +179,7 @@ export function Contact() {
                 </dd>
               </div>
               <div className="py-4">
-                <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--text-muted-v2)]">
+                <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
                   Redes
                 </dt>
                 <dd className="mt-2 flex flex-wrap gap-x-5 gap-y-2">

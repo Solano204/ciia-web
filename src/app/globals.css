@@ -1,50 +1,35 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0a0a0b;
-  --foreground: #e4e4e7;
-  --muted: #71717a;
+  /* Escala de grises única (ver DESIGN.md). */
+  --gray-950: #0a0a0b;
+  --gray-900: #18181b;
+  --gray-500: #8a8a93;
+  --gray-400: #a1a1aa;
+  --gray-200: #e4e4e7;
+
+  --background: var(--gray-950);
+  --foreground: var(--gray-200);
+  --muted: var(--gray-500);
+  --text-secondary: var(--gray-400);
+
+  --line: rgba(255, 255, 255, 0.07);
+  --line-strong: rgba(255, 255, 255, 0.12);
+  --line-stronger: rgba(255, 255, 255, 0.18);
+
+  /* Único acento. */
   --accent: #d4a22f;
   --accent-soft: rgba(212, 162, 47, 0.14);
-  --card-bg: rgba(24, 24, 27, 0.55);
-  --card-border: rgba(255, 255, 255, 0.08);
-  --hud-line: rgba(255, 255, 255, 0.1);
+  --on-accent: var(--gray-950);
 
-  /* --- v2 brand system (CII.IA): scoped to Solutions/ExecutionCycle/Cases + detail pages --- */
-  --bg-deep-v2: #000000;
-  --bg-base-v2: #08080c;
-  --surface-1-v2: #0f1018;
-  --surface-2-v2: #16182280;
-  --surface-3-v2: #1c1f2e;
+  --card-bg: color-mix(in srgb, var(--gray-900) 55%, transparent);
+  --card-border: var(--line);
+  --hud-line: var(--line-strong);
 
-  --text-primary-v2: #f0f1f5;
-  --text-secondary-v2: #9a9dab;
-  /* Era #6b6f80: 3.80:1 sobre las superficies de cristal, por debajo del 4.5:1
-     que exige WCAG AA. Lo llevan casi todas las etiquetas pequeñas del sitio,
-     así que subirlo aquí corrige 44 elementos de una sola vez. Ahora 4.97:1. */
-  --text-muted-v2: #7d8296;
-  --text-disabled-v2: #45485a;
-
-  --accent-v2: #0019ff;
-  /* Era #3d52ff: azul muy saturado pero de luminancia baja, 3.54:1 sobre
-     cristal. Sólo se usa para texto (precios y el paso activo del ciclo), así
-     que se aclara sin afectar a bordes ni rellenos. Ahora 5.37:1. */
-  --accent-bright-v2: #6b7cff;
-  --accent-light-v2: #7a88ff;
-  --accent-dim-v2: #0014cc;
-  --accent-deep-v2: #000e99;
-  --accent-soft-v2: rgba(0, 25, 255, 0.12);
-  --accent-wash-v2: rgba(0, 25, 255, 0.05);
-  --accent-border-v2: rgba(0, 25, 255, 0.4);
-  --accent-border-strong-v2: rgba(0, 25, 255, 0.65);
-
-  --border-v2: rgba(255, 255, 255, 0.07);
-  --border-strong-v2: rgba(255, 255, 255, 0.12);
-  --border-stronger-v2: rgba(255, 255, 255, 0.18);
-
-  --success-v2: #2dd4a7;
-  --warning-v2: #e5a93d;
-  --danger-v2: #e56b6b;
+  /* Estados: solo semánticos, nunca decoración. */
+  --success: #2dd4a7;
+  --warning: #e5a93d;
+  --danger: #e56b6b;
 }
 
 @theme inline {
@@ -56,30 +41,7 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
-  --color-bg-deep-v2: var(--bg-deep-v2);
-  --color-bg-base-v2: var(--bg-base-v2);
-  --color-surface-1-v2: var(--surface-1-v2);
-  --color-surface-2-v2: var(--surface-2-v2);
-  --color-surface-3-v2: var(--surface-3-v2);
-  --color-text-primary-v2: var(--text-primary-v2);
-  --color-text-secondary-v2: var(--text-secondary-v2);
-  --color-text-muted-v2: var(--text-muted-v2);
-  --color-text-disabled-v2: var(--text-disabled-v2);
-  --color-accent-v2: var(--accent-v2);
-  --color-accent-bright-v2: var(--accent-bright-v2);
-  --color-accent-light-v2: var(--accent-light-v2);
-  --color-accent-dim-v2: var(--accent-dim-v2);
-  --color-accent-deep-v2: var(--accent-deep-v2);
-  --color-accent-soft-v2: var(--accent-soft-v2);
-  --color-accent-wash-v2: var(--accent-wash-v2);
-  --color-accent-border-v2: var(--accent-border-v2);
-  --color-accent-border-strong-v2: var(--accent-border-strong-v2);
-  --color-border-v2: var(--border-v2);
-  --color-border-strong-v2: var(--border-strong-v2);
-  --color-border-stronger-v2: var(--border-stronger-v2);
-  --color-success-v2: var(--success-v2);
-  --color-warning-v2: var(--warning-v2);
-  --color-danger-v2: var(--danger-v2);
+  --color-on-accent: var(--on-accent);
 }
 
 html,
@@ -121,29 +83,29 @@ body {
   background: rgba(15, 16, 24, 0.6);
   backdrop-filter: blur(12px) saturate(120%);
   -webkit-backdrop-filter: blur(12px) saturate(120%);
-  border: 1px solid var(--border-v2);
+  border: 1px solid var(--line);
 }
 
 .glass-2-v2 {
   background: rgba(15, 16, 24, 0.75);
   backdrop-filter: blur(20px) saturate(140%);
   -webkit-backdrop-filter: blur(20px) saturate(140%);
-  border: 1px solid var(--border-strong-v2);
+  border: 1px solid var(--line-strong);
 }
 
 .glass-3-v2 {
   background: rgba(15, 16, 24, 0.85);
   backdrop-filter: blur(28px) saturate(160%);
   -webkit-backdrop-filter: blur(28px) saturate(160%);
-  border: 1px solid var(--border-stronger-v2);
+  border: 1px solid var(--line-stronger);
 }
 
 /* Paso 5.3: 12 blurred cards over an animated shader tanks scroll perf —
    the cases grid gets a solid (no backdrop-filter) surface instead of
    glass-1-v2; blur stays reserved for detail pages + the featured card. */
 .surface-flat-v2 {
-  background: var(--surface-1-v2);
-  border: 1px solid var(--border-v2);
+  background: rgb(15, 16, 24);
+  border: 1px solid var(--line);
   border-radius: 16px;
   box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
   transition:
@@ -152,12 +114,12 @@ body {
 }
 
 .glass-featured-v2 {
-  border-color: var(--accent-border-v2);
-  background-color: var(--accent-wash-v2);
+  border-color: color-mix(in srgb, var(--accent) 40%, transparent);
+  background-color: transparent;
 }
 
 .glass-hover-v2:hover {
-  border-color: var(--accent-border-strong-v2);
+  border-color: color-mix(in srgb, var(--accent) 65%, transparent);
 }
 
 @supports not (backdrop-filter: blur(1px)) {

@@ -67,7 +67,7 @@ function PartnerTile({ partner }: TileProps) {
           target="_blank"
           rel="noopener noreferrer"
           aria-label={label}
-          className={`${tileClass} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-v2`}
+          className={`${tileClass} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent`}
         >
           {inner}
           <span className="sr-only">Se abre en una ventana nueva</span>
@@ -84,7 +84,7 @@ function PartnerTile({ partner }: TileProps) {
         {partner.note ? (
           <span
             className={[
-              "block truncate font-mono text-[11px] leading-4 text-[var(--text-muted-v2)] opacity-0",
+              "block truncate font-mono text-[11px] leading-4 text-muted opacity-0",
               "transition-opacity duration-300 motion-reduce:transition-none",
               "group-hover/cell:opacity-100 group-focus-within/cell:opacity-100",
             ].join(" ")}
@@ -299,7 +299,7 @@ export function EcosystemGrid() {
           ))}
         </div>
 
-        <span className="shrink-0 font-mono text-[11px] tracking-wide text-[var(--text-muted-v2)]" aria-live="polite">
+        <span className="shrink-0 font-mono text-[11px] tracking-wide text-muted" aria-live="polite">
           {visibleCount} DE {ECOSYSTEM_PARTNERS.length}
         </span>
       </div>
@@ -356,10 +356,10 @@ function FilterPill({ label, isActive, onSelect }: FilterPillProps) {
       className={[
         "shrink-0 rounded-full border px-4 py-1.5 font-mono text-[11px] uppercase tracking-wide",
         "transition-colors duration-200 motion-reduce:transition-none",
-        "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent-v2",
+        "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",
         isActive
-          ? "border-accent-v2 text-accent-bright-v2"
-          : "border-white/10 text-[var(--text-muted-v2)] hover:border-white/20 hover:text-zinc-300",
+          ? "border-accent text-accent"
+          : "border-white/10 text-muted hover:border-white/20 hover:text-zinc-300",
       ].join(" ")}
     >
       {label}

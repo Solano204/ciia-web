@@ -309,7 +309,7 @@ function WorkPrincipleLine({ principle, index }: { principle: WorkPrinciple; ind
             // El estado revelado debe cumplir AA: la jerarquía frente a la
             // palabra de 48px la da el tamaño, no un gris ilegible (antes
             // zinc-700, 1.33:1). El estado previo es transitorio.
-            isVisible ? "text-[var(--text-muted-v2)]" : "text-zinc-800",
+            isVisible ? "text-muted" : "text-zinc-800",
           ].join(" ")}
         >
           {order}
@@ -324,7 +324,7 @@ function WorkPrincipleLine({ principle, index }: { principle: WorkPrinciple; ind
         </span>
 
         <span className="ml-11 flex basis-full items-baseline gap-3 md:ml-0 md:basis-auto">
-          <span aria-hidden className="text-[clamp(15px,2vw,22px)] text-[var(--text-muted-v2)]">
+          <span aria-hidden className="text-[clamp(15px,2vw,22px)] text-muted">
             /
           </span>
           {/* El tachado es un ::after animable; `no-underline` quita el
@@ -333,7 +333,7 @@ function WorkPrincipleLine({ principle, index }: { principle: WorkPrinciple; ind
             className={[
               // Contenido real («no diagnosticamos»), no decoración: zinc-600
               // daba 2.56:1. Sigue siendo el tono más apagado que cumple AA.
-              "relative text-[clamp(15px,2vw,22px)] italic text-[var(--text-muted-v2)] no-underline",
+              "relative text-[clamp(15px,2vw,22px)] italic text-muted no-underline",
               "after:absolute after:left-0 after:top-1/2 after:h-[1.5px] after:w-full",
               "after:origin-left after:bg-white/25 after:content-['']",
               "after:transition-transform after:duration-500 after:ease-out",
@@ -686,7 +686,7 @@ export function About() {
                   />
                 </span>
                 <span
-                  className="mt-3 block font-mono text-[10px] uppercase leading-relaxed tracking-[0.15em] text-[var(--text-muted-v2)]"
+                  className="mt-3 block font-mono text-[10px] uppercase leading-relaxed tracking-[0.15em] text-muted"
                   data-fx="stat-label"
                 >
                   {stat.label}
@@ -712,7 +712,7 @@ export function About() {
                   <blockquote className="font-sans text-lg italic leading-snug text-foreground">
                   &ldquo;{item.quote}&rdquo;
                 </blockquote>
-                <figcaption className="mt-4 text-sm text-[var(--text-muted-v2)]">{item.role}</figcaption>
+                <figcaption className="mt-4 text-sm text-muted">{item.role}</figcaption>
               </figure>
             </AnimatedItem>
           ))}
