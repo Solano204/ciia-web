@@ -22,10 +22,6 @@
   --accent-soft: rgba(212, 162, 47, 0.14);
   --on-accent: var(--gray-950);
 
-  --card-bg: color-mix(in srgb, var(--gray-900) 55%, transparent);
-  --card-border: var(--line);
-  --hud-line: var(--line-strong);
-
   /* Estados: solo semánticos, nunca decoración. */
   --success: #2dd4a7;
   --warning: #e5a93d;
@@ -96,81 +92,6 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-.card-surface {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  border-radius: 20px;
-  backdrop-filter: blur(20px) saturate(140%);
-  -webkit-backdrop-filter: blur(20px) saturate(140%);
-  box-shadow:
-    0 1px 0 0 rgba(255, 255, 255, 0.04) inset,
-    0 20px 40px -20px rgba(0, 0, 0, 0.6);
-}
-
-/* --- v2 glass system (Solutions/ExecutionCycle/Cases + detail pages only) --- */
-.glass-1-v2,
-.glass-2-v2,
-.glass-3-v2 {
-  border-radius: 16px;
-  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
-  transition:
-    border-color 200ms ease,
-    background-color 200ms ease;
-}
-
-.glass-1-v2 {
-  background: rgba(15, 16, 24, 0.6);
-  backdrop-filter: blur(12px) saturate(120%);
-  -webkit-backdrop-filter: blur(12px) saturate(120%);
-  border: 1px solid var(--line);
-}
-
-.glass-2-v2 {
-  background: rgba(15, 16, 24, 0.75);
-  backdrop-filter: blur(20px) saturate(140%);
-  -webkit-backdrop-filter: blur(20px) saturate(140%);
-  border: 1px solid var(--line-strong);
-}
-
-.glass-3-v2 {
-  background: rgba(15, 16, 24, 0.85);
-  backdrop-filter: blur(28px) saturate(160%);
-  -webkit-backdrop-filter: blur(28px) saturate(160%);
-  border: 1px solid var(--line-stronger);
-}
-
-/* Paso 5.3: 12 blurred cards over an animated shader tanks scroll perf —
-   the cases grid gets a solid (no backdrop-filter) surface instead of
-   glass-1-v2; blur stays reserved for detail pages + the featured card. */
-.surface-flat-v2 {
-  background: rgb(15, 16, 24);
-  border: 1px solid var(--line);
-  border-radius: 16px;
-  box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.06);
-  transition:
-    border-color 200ms ease,
-    background-color 200ms ease;
-}
-
-.glass-featured-v2 {
-  border-color: color-mix(in srgb, var(--accent) 40%, transparent);
-  background-color: transparent;
-}
-
-.glass-hover-v2:hover {
-  border-color: color-mix(in srgb, var(--accent) 65%, transparent);
-}
-
-@supports not (backdrop-filter: blur(1px)) {
-  .glass-1-v2,
-  .glass-2-v2,
-  .glass-3-v2 {
-    background: rgba(15, 16, 24, 0.95);
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-  }
-}
-
 /* Fundido al cambiar de filtro en el ecosistema. */
 @keyframes eco-fade {
   from {
@@ -228,15 +149,6 @@ body {
 .section-seam::after {
   height: 180px;
   background: linear-gradient(to bottom, rgba(255, 255, 255, 0.025), transparent);
-}
-
-.hud-tick {
-  background-image: linear-gradient(
-    90deg,
-    transparent 0 calc(100% - 1px),
-    var(--hud-line) calc(100% - 1px) 100%
-  );
-  background-size: 16px 100%;
 }
 
 html.lenis,
