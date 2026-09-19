@@ -3,11 +3,16 @@ import { CycleCarousel } from "@/components/ui/CycleCarousel";
 import { Section } from "@/components/ui/Section";
 import { SectionHeader, type HeadingLevel } from "@/components/ui/SectionHeader";
 import { StageRail } from "@/components/ui/StageRail";
-import { CTA_COPY, EXECUTION_STAGES, SERVICES_DATA, schedulingHref } from "@/lib/ciiia";
+import {
+  CTA_COPY,
+  EXECUTION_STAGES,
+  PAGE_DESCRIPTIONS,
+  SERVICES_DATA,
+  schedulingHref,
+} from "@/lib/ciiia";
 
 const TITLE = "Ciclo de ejecución";
-const DESCRIPTION =
-  "Cada proyecto recorre cinco etapas. Elige una para ver qué se entrega y qué productos intervienen.";
+const DESCRIPTION = PAGE_DESCRIPTIONS.ciclo;
 
 export function ExecutionCycle({
   headingLevel = "h2",

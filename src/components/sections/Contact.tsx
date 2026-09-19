@@ -5,13 +5,13 @@ import { AnimatedItem } from "@/components/ui/AnimatedSection";
 import { CtaButton } from "@/components/ui/Cta";
 import { Section } from "@/components/ui/Section";
 import { SectionHeader, type HeadingLevel } from "@/components/ui/SectionHeader";
-import { CONTACT_INFO, CTA_COPY, SCHEDULING_URL } from "@/lib/ciiia";
+import { CONTACT_INFO, CTA_COPY, PAGE_DESCRIPTIONS, SCHEDULING_URL } from "@/lib/ciiia";
 
 const inputClasses =
   "mt-2 block w-full rounded-lg border border-white/10 bg-white/[0.03] px-3.5 py-2.5 text-sm text-foreground outline-none transition-colors focus:border-accent";
 
 const TITLE = "Contacto";
-const DESCRIPTION = "Cuéntanos qué necesitas y en qué punto está tu organización.";
+const DESCRIPTION = PAGE_DESCRIPTIONS.contacto;
 
 export function Contact({
   headingLevel = "h2",

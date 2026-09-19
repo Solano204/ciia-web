@@ -3,7 +3,7 @@ import { BentoGrid } from "@/components/ui/BentoGrid";
 import { CtaButton, CtaLink, SectionCta } from "@/components/ui/Cta";
 import { Section } from "@/components/ui/Section";
 import { SectionHeader, type HeadingLevel } from "@/components/ui/SectionHeader";
-import { CTA_COPY, SERVICES_DATA } from "@/lib/ciiia";
+import { CTA_COPY, PAGE_DESCRIPTIONS, SERVICES_DATA } from "@/lib/ciiia";
 
 export function Solutions({
   headingLevel = "h2",
@@ -21,7 +21,7 @@ export function Solutions({
         animated
         as={headingLevel}
         title="Soluciones"
-        description="Cinco líneas de trabajo que cubren el ciclo completo, de decidir qué merece construirse a dejar la capacidad instalada."
+        description={PAGE_DESCRIPTIONS.soluciones}
       />
 
       <AnimatedItem>

@@ -24,7 +24,7 @@ const satoshi = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "CII.IA | De la idea a la operación",
+  title: { default: "CII.IA | De la idea a la operación", template: "%s | CII.IA" },
   description:
     "Centro de Innovación Industrial en Inteligencia Artificial. Desde el PIIT, en Nuevo León, acompañamos a empresas e instituciones a llevar la inteligencia artificial de la idea a la operación.",
   metadataBase: new URL(SITE_URL),

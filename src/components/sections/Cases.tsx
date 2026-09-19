@@ -7,7 +7,7 @@ import { CasesDeck } from "@/components/ui/CasesDeck";
 import { CtaButton, CtaLink, SectionCta } from "@/components/ui/Cta";
 import { Section } from "@/components/ui/Section";
 import { SectionHeader, type HeadingLevel } from "@/components/ui/SectionHeader";
-import { CTA_COPY, PROJECT_CASES, schedulingHref } from "@/lib/ciiia";
+import { CTA_COPY, PAGE_DESCRIPTIONS, PROJECT_CASES, schedulingHref } from "@/lib/ciiia";
 
 export function Cases({
   headingLevel = "h2",
@@ -35,7 +35,7 @@ export function Cases({
         animated
         as={headingLevel}
         title="Casos"
-        description="Doce soluciones de inteligencia artificial documentadas por el CII.IA en manufactura, comercio, servicios financieros y seguridad."
+        description={PAGE_DESCRIPTIONS.casos}
       />
 
       {!limit && (

@@ -848,6 +848,17 @@ export const SITE_URL = "https://ciiia.mx";
 /** Destino de «Agenda con nosotros», con respaldo mientras falte la agenda. */
 export const schedulingHref = (): string => SCHEDULING_URL || "/contacto";
 
+/** Descripción de cada página: la misma frase que abre su sección. */
+export const PAGE_DESCRIPTIONS = {
+  soluciones:
+    "Cinco líneas de trabajo que cubren el ciclo completo, de decidir qué merece construirse a dejar la capacidad instalada.",
+  ciclo:
+    "Cada proyecto recorre cinco etapas. Elige una para ver qué se entrega y qué productos intervienen.",
+  casos:
+    "Doce soluciones de inteligencia artificial documentadas por el CII.IA en manufactura, comercio, servicios financieros y seguridad.",
+  contacto: "Cuéntanos qué necesitas y en qué punto está tu organización.",
+} as const;
+
 /** Enlaces de navegación compartidos por el nav y el pie de página. */
 export const NAV_LINKS: { href: string; label: string }[] = [
   { href: "/soluciones", label: "Soluciones" },
