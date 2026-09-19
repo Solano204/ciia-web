@@ -14,6 +14,7 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 // Los alias sin sufijo (`CaretLeft`) están deprecados en phosphor v2.1.
 import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react";
 import { CtaButton } from "@/components/ui/Cta";
+import { SectionHeader } from "@/components/ui/SectionHeader";
 import {
   CTA_COPY,
   cycleImageSrc,
@@ -33,13 +34,11 @@ const SWIPE_RATIO = 1.4;
 export function CycleCarousel({
   stages,
   services,
-  eyebrow,
   title,
   description,
 }: {
   stages: ExecutionStage[];
   services: ServiceItem[];
-  eyebrow: ReactNode;
   title: string;
   description: string;
 }) {
@@ -125,19 +124,7 @@ export function CycleCarousel({
       {/* Cabecera a todo lo ancho, con el mismo patrón que Soluciones y Casos:
           antes vivía apilada en la columna izquierda y empujaba el riel hacia
           abajo, dejando un hueco muerto junto a la tarjeta. */}
-      <div className="grid gap-6 md:grid-cols-12">
-        <div className="md:col-span-12">{eyebrow}</div>
-        <div className="md:col-span-6">
-          <h2 className="mt-4 font-display text-4xl font-semibold text-foreground md:text-5xl">
-            {title}
-          </h2>
-        </div>
-        <div className="md:col-span-5 md:col-start-8 md:self-end">
-          <p className="text-base leading-relaxed text-[var(--text-secondary)]">
-            {description}
-          </p>
-        </div>
-      </div>
+      <SectionHeader title={title} description={description} />
 
       <div className="grid gap-8 lg:grid-cols-12 lg:gap-6">
         {/* `min-w-0` en toda la cadena: sin él, el `min-width:auto` que traen
@@ -260,7 +247,7 @@ export function CycleCarousel({
               // El alto mínimo iguala al de la etapa más larga (DISEÑAR): sin
               // él la tarjeta oscilaba unos 58px al cambiar y arrastraba todo
               // lo que viene debajo.
-              className="glass-2-v2 relative grid cursor-pointer gap-6 overflow-hidden p-6 outline-none focus-visible:ring-2 focus-visible:ring-accent md:grid-cols-12 md:gap-8 lg:min-h-[512px] lg:p-8"
+              className="relative grid cursor-pointer gap-6 overflow-hidden outline-none focus-visible:ring-2 focus-visible:ring-accent md:grid-cols-12 md:gap-8 lg:min-h-[512px]"
             >
               {/* La imagen va al costado desde tablet: apilada encima hacía la
                   tarjeta casi el doble de alta de lo que pide su contenido. */}
@@ -273,7 +260,7 @@ export function CycleCarousel({
                   {activeStage.focus}
                 </span>
 
-                <h3 className="font-display text-3xl font-semibold uppercase leading-[0.95] text-foreground lg:text-[44px]">
+                <h3 className="font-display text-h2 font-semibold uppercase text-foreground">
                   {activeStage.name}
                 </h3>
 
@@ -296,15 +283,8 @@ export function CycleCarousel({
                     <dt className="font-sans text-[12px] uppercase tracking-[0.08em] text-muted">
                       Productos
                     </dt>
-                    <dd className="mt-2 flex flex-wrap gap-2">
-                      {activeStage.products.map((product) => (
-                        <span
-                          key={product}
-                          className="rounded-full border border-[var(--line)] bg-white/[0.04] px-2.5 py-1 text-xs text-[var(--text-secondary)]"
-                        >
-                          {product}
-                        </span>
-                      ))}
+                    <dd className="mt-2 text-[15px] leading-relaxed text-[var(--text-secondary)]">
+                      {activeStage.products.join(" · ")}
                     </dd>
                   </div>
                   {relatedServices.length > 0 && (
@@ -393,7 +373,7 @@ function StageImage({ stage }: { stage: ExecutionStage }) {
   const [failed, setFailed] = useState(false);
 
   return (
-    <div className="relative flex aspect-video items-center justify-center overflow-hidden rounded-xl border border-[var(--line)] bg-white/[0.02] md:aspect-[4/3]">
+    <div className="relative flex aspect-video items-center justify-center overflow-hidden rounded-xl md:aspect-[4/3]">
       <span
         aria-hidden
         className="select-none font-display text-[72px] font-semibold leading-none text-white/5"
