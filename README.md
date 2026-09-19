@@ -20,6 +20,13 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Build y despliegue
+
+`npm run build` exporta el sitio estático a `out/` (Cloudflare Workers, ver `wrangler.toml`). Dos hooks de npm lo acompañan:
+
+- `prebuild` (`scripts/fetch-fonts.mjs`): descarga de Fontshare las fuentes que falten en `src/fonts/`. `predev` hace lo mismo e incluye las de `/lab`. Las `.woff2` no se versionan por licencia (ver `src/fonts/LICENSE-fonts.txt`).
+- `postbuild` (`scripts/flatten-prefetch.mjs`): el export de Next escribe los payloads de prefetch en carpetas (`ciclo/__next.ciclo/__PAGE__.txt`), pero el cliente los pide con nombre plano (`ciclo/__next.ciclo.__PAGE__.txt`), y sin este paso cada `Link` genera un 404 en consola. El script duplica cada payload con nombre plano. Termina con error si no encuentra ningún `__next.*/__PAGE__.txt`, para que un cambio interno de Next rompa el build en lugar de fallar en silencio. `trailingSlash: true` se probó y no lo resuelve.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

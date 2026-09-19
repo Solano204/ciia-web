@@ -139,7 +139,7 @@
 - Nav con rutas, estado activo por página y hamburguesa móvil accesible (Esc, foco atrapado, cierre al navegar).
 - Home resumen: un teaser por sección y un CTA final.
 - Página 404 propia con salida al inicio.
-- Pendiente: verificar en el preview de Cloudflare los 404 de prefetch (`__next.*.txt`). Si aparecen, evaluar `prefetch={false}` en `Link` o ajustar el export.
+- Prefetch: el export escribe los payloads `__next.*/__PAGE__.txt` en carpetas y el cliente los pide con nombre plano, lo que daba 404. `trailingSlash: true` no lo resuelve; se corrige con `scripts/flatten-prefetch.mjs` (postbuild, ver README). Verificado en local con wrangler; pendiente confirmar en el preview de Cloudflare.
 
 ### FASE 3 — Hero + Reto
 **Hero**
