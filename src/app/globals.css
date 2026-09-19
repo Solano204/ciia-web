@@ -30,6 +30,24 @@
   --success: #2dd4a7;
   --warning: #e5a93d;
   --danger: #e56b6b;
+
+  /* Espaciado de sección y ancho del contenedor (ver DESIGN.md). */
+  --section-y: 6rem;
+  --container-max: 1400px;
+
+  /* Motion. */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-micro: 150ms;
+  --dur-base: 250ms;
+  --dur-large: 500ms;
+  --stagger: 60ms;
+}
+
+@media (min-width: 768px) {
+  :root {
+    --section-y: 8rem;
+  }
 }
 
 @theme inline {
