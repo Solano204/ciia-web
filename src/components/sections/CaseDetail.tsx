@@ -2,7 +2,7 @@ import fs from "node:fs";
 import path from "node:path";
 import Link from "next/link";
 import { DecayImage } from "@/components/ui/DecayImage";
-import { BeamsBackground } from "@/components/ui/BeamsBackground";
+import { Section } from "@/components/ui/Section";
 import { technologyLabel } from "@/lib/cases";
 import { CtaButton } from "@/components/ui/Cta";
 import { CTA_COPY, type ProjectCase } from "@/lib/ciiia";
@@ -38,9 +38,7 @@ export function CaseDetail({
   const etiquetasValue = strippedTags.length > 0 ? strippedTags.join(" · ") : techLabel;
 
   return (
-    <BeamsBackground className="min-h-screen">
-    <main className="flex flex-col gap-16 py-24">
-      <div className="mx-auto flex w-full max-w-[1400px] flex-col gap-16 px-6 md:px-10">
+    <Section id="caso" className="flex flex-col gap-16">
         <Link
           href={CASES_HREF}
           className="inline-flex w-fit items-center gap-2 font-sans text-[12px] uppercase tracking-[0.08em] text-muted transition-colors hover:text-foreground"
@@ -159,8 +157,6 @@ export function CaseDetail({
             </span>
           </Link>
         </nav>
-      </div>
-    </main>
-    </BeamsBackground>
+    </Section>
   );
 }

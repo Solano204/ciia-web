@@ -1,18 +1,12 @@
 "use client";
 
-import type { MouseEvent } from "react";
+import Link from "next/link";
 import { ArrowUpRight } from "@phosphor-icons/react";
 import { BeamsBackground } from "@/components/ui/BeamsBackground";
-import { useLenis } from "@/components/providers/SmoothScrollProvider";
-import { scrollToAnchor } from "@/lib/smooth-anchor";
 import { CONTACT_INFO, NAV_LINKS, PRIVACY_NOTICE_HREF } from "@/lib/ciiia";
 
 export function Footer() {
-  const lenis = useLenis();
   const year = new Date().getFullYear();
-
-  const handleAnchorClick = (event: MouseEvent<HTMLAnchorElement>, href: string) =>
-    scrollToAnchor(event, href, lenis);
 
   return (
     <BeamsBackground className="section-seam">
@@ -42,14 +36,13 @@ export function Footer() {
                   Navegación
                 </h2>
                 {NAV_LINKS.map(({ href, label }) => (
-                  <a
+                  <Link
                     key={href}
                     href={href}
-                    onClick={(event) => handleAnchorClick(event, href)}
                     className="font-sans text-[13px] font-medium text-zinc-300 transition-colors hover:text-accent"
                   >
                     {label}
-                  </a>
+                  </Link>
                 ))}
               </nav>
 

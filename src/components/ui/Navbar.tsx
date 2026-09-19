@@ -1,18 +1,22 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState, type MouseEvent } from "react";
-import { useLenis } from "@/components/providers/SmoothScrollProvider";
-import { scrollToAnchor } from "@/lib/smooth-anchor";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import { CtaButton } from "@/components/ui/Cta";
 import { CTA_COPY, NAV_LINKS, schedulingHref } from "@/lib/ciiia";
 
-export function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const lenis = useLenis();
+type LinkState = "page" | "section" | null;
 
-  const handleAnchorClick = (event: MouseEvent<HTMLAnchorElement>, href: string) =>
-    scrollToAnchor(event, href, lenis);
+// Las fichas (/casos/caso-01) marcan como activa la sección a la que pertenecen.
+function linkState(pathname: string, href: string): LinkState {
+  if (pathname === href) return "page";
+  return pathname.startsWith(`${href}/`) ? "section" : null;
+}
+
+export function Navbar() {
+  const pathname = usePathname();
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -45,17 +49,21 @@ export function Navbar() {
           CII.IA
         </Link>
 
-        <nav className="hidden items-center gap-5 lg:flex xl:gap-7">
-          {NAV_LINKS.map(({ href, label }) => (
-            <a
-              key={href}
-              href={href}
-              onClick={(event) => handleAnchorClick(event, href)}
-              className="font-sans text-[12px] uppercase tracking-[0.08em] text-zinc-400 transition-colors hover:text-foreground"
-            >
-              {label}
-            </a>
-          ))}
+        <nav aria-label="Principal" className="hidden items-center gap-5 lg:flex xl:gap-7">
+          {NAV_LINKS.map(({ href, label }) => {
+            const state = linkState(pathname, href);
+            return (
+              <Link
+                key={href}
+                href={href}
+                aria-current={state === "page" ? "page" : undefined}
+                data-active={state ? "" : undefined}
+                className="font-sans text-[12px] uppercase tracking-[0.08em] text-zinc-400 underline-offset-[10px] transition-colors hover:text-foreground data-[active]:text-foreground data-[active]:underline data-[active]:decoration-accent"
+              >
+                {label}
+              </Link>
+            );
+          })}
         </nav>
 
         {/* CTA fijo. En móvil se recorta a «Agenda» para no empujar la marca

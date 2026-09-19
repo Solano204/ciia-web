@@ -5,6 +5,8 @@ import "./globals.css";
 import { SmoothScrollProvider } from "@/components/providers/SmoothScrollProvider";
 import { SplashCursorMount } from "@/components/providers/SplashCursorMount";
 import { BeamsGlobalMount } from "@/components/providers/BeamsGlobalMount";
+import { Navbar } from "@/components/ui/Navbar";
+import { Footer } from "@/components/sections/Footer";
 import { SITE_URL } from "@/lib/ciiia";
 
 const clashDisplay = localFont({
@@ -38,7 +40,11 @@ export default function RootLayout({
     >
       <body className="relative min-h-full bg-background text-foreground grain">
         <BeamsGlobalMount />
-        <SmoothScrollProvider>{children}</SmoothScrollProvider>
+        <SmoothScrollProvider>
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+        </SmoothScrollProvider>
         <SplashCursorMount />
       </body>
     </html>
