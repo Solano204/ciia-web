@@ -202,6 +202,7 @@
 - Fundadores con logos a color.
 - Principios ("Descubrimos / no diagnosticamos") conservados pero más compactos.
 - CTA: "Contáctanos".
+- Pendiente: error de hidratación en `/nosotros` con `prefers-reduced-motion: reduce` activo (detectado durante la Fase 2). Reproducir con reduced motion, revisar la consola y corregir en esta fase.
 
 ### FASE 8 — Ecosistema
 - Logos a color completo, más grandes, con hover sutil. Que resalten y no se vea apagado.
