@@ -51,7 +51,7 @@ export function BentoCard({
       } ${size === "sm" ? "p-5" : "p-6"} ${className}`}
     >
       <div className="flex items-start justify-between gap-4">
-        <span className="font-mono text-xs uppercase tracking-[0.22em] text-foreground">
+        <span className="font-mono text-xs uppercase tracking-[0.08em] text-foreground">
           {service.title}
         </span>
         <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[var(--line-strong)] text-[var(--text-secondary)] transition-transform duration-200 motion-reduce:transition-none group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-foreground">
@@ -69,7 +69,7 @@ export function BentoCard({
       {/* Regla de la tarjeta: título + una frase + dato clave. La descripción,
           los puntos y las specs viven en /soluciones/[id]. */}
       <div className="flex flex-col gap-2">
-        <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
+        <span className="font-mono text-[12px] uppercase tracking-[0.08em] text-muted">
           {service.category}
         </span>
         <h3
@@ -93,7 +93,7 @@ export function BentoCard({
       {/* Por encima del ::after del enlace extendido, para que sea clicable
           por separado en vez de llevar también a la página de la solución. */}
       <div className="relative z-10">
-        <CtaLink href="#contacto" className="py-0 text-[10px]">
+        <CtaLink href="#contacto" className="py-0 text-[12px]">
           {CTA_COPY.asesoria}
         </CtaLink>
       </div>

@@ -38,7 +38,7 @@ export function SolutionDetail({
     <main className="mx-auto flex max-w-[1400px] flex-col gap-16 px-6 py-24 md:px-10 bg-transparent">
       <Link
         href={SOLUTIONS_HREF}
-        className="inline-flex w-fit items-center gap-2 font-mono text-[11px] uppercase tracking-[0.22em] text-muted transition-colors hover:text-foreground"
+        className="inline-flex w-fit items-center gap-2 font-mono text-[12px] uppercase tracking-[0.08em] text-muted transition-colors hover:text-foreground"
       >
         <span aria-hidden>&larr;</span> Soluciones
       </Link>
@@ -46,14 +46,14 @@ export function SolutionDetail({
       {/* Hero */}
       <div className="grid gap-8 lg:grid-cols-12">
         <div className="flex flex-col gap-4 lg:col-span-7">
-          <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
+          <span className="font-mono text-[12px] uppercase tracking-[0.08em] text-muted">
             {service.category}
           </span>
           <h1 className="font-sans text-[56px] font-semibold uppercase leading-[0.95] tracking-tight text-foreground">
             {service.title}
           </h1>
           {service.previousName && (
-            <p className="font-mono text-[11px] uppercase tracking-[0.18em] text-muted">
+            <p className="font-mono text-[12px] uppercase tracking-[0.08em] text-muted">
               ANTES: {stripAntesPrefix(service.previousName)}
             </p>
           )}
@@ -61,7 +61,7 @@ export function SolutionDetail({
         </div>
 
         <div className="glass-3-v2 p-6 lg:col-span-4 lg:col-start-9">
-          <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
+          <span className="font-mono text-[12px] uppercase tracking-[0.08em] text-muted">
             Inversión de referencia
           </span>
           <p className="mt-2 text-[22px] font-semibold leading-snug text-accent">
@@ -79,7 +79,7 @@ export function SolutionDetail({
           <p className="text-[17px] leading-relaxed text-[var(--text-secondary)]">{service.description}</p>
 
           <div>
-            <h2 className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
+            <h2 className="font-mono text-[12px] uppercase tracking-[0.08em] text-muted">
               Qué incluye
             </h2>
             <ul className="mt-4 flex flex-col border-t border-[var(--line)]">
@@ -107,7 +107,7 @@ export function SolutionDetail({
           )}
 
           <div>
-            <h2 className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
+            <h2 className="font-mono text-[12px] uppercase tracking-[0.08em] text-muted">
               Componentes
             </h2>
             <div className="mt-3 flex flex-wrap gap-2">

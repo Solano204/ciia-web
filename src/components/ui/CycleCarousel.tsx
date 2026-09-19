@@ -197,7 +197,7 @@ export function CycleCarousel({
                     </span>
                     <span
                       className={[
-                        "whitespace-nowrap font-mono text-xs uppercase tracking-[0.2em]",
+                        "whitespace-nowrap font-mono text-xs uppercase tracking-[0.08em]",
                         "transition-colors duration-200 motion-reduce:transition-none",
                         isActive
                           ? "text-foreground"
@@ -269,7 +269,7 @@ export function CycleCarousel({
               </div>
 
               <div className="flex flex-col gap-5 md:col-span-7">
-                <span className="font-mono text-[11px] uppercase tracking-[0.24em] text-muted">
+                <span className="font-mono text-[12px] uppercase tracking-[0.08em] text-muted">
                   {activeStage.focus}
                 </span>
 
@@ -285,7 +285,7 @@ export function CycleCarousel({
 
                 <dl className="grid gap-5 sm:grid-cols-2">
                   <div>
-                    <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
+                    <dt className="font-mono text-[12px] uppercase tracking-[0.08em] text-muted">
                       Entregable
                     </dt>
                     <dd className="mt-2 text-[15px] leading-relaxed text-foreground">
@@ -293,7 +293,7 @@ export function CycleCarousel({
                     </dd>
                   </div>
                   <div>
-                    <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
+                    <dt className="font-mono text-[12px] uppercase tracking-[0.08em] text-muted">
                       Productos
                     </dt>
                     <dd className="mt-2 flex flex-wrap gap-2">
@@ -309,7 +309,7 @@ export function CycleCarousel({
                   </div>
                   {relatedServices.length > 0 && (
                     <div className="sm:col-span-2">
-                      <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
+                      <dt className="font-mono text-[12px] uppercase tracking-[0.08em] text-muted">
                         Soluciones que intervienen
                       </dt>
                       <dd className="mt-2 flex flex-wrap gap-x-5 gap-y-1.5">
@@ -340,7 +340,7 @@ export function CycleCarousel({
                       style={{ width: `${progress}%` }}
                     />
                   </div>
-                  <span className="font-mono text-[11px] font-semibold text-foreground">
+                  <span className="font-mono text-[12px] font-semibold text-foreground">
                     {Math.round(progress)}%
                   </span>
                 </div>

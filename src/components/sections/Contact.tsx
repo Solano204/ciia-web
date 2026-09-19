@@ -104,7 +104,7 @@ export function Contact() {
               <div>
                 <button
                   type="submit"
-                  className="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 font-mono text-[11px] font-semibold uppercase tracking-[0.22em] text-background outline-none transition-[filter] duration-200 motion-reduce:transition-none hover:brightness-110 focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                  className="inline-flex items-center gap-2 rounded-full bg-accent px-5 py-2.5 font-mono text-[12px] font-semibold uppercase tracking-[0.08em] text-background outline-none transition-[filter] duration-200 motion-reduce:transition-none hover:brightness-110 focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                 >
                   Preparar correo
                 </button>
@@ -145,7 +145,7 @@ export function Contact() {
             <h3 className="font-sans text-lg font-semibold text-foreground">Contacto directo</h3>
             <dl className="mt-5 flex flex-col divide-y divide-white/8 border-y border-white/8">
               <div className="py-4">
-                <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
+                <dt className="font-mono text-[12px] uppercase tracking-[0.08em] text-muted">
                   Correo
                 </dt>
                 <dd className="mt-1">
@@ -158,7 +158,7 @@ export function Contact() {
                 </dd>
               </div>
               <div className="py-4">
-                <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
+                <dt className="font-mono text-[12px] uppercase tracking-[0.08em] text-muted">
                   Teléfono
                 </dt>
                 <dd className="mt-1">
@@ -171,7 +171,7 @@ export function Contact() {
                 </dd>
               </div>
               <div className="py-4">
-                <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
+                <dt className="font-mono text-[12px] uppercase tracking-[0.08em] text-muted">
                   Sede
                 </dt>
                 <dd className="mt-1 text-sm leading-snug text-foreground">
@@ -179,7 +179,7 @@ export function Contact() {
                 </dd>
               </div>
               <div className="py-4">
-                <dt className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
+                <dt className="font-mono text-[12px] uppercase tracking-[0.08em] text-muted">
                   Redes
                 </dt>
                 <dd className="mt-2 flex flex-wrap gap-x-5 gap-y-2">

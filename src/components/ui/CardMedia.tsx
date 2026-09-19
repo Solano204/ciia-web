@@ -106,7 +106,7 @@ export function CardMedia({ media, aspect }: { media: CardMediaData; aspect: Med
       return (
         <div className="flex flex-col gap-1">
           <span className="font-sans text-4xl font-semibold text-foreground">{media.value}</span>
-          <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
+          <span className="font-mono text-[12px] uppercase tracking-[0.08em] text-muted">
             {media.label}
           </span>
         </div>

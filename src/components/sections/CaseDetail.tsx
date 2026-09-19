@@ -45,14 +45,14 @@ export function CaseDetail({
       <div className="mx-auto flex w-full max-w-[1400px] flex-col gap-16 px-6 md:px-10">
         <Link
           href={CASES_HREF}
-          className="inline-flex w-fit items-center gap-2 font-mono text-[11px] uppercase tracking-[0.22em] text-muted transition-colors hover:text-foreground"
+          className="inline-flex w-fit items-center gap-2 font-mono text-[12px] uppercase tracking-[0.08em] text-muted transition-colors hover:text-foreground"
         >
           <span aria-hidden>&larr;</span> Casos
         </Link>
 
         {/* Hero */}
         <div className="mx-auto flex w-full max-w-[900px] flex-col gap-4">
-          <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-muted">
+          <span className="font-mono text-[12px] uppercase tracking-[0.08em] text-muted">
             {item.sector}
           </span>
           <h1 className="font-sans text-[64px] font-semibold leading-[0.95] tracking-tight text-foreground">
@@ -68,7 +68,7 @@ export function CaseDetail({
               <span className="block font-sans text-5xl font-semibold leading-none text-foreground md:text-[72px]">
                 {item.metricHighlight}
               </span>
-              <span className="mt-3 block font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--text-secondary)]">
+              <span className="mt-3 block font-mono text-[12px] uppercase tracking-[0.08em] text-[var(--text-secondary)]">
                 {item.metricLabel}
               </span>
             </div>
@@ -82,7 +82,7 @@ export function CaseDetail({
               key={block.key}
               className={`flex flex-col gap-4 py-12 ${index > 0 ? "border-t border-[var(--line)]" : ""}`}
             >
-              <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
+              <span className="font-mono text-[12px] uppercase tracking-[0.08em] text-muted">
                 {block.eyebrow}
               </span>
               <h2 className="text-2xl font-semibold text-foreground">{block.heading}</h2>
@@ -94,19 +94,19 @@ export function CaseDetail({
         {/* Metadata strip */}
         <dl className="grid grid-cols-2 gap-8 border-y border-[var(--line)] py-8 md:grid-cols-4">
           <div>
-            <dt className="font-mono text-[9px] uppercase tracking-[0.22em] text-muted">
+            <dt className="font-mono text-[12px] uppercase tracking-[0.08em] text-muted">
               Sector
             </dt>
             <dd className="mt-2 text-sm text-foreground">{item.sector}</dd>
           </div>
           <div>
-            <dt className="font-mono text-[9px] uppercase tracking-[0.22em] text-muted">
+            <dt className="font-mono text-[12px] uppercase tracking-[0.08em] text-muted">
               Tecnología
             </dt>
             <dd className="mt-2 text-sm text-foreground">{techLabel}</dd>
           </div>
           <div>
-            <dt className="font-mono text-[9px] uppercase tracking-[0.22em] text-muted">
+            <dt className="font-mono text-[12px] uppercase tracking-[0.08em] text-muted">
               Resultado clave
             </dt>
             <dd className="mt-2 text-sm text-foreground">
@@ -114,7 +114,7 @@ export function CaseDetail({
             </dd>
           </div>
           <div>
-            <dt className="font-mono text-[9px] uppercase tracking-[0.22em] text-muted">
+            <dt className="font-mono text-[12px] uppercase tracking-[0.08em] text-muted">
               Etiquetas
             </dt>
             <dd className="mt-2 text-sm text-foreground">{etiquetasValue}</dd>
@@ -123,7 +123,7 @@ export function CaseDetail({
 
         {/* Tags */}
         <div>
-          <h2 className="font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
+          <h2 className="font-mono text-[12px] uppercase tracking-[0.08em] text-muted">
             Tags
           </h2>
           <div className="mt-3 flex flex-wrap gap-2">
@@ -151,7 +151,7 @@ export function CaseDetail({
         {/* Prev / next */}
         <nav aria-label="Otros casos" className="grid gap-8 border-t border-[var(--line)] pt-12 sm:grid-cols-2">
           <Link href={`/casos/${prev.id}`} className="group flex flex-col gap-2">
-            <span className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
+            <span className="flex items-center gap-2 font-mono text-[12px] uppercase tracking-[0.08em] text-muted">
               <span aria-hidden>&larr;</span> Caso anterior
             </span>
             <span className="text-base text-foreground transition-colors group-hover:text-accent">
@@ -162,7 +162,7 @@ export function CaseDetail({
             href={`/casos/${next.id}`}
             className="group flex flex-col items-end gap-2 text-right"
           >
-            <span className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.22em] text-muted">
+            <span className="flex items-center gap-2 font-mono text-[12px] uppercase tracking-[0.08em] text-muted">
               Caso siguiente <span aria-hidden>&rarr;</span>
             </span>
             <span className="text-base text-foreground transition-colors group-hover:text-accent">

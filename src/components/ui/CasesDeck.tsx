@@ -121,7 +121,7 @@ export function CasesDeck({
 
           <span
             aria-live="polite"
-            className="shrink-0 font-mono text-[11px] tabular-nums text-muted"
+            className="shrink-0 font-mono text-[12px] tabular-nums text-muted"
           >
             {current} / {total}
           </span>

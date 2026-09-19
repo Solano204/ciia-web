@@ -58,7 +58,7 @@ export function StageRail({
             return (
               <Fragment key={stage.id}>
                 <span
-                  className={`text-center font-mono text-[11px] uppercase tracking-[0.14em] ${labelClass(active)}`}
+                  className={`text-center font-mono text-[12px] uppercase tracking-[0.08em] ${labelClass(active)}`}
                 >
                   {stage.name}
                 </span>
@@ -92,7 +92,7 @@ export function StageRail({
                 )}
               </div>
               <span
-                className={`pt-2 pb-4 font-mono text-[11px] uppercase tracking-[0.14em] ${labelClass(active)}`}
+                className={`pt-2 pb-4 font-mono text-[12px] uppercase tracking-[0.08em] ${labelClass(active)}`}
               >
                 {stage.name}
               </span>

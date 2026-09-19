@@ -75,14 +75,14 @@ export function CaseCard({
         isActive ? "lg:scale-100 lg:opacity-100" : "lg:scale-[0.96] lg:opacity-[0.35]",
       ].join(" ")}
     >
-      <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
+      <span className="font-mono text-[12px] uppercase tracking-[0.08em] text-muted">
         {item.sector} &middot; {technologyLabel(item.technology)}
       </span>
 
       <span className="mt-6 font-sans text-[56px] font-bold leading-none tabular-nums text-accent lg:text-[72px]">
         {item.metricHighlight}
       </span>
-      <span className="mt-3 font-mono text-[10px] uppercase tracking-[0.2em] text-muted">
+      <span className="mt-3 font-mono text-[12px] uppercase tracking-[0.08em] text-muted">
         {item.metricLabel}
       </span>
 

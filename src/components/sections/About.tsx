@@ -132,7 +132,7 @@ function PartnerTile({ partner, isActive, onActivate }: PartnerTileProps) {
 
   const content = logoFailed ? (
     <span
-      className={`font-mono text-sm uppercase tracking-[0.18em] ${onLight ? "text-zinc-600" : "text-zinc-400"}`}
+      className={`font-mono text-sm uppercase tracking-[0.08em] ${onLight ? "text-zinc-600" : "text-zinc-400"}`}
     >
       {initialsOf(partner.name)}
     </span>
@@ -686,7 +686,7 @@ export function About() {
                   />
                 </span>
                 <span
-                  className="mt-3 block font-mono text-[10px] uppercase leading-relaxed tracking-[0.15em] text-muted"
+                  className="mt-3 block font-mono text-[12px] uppercase leading-relaxed tracking-[0.08em] text-muted"
                   data-fx="stat-label"
                 >
                   {stat.label}
