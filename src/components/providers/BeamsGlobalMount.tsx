@@ -18,8 +18,8 @@ function useBeamsPaused(): boolean {
   useEffect(() => {
     const opaqueSections = document.querySelectorAll(".scroll-animation");
     if (opaqueSections.length === 0) {
-      setOccluded(false);
-      return;
+      const rafId = requestAnimationFrame(() => setOccluded(false));
+      return () => cancelAnimationFrame(rafId);
     }
     const intersecting = new Set<Element>();
     const observer = new IntersectionObserver((entries) => {

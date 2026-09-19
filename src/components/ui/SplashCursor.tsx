@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
 
 interface ColorRGB {
   r: number;
@@ -87,17 +87,20 @@ function pointerPrototype(): Pointer {
 }
 
 function useMatchMedia(query: string): boolean {
-  const [matches, setMatches] = useState(false);
+  const subscribe = useCallback(
+    (onChange: () => void) => {
+      const mql = window.matchMedia(query);
+      mql.addEventListener("change", onChange);
+      return () => mql.removeEventListener("change", onChange);
+    },
+    [query],
+  );
 
-  useEffect(() => {
-    const mql = window.matchMedia(query);
-    setMatches(mql.matches);
-    const onChange = () => setMatches(mql.matches);
-    mql.addEventListener("change", onChange);
-    return () => mql.removeEventListener("change", onChange);
-  }, [query]);
-
-  return matches;
+  return useSyncExternalStore(
+    subscribe,
+    () => window.matchMedia(query).matches,
+    () => false,
+  );
 }
 
 export default function SplashCursor({
@@ -119,6 +122,7 @@ export default function SplashCursor({
   COLOR = "#ff0000",
 }: SplashCursorProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const { r: backR, g: backG, b: backB } = BACK_COLOR;
 
   // --- Performance guards: reduced motion, touch devices, small viewports ---
   const prefersReducedMotion = useMatchMedia("(prefers-reduced-motion: reduce)");
@@ -145,7 +149,7 @@ export default function SplashCursor({
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    let pointers: Pointer[] = [pointerPrototype()];
+    const pointers: Pointer[] = [pointerPrototype()];
 
     const config = {
       SIM_RESOLUTION,
@@ -161,7 +165,7 @@ export default function SplashCursor({
       SHADING,
       COLOR_UPDATE_SPEED,
       PAUSED: false,
-      BACK_COLOR,
+      BACK_COLOR: { r: backR, g: backG, b: backB },
       TRANSPARENT,
       RAINBOW_MODE,
       COLOR,
@@ -1477,9 +1481,9 @@ export default function SplashCursor({
     SPLAT_FORCE,
     SHADING,
     COLOR_UPDATE_SPEED,
-    BACK_COLOR.r,
-    BACK_COLOR.g,
-    BACK_COLOR.b,
+    backR,
+    backG,
+    backB,
     TRANSPARENT,
     RAINBOW_MODE,
     COLOR,

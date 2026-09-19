@@ -25,14 +25,11 @@ function stripAntesPrefix(value: string): string {
 
 export function SolutionDetail({
   service,
-  index,
   stages,
 }: {
   service: ServiceItem;
-  index: number;
   stages: ExecutionStage[];
 }) {
-  const serviceNumber = String(index + 1).padStart(2, "0");
   const imageExists = hasLocalImage(service.id);
 
   return (
@@ -127,27 +124,7 @@ export function SolutionDetail({
 
         <div className="lg:col-span-5 lg:col-start-8">
           <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-[var(--border-v2)]">
-            {imageExists ? (
-              <DecayImage src={`/soluciones/${service.id}.jpg`} alt={service.title} />
-            ) : (
-              <>
-                {/* ponytail: no local asset yet at public/soluciones/<id>.jpg —
-                    placeholder photo so the decay effect is visible; swap to the
-                    real image when it lands. */}
-                <DecayImage
-                  src={`https://picsum.photos/seed/${service.id}/800/600?grayscale`}
-                  alt={service.title}
-                />
-                <div className="absolute inset-0 flex items-center justify-center bg-black/40">
-                  <span
-                    aria-hidden
-                    className="select-none font-sans text-[140px] font-semibold leading-none text-white/10"
-                  >
-                    {serviceNumber}
-                  </span>
-                </div>
-              </>
-            )}
+            {imageExists && <DecayImage src={`/soluciones/${service.id}.jpg`} alt={service.title} />}
           </div>
         </div>
       </div>

@@ -32,5 +32,5 @@ export default async function SolutionDetailPage({
   const index = SERVICES_DATA.findIndex((s) => s.id === id);
   if (index === -1) notFound();
 
-  return <SolutionDetail service={SERVICES_DATA[index]} index={index} stages={EXECUTION_STAGES} />;
+  return <SolutionDetail service={SERVICES_DATA[index]} stages={EXECUTION_STAGES} />;
 }
