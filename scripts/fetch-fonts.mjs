@@ -14,6 +14,9 @@ const FAMILIES = {
   "general-sans": ["GeneralSans-Variable.woff2"],
 };
 
+const DEV_ONLY = new Set(["cabinet-grotesk", "general-sans"]);
+const isDev = process.argv.includes("--dev");
+
 const CD_SIGNATURE = 0x02014b50;
 const EOCD_SIGNATURE = Buffer.from([0x50, 0x4b, 0x05, 0x06]);
 
@@ -66,6 +69,7 @@ async function fetchFamily(slug, files) {
 mkdirSync(FONTS_DIR, { recursive: true });
 
 for (const [slug, files] of Object.entries(FAMILIES)) {
+  if (!isDev && DEV_ONLY.has(slug)) continue;
   if (files.every((file) => existsSync(join(FONTS_DIR, file)))) continue;
   try {
     for (const [file, data] of await fetchFamily(slug, files)) {
