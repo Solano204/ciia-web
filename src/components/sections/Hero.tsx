@@ -1,8 +1,6 @@
 "use client";
 
 import { useCallback, useRef, useState } from "react";
-import { EyebrowBadge } from "@/components/ui/EyebrowBadge";
-import { HudFrame } from "@/components/ui/HudFrame";
 import { CtaButton, CtaLink } from "@/components/ui/Cta";
 import { DIALOGUES, FRAME_COUNT, HERO_TEXT_FADE_END, framePath } from "@/lib/hero";
 import { CTA_COPY, INSTITUTIONAL_METRICS, MANIFESTO, schedulingHref } from "@/lib/ciiia";
@@ -70,25 +68,15 @@ export function Hero() {
           }}
         />
 
-        <div className="pointer-events-none absolute left-6 top-24 text-accent md:left-10 md:top-28">
-          <HudFrame corner="tl" size={26} />
-        </div>
-        <div className="pointer-events-none absolute right-6 top-24 text-accent md:right-10 md:top-28">
-          <HudFrame corner="tr" size={26} />
-        </div>
-        <div className="pointer-events-none absolute bottom-14 left-6 text-accent md:bottom-16 md:left-10">
-          <HudFrame corner="bl" size={26} />
-        </div>
-        <div className="pointer-events-none absolute bottom-14 right-6 text-accent md:bottom-16 md:right-10">
-          <HudFrame corner="br" size={26} />
-        </div>
-
         <div
           ref={heroTextRef}
           className="absolute inset-x-0 bottom-0 z-10 flex flex-col items-start gap-5 px-6 pb-24 md:px-12 md:pb-28"
           style={{ transition: "opacity 80ms linear" }}
         >
-          <EyebrowBadge>{MANIFESTO.eyebrow}</EyebrowBadge>
+          <span className="inline-flex items-center gap-2 font-sans text-[12px] font-medium uppercase tracking-[0.08em] text-accent">
+            <span aria-hidden className="inline-block h-1.5 w-1.5 rounded-full bg-accent" />
+            {MANIFESTO.eyebrow}
+          </span>
           <h1 className="max-w-[16ch] font-display text-5xl font-semibold leading-[0.95] text-foreground md:text-7xl lg:text-8xl">
             {MANIFESTO.problem[0]}
             <br />
@@ -170,7 +158,7 @@ export function Hero() {
               className={`pointer-events-none absolute ${position} z-20 hidden w-[420px] max-w-[90vw] md:block`}
             >
               <figure
-                className={`card-surface pointer-events-auto p-6 transition-all duration-400 ease-out ${
+                className={`pointer-events-auto border-l border-[var(--line-strong)] pl-6 [text-shadow:0_1px_14px_rgba(0,0,0,0.7)] transition-all duration-400 ease-out ${
                   visible ? "translate-y-0 opacity-100" : "translate-y-5 opacity-0"
                 }`}
               >
@@ -194,7 +182,7 @@ export function Hero() {
             return (
               <figure
                 key={d.id}
-                className={`card-surface pointer-events-auto p-5 transition-all duration-400 ease-out ${
+                className={`pointer-events-auto border-l border-[var(--line-strong)] pl-5 [text-shadow:0_1px_14px_rgba(0,0,0,0.7)] transition-all duration-400 ease-out ${
                   visible
                     ? "translate-y-0 opacity-100"
                     : "translate-y-4 opacity-0"
@@ -218,7 +206,10 @@ export function Hero() {
 
         {!loaded && (
           <div className="absolute inset-0 z-30 flex flex-col items-center justify-center gap-5 bg-background px-6">
-            <EyebrowBadge>CII.IA // CARGANDO</EyebrowBadge>
+            <span className="inline-flex items-center gap-2 font-sans text-[12px] font-medium uppercase tracking-[0.08em] text-accent">
+              <span aria-hidden className="inline-block h-1.5 w-1.5 rounded-full bg-accent" />
+              CII.IA // CARGANDO
+            </span>
             <div className="h-px w-60 bg-white/10 md:w-80">
               <div
                 className="h-full bg-accent transition-[width] duration-150 ease-out"
