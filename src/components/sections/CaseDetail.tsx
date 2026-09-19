@@ -7,10 +7,8 @@ import { technologyLabel } from "@/lib/cases";
 import { CtaButton } from "@/components/ui/Cta";
 import { CTA_COPY, type ProjectCase } from "@/lib/ciiia";
 
-// ponytail: "/casos" and "/contacto" only exist as home-page anchors today,
-// not standalone routes — linking there instead of a 404.
-const CASES_HREF = "/#casos";
-const CONTACT_HREF = "/#contacto";
+const CASES_HREF = "/casos";
+const CONTACT_HREF = "/contacto";
 
 function hasLocalImage(id: string): boolean {
   return fs.existsSync(path.join(process.cwd(), "public", "casos", `${id}.jpg`));

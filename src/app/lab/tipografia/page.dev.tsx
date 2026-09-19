@@ -59,7 +59,7 @@ function Option({
         <p className="max-w-[56ch] text-body text-[var(--text-secondary)]">{MANIFESTO.lead}</p>
         <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
           <CtaButton href={schedulingHref()}>{CTA_COPY.agenda}</CtaButton>
-          <CtaLink href="#soluciones">Ver soluciones</CtaLink>
+          <CtaLink href="/soluciones">Ver soluciones</CtaLink>
         </div>
       </div>
 

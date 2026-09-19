@@ -7,11 +7,12 @@ import { AnimatedItem, AnimatedSection } from "@/components/ui/AnimatedSection";
 import { EcosystemGrid } from "@/components/ui/EcosystemGrid";
 import { CtaButton, CtaLink, SectionCta } from "@/components/ui/Cta";
 import { Section } from "@/components/ui/Section";
+import type { HeadingLevel } from "@/components/ui/SectionHeader";
 import { CTA_COPY, ECOSYSTEM_INTRO, schedulingHref } from "@/lib/ciiia";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export function Ecosystem() {
+export function Ecosystem({ headingLevel: Heading = "h2" }: { headingLevel?: HeadingLevel }) {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -42,12 +43,12 @@ export function Ecosystem() {
             <div className="lg:col-span-12" data-fx="eco-header">
               <div className="grid gap-5 lg:grid-cols-12 lg:items-end">
                 <span className="block overflow-hidden pb-[0.08em] lg:col-span-6">
-                  <h2
+                  <Heading
                     className="font-display text-h2 font-medium text-foreground"
                     data-fx="eco-title"
                   >
                     Ecosistema
-                  </h2>
+                  </Heading>
                 </span>
                 <p
                   className="max-w-[420px] text-[15px] leading-relaxed text-zinc-400 lg:col-span-5 lg:col-start-8"
@@ -68,7 +69,7 @@ export function Ecosystem() {
           </AnimatedSection>
 
           <SectionCta className="border-white/8">
-            <CtaButton href="#contacto">{CTA_COPY.contacto}</CtaButton>
+            <CtaButton href="/contacto">{CTA_COPY.contacto}</CtaButton>
             <CtaLink href={schedulingHref()}>{CTA_COPY.agenda}</CtaLink>
           </SectionCta>
     </Section>

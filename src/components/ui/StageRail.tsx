@@ -2,10 +2,7 @@ import { Fragment } from "react";
 import Link from "next/link";
 import type { ExecutionStage } from "@/lib/ciiia";
 
-// ponytail: "/metodologia" doesn't exist as its own route yet — the
-// equivalent content lives at the home page's #ciclo section, so the rail
-// links there instead of a dead 404.
-const METHODOLOGY_HREF = "/#ciclo";
+const METHODOLOGY_HREF = "/ciclo";
 
 function nodeClass(active: boolean) {
   return active

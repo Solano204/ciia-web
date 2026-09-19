@@ -14,7 +14,7 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 // Los alias sin sufijo (`CaretLeft`) están deprecados en phosphor v2.1.
 import { CaretLeftIcon, CaretRightIcon } from "@phosphor-icons/react";
 import { CtaButton } from "@/components/ui/Cta";
-import { SectionHeader } from "@/components/ui/SectionHeader";
+import { SectionHeader, type HeadingLevel } from "@/components/ui/SectionHeader";
 import {
   CTA_COPY,
   cycleImageSrc,
@@ -36,9 +36,11 @@ export function CycleCarousel({
   services,
   title,
   description,
+  headingLevel = "h2",
 }: {
   stages: ExecutionStage[];
   services: ServiceItem[];
+  headingLevel?: HeadingLevel;
   title: string;
   description: string;
 }) {
@@ -124,7 +126,7 @@ export function CycleCarousel({
       {/* Cabecera a todo lo ancho, con el mismo patrón que Soluciones y Casos:
           antes vivía apilada en la columna izquierda y empujaba el riel hacia
           abajo, dejando un hueco muerto junto a la tarjeta. */}
-      <SectionHeader title={title} description={description} />
+      <SectionHeader as={headingLevel} title={title} description={description} />
 
       <div className="grid gap-8 lg:grid-cols-12 lg:gap-6">
         {/* `min-w-0` en toda la cadena: sin él, el `min-width:auto` que traen

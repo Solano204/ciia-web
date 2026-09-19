@@ -88,7 +88,7 @@ export function Hero() {
 
           <div className="flex flex-wrap items-center gap-x-6 gap-y-3">
             <CtaButton href={schedulingHref()}>{CTA_COPY.agenda}</CtaButton>
-            <CtaLink href="#soluciones">Ver soluciones</CtaLink>
+            <CtaLink href="/soluciones">Ver soluciones</CtaLink>
           </div>
         </div>
 

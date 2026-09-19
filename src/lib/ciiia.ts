@@ -846,14 +846,14 @@ export const SCHEDULING_URL: string = "";
 export const SITE_URL = "https://ciiia.mx";
 
 /** Destino de «Agenda con nosotros», con respaldo mientras falte la agenda. */
-export const schedulingHref = (): string => SCHEDULING_URL || "#contacto";
+export const schedulingHref = (): string => SCHEDULING_URL || "/contacto";
 
 /** Enlaces de navegación compartidos por el nav y el pie de página. */
 export const NAV_LINKS: { href: string; label: string }[] = [
-  { href: "#soluciones", label: "Soluciones" },
-  { href: "#ciclo", label: "Ciclo" },
-  { href: "#casos", label: "Casos" },
-  { href: "#nosotros", label: "Nosotros" },
-  { href: "#ecosistema", label: "Ecosistema" },
-  { href: "#contacto", label: "Contacto" },
+  { href: "/soluciones", label: "Soluciones" },
+  { href: "/ciclo", label: "Ciclo" },
+  { href: "/casos", label: "Casos" },
+  { href: "/nosotros", label: "Nosotros" },
+  { href: "/ecosistema", label: "Ecosistema" },
+  { href: "/contacto", label: "Contacto" },
 ];

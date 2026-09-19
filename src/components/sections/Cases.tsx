@@ -6,10 +6,10 @@ import { CaseFilters, type CaseFilterState } from "@/components/ui/CaseFilters";
 import { CasesDeck } from "@/components/ui/CasesDeck";
 import { CtaButton, CtaLink, SectionCta } from "@/components/ui/Cta";
 import { Section } from "@/components/ui/Section";
-import { SectionHeader } from "@/components/ui/SectionHeader";
+import { SectionHeader, type HeadingLevel } from "@/components/ui/SectionHeader";
 import { CTA_COPY, PROJECT_CASES, schedulingHref } from "@/lib/ciiia";
 
-export function Cases() {
+export function Cases({ headingLevel = "h2" }: { headingLevel?: HeadingLevel }) {
   const [filters, setFilters] = useState<CaseFilterState>({ sector: "todos", technology: "todas" });
 
   const filtered = useMemo(
@@ -26,6 +26,7 @@ export function Cases() {
     <Section id="casos" className="flex flex-col gap-12">
       <SectionHeader
         animated
+        as={headingLevel}
         title="Casos"
         description="Doce soluciones de inteligencia artificial documentadas por el CII.IA en manufactura, comercio, servicios financieros y seguridad."
       />
@@ -43,7 +44,7 @@ export function Cases() {
       )}
 
       <SectionCta>
-        <CtaButton href="#contacto">{CTA_COPY.asesoriaCaso}</CtaButton>
+        <CtaButton href="/contacto">{CTA_COPY.asesoriaCaso}</CtaButton>
         <CtaLink href={schedulingHref()}>{CTA_COPY.agenda}</CtaLink>
       </SectionCta>
     </Section>

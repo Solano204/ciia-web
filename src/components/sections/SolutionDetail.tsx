@@ -7,10 +7,8 @@ import { BeamsBackground } from "@/components/ui/BeamsBackground";
 import { CtaButton } from "@/components/ui/Cta";
 import { CTA_COPY, type ExecutionStage, type ServiceItem } from "@/lib/ciiia";
 
-// ponytail: these three sections only exist as anchors on the home page
-// today, not standalone routes — linking there instead of a 404.
-const SOLUTIONS_HREF = "/#soluciones";
-const CONTACT_HREF = "/#contacto";
+const SOLUTIONS_HREF = "/soluciones";
+const CONTACT_HREF = "/contacto";
 
 function hasLocalImage(id: string): boolean {
   return fs.existsSync(path.join(process.cwd(), "public", "soluciones", `${id}.jpg`));
