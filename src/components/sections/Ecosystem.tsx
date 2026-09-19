@@ -4,7 +4,7 @@ import { Suspense, useEffect, useRef } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { AnimatedItem, AnimatedSection } from "@/components/ui/AnimatedSection";
-import { EcosystemGrid } from "@/components/ui/EcosystemGrid";
+import { EcosystemGrid, EcosystemLogos } from "@/components/ui/EcosystemGrid";
 import { CtaButton, CtaLink, SectionCta } from "@/components/ui/Cta";
 import { Section } from "@/components/ui/Section";
 import type { HeadingLevel } from "@/components/ui/SectionHeader";
@@ -12,7 +12,14 @@ import { CTA_COPY, ECOSYSTEM_INTRO, schedulingHref } from "@/lib/ciiia";
 
 gsap.registerPlugin(ScrollTrigger);
 
-export function Ecosystem({ headingLevel: Heading = "h2" }: { headingLevel?: HeadingLevel }) {
+export function Ecosystem({
+  headingLevel: Heading = "h2",
+  limit,
+}: {
+  headingLevel?: HeadingLevel;
+  /** Teaser de la home: solo los primeros `limit` logos, con enlace a /ecosistema. */
+  limit?: number;
+}) {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -62,15 +69,23 @@ export function Ecosystem({ headingLevel: Heading = "h2" }: { headingLevel?: Hea
 
           <AnimatedSection>
             <AnimatedItem>
-              <Suspense fallback={<div className="h-px w-full border-y border-white/8" />}>
-                <EcosystemGrid />
-              </Suspense>
+              {limit ? (
+                <EcosystemLogos limit={limit} />
+              ) : (
+                <Suspense fallback={<div className="h-px w-full border-y border-white/8" />}>
+                  <EcosystemGrid />
+                </Suspense>
+              )}
             </AnimatedItem>
           </AnimatedSection>
 
           <SectionCta className="border-white/8">
             <CtaButton href="/contacto">{CTA_COPY.contacto}</CtaButton>
-            <CtaLink href={schedulingHref()}>{CTA_COPY.agenda}</CtaLink>
+            {limit ? (
+              <CtaLink href="/ecosistema">Ver todo el ecosistema</CtaLink>
+            ) : (
+              <CtaLink href={schedulingHref()}>{CTA_COPY.agenda}</CtaLink>
+            )}
           </SectionCta>
     </Section>
   );

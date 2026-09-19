@@ -9,17 +9,24 @@ import { Section } from "@/components/ui/Section";
 import { SectionHeader, type HeadingLevel } from "@/components/ui/SectionHeader";
 import { CTA_COPY, PROJECT_CASES, schedulingHref } from "@/lib/ciiia";
 
-export function Cases({ headingLevel = "h2" }: { headingLevel?: HeadingLevel }) {
+export function Cases({
+  headingLevel = "h2",
+  limit,
+}: {
+  headingLevel?: HeadingLevel;
+  /** Teaser de la home: solo los primeros `limit`, sin filtros y con enlace a /casos. */
+  limit?: number;
+}) {
   const [filters, setFilters] = useState<CaseFilterState>({ sector: "todos", technology: "todas" });
 
   const filtered = useMemo(
     () =>
-      PROJECT_CASES.filter(
+      (limit ? PROJECT_CASES.slice(0, limit) : PROJECT_CASES).filter(
         (item) =>
           (filters.sector === "todos" || item.sector === filters.sector) &&
           (filters.technology === "todas" || item.technology === filters.technology),
       ),
-    [filters],
+    [filters, limit],
   );
 
   return (
@@ -31,9 +38,11 @@ export function Cases({ headingLevel = "h2" }: { headingLevel?: HeadingLevel }) 
         description="Doce soluciones de inteligencia artificial documentadas por el CII.IA en manufactura, comercio, servicios financieros y seguridad."
       />
 
-      <AnimatedItem>
-        <CaseFilters cases={PROJECT_CASES} value={filters} onChange={setFilters} />
-      </AnimatedItem>
+      {!limit && (
+        <AnimatedItem>
+          <CaseFilters cases={PROJECT_CASES} value={filters} onChange={setFilters} />
+        </AnimatedItem>
+      )}
 
       {filtered.length === 0 ? (
         <p className="font-sans text-sm text-muted">
@@ -45,7 +54,11 @@ export function Cases({ headingLevel = "h2" }: { headingLevel?: HeadingLevel }) 
 
       <SectionCta>
         <CtaButton href="/contacto">{CTA_COPY.asesoriaCaso}</CtaButton>
-        <CtaLink href={schedulingHref()}>{CTA_COPY.agenda}</CtaLink>
+        {limit ? (
+          <CtaLink href="/casos">Ver todos los casos</CtaLink>
+        ) : (
+          <CtaLink href={schedulingHref()}>{CTA_COPY.agenda}</CtaLink>
+        )}
       </SectionCta>
     </Section>
   );

@@ -10,7 +10,17 @@ import { CONTACT_INFO, CTA_COPY, SCHEDULING_URL } from "@/lib/ciiia";
 const inputClasses =
   "mt-2 block w-full rounded-lg border border-white/10 bg-white/[0.03] px-3.5 py-2.5 text-sm text-foreground outline-none transition-colors focus:border-accent";
 
-export function Contact({ headingLevel = "h2" }: { headingLevel?: HeadingLevel }) {
+const TITLE = "Contacto";
+const DESCRIPTION = "Cuéntanos qué necesitas y en qué punto está tu organización.";
+
+export function Contact({
+  headingLevel = "h2",
+  teaser = false,
+}: {
+  headingLevel?: HeadingLevel;
+  /** Cierre de la home: solo el encabezado y un CTA hacia /contacto. */
+  teaser?: boolean;
+}) {
   const [prepared, setPrepared] = useState(false);
   const nombreId = useId();
   const orgId = useId();
@@ -35,14 +45,20 @@ export function Contact({ headingLevel = "h2" }: { headingLevel?: HeadingLevel }
     setPrepared(true);
   };
 
+  if (teaser) {
+    return (
+      <Section id="contacto" className="flex flex-col gap-8">
+        <SectionHeader animated as={headingLevel} title={TITLE} description={DESCRIPTION} />
+        <div>
+          <CtaButton href="/contacto">{CTA_COPY.contacto}</CtaButton>
+        </div>
+      </Section>
+    );
+  }
+
   return (
     <Section id="contacto" className="flex flex-col gap-12">
-        <SectionHeader
-          animated
-          as={headingLevel}
-          title="Contacto"
-          description="Cuéntanos qué necesitas y en qué punto está tu organización."
-        />
+        <SectionHeader animated as={headingLevel} title={TITLE} description={DESCRIPTION} />
 
         <div className="grid gap-12 md:grid-cols-12">
           <AnimatedItem className="md:col-span-7">

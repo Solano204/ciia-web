@@ -375,7 +375,14 @@ function WorkPrinciples() {
   );
 }
 
-export function About({ headingLevel: Heading = "h2" }: { headingLevel?: HeadingLevel }) {
+export function About({
+  headingLevel: Heading = "h2",
+  teaser = false,
+}: {
+  headingLevel?: HeadingLevel;
+  /** Teaser de la home: titular, dato del 5% y foto, con enlace a /nosotros. */
+  teaser?: boolean;
+}) {
   const lastHeadlineIndex = ABOUT_DATA.headlineLines.length - 1;
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -443,6 +450,9 @@ export function About({ headingLevel: Heading = "h2" }: { headingLevel?: Heading
           0.1,
         )
         .from("[data-fx='highlight-copy']", { opacity: 0, y: 18, duration: 0.7, ease: "power2.out" }, 0.45);
+
+      // En el teaser de la home no hay cifras, socios ni principios.
+      if (teaser) return;
 
       // Stats: cada número sube enmascarado y su etiqueta aparece detrás.
       gsap
@@ -564,7 +574,7 @@ export function About({ headingLevel: Heading = "h2" }: { headingLevel?: Heading
     );
 
     return () => mm.revert();
-  }, []);
+  }, [teaser]);
 
   return (
     <Section ref={sectionRef} id="nosotros" className="flex flex-col gap-20">
@@ -642,6 +652,8 @@ export function About({ headingLevel: Heading = "h2" }: { headingLevel?: Heading
           </div>
         </AnimatedSection>
 
+        {!teaser && (
+          <>
         <AnimatedSection className="border-t border-white/8 pt-16">
           <div
             className="grid grid-cols-2 divide-white/8 lg:grid-cols-4 lg:divide-x"
@@ -680,12 +692,19 @@ export function About({ headingLevel: Heading = "h2" }: { headingLevel?: Heading
         <FoundingPartners />
 
         <WorkPrinciples />
+          </>
+        )}
 
         <SectionCta className="border-white/8">
           <CtaButton href="/contacto">{CTA_COPY.contacto}</CtaButton>
-          <CtaLink href="/ecosistema">Ver el ecosistema</CtaLink>
+          {teaser ? (
+            <CtaLink href="/nosotros">Conocer al CII.IA</CtaLink>
+          ) : (
+            <CtaLink href="/ecosistema">Ver el ecosistema</CtaLink>
+          )}
         </SectionCta>
 
+        {!teaser && (
         <AnimatedSection className="grid gap-10 border-t border-white/8 pt-12 md:grid-cols-2">
           {CLIENT_QUOTES.map((item) => (
             <AnimatedItem key={item.id}>
@@ -698,6 +717,7 @@ export function About({ headingLevel: Heading = "h2" }: { headingLevel?: Heading
             </AnimatedItem>
           ))}
         </AnimatedSection>
+        )}
     </Section>
   );
 }

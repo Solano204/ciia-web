@@ -12,12 +12,12 @@ export default function Home() {
     <>
       <Hero />
       <Challenge />
-      <Solutions />
-      <ExecutionCycle />
-      <Cases />
-      <About />
-      <Ecosystem />
-      <Contact />
+      <Solutions limit={3} />
+      <ExecutionCycle teaser />
+      <Cases limit={3} />
+      <About teaser />
+      <Ecosystem limit={6} />
+      <Contact teaser />
     </>
   );
 }

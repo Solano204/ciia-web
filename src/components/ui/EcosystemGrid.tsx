@@ -339,6 +339,17 @@ export function EcosystemGrid() {
   );
 }
 
+/** Muestra plana de los primeros `limit` logos: sin filtros ni categorías. */
+export function EcosystemLogos({ limit }: { limit: number }) {
+  return (
+    <div className="grid grid-cols-2 gap-2.5 md:grid-cols-3 xl:grid-cols-6">
+      {ECOSYSTEM_PARTNERS.slice(0, limit).map((partner) => (
+        <PartnerTile key={partner.id} partner={partner} />
+      ))}
+    </div>
+  );
+}
+
 type FilterPillProps = {
   label: string;
   isActive: boolean;
