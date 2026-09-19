@@ -17,9 +17,11 @@ const clashDisplay = localFont({
 });
 
 const satoshi = localFont({
-  src: "../fonts/Satoshi-Variable.woff2",
+  src: [
+    { path: "../fonts/Satoshi-Variable.woff2", weight: "300 900", style: "normal" },
+    { path: "../fonts/Satoshi-VariableItalic.woff2", weight: "300 900", style: "italic" },
+  ],
   variable: "--font-satoshi",
-  weight: "300 900",
   display: "swap",
 });
 

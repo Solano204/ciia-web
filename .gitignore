@@ -23,6 +23,7 @@
 # misc
 .DS_Store
 *.pem
+*.stackdump
 
 # debug
 npm-debug.log*
@@ -43,3 +44,6 @@ public/videos/
 
 # playwright mcp
 .playwright-mcp/
+
+# fonts (ITF FFL, not redistributable): fetched by scripts/fetch-fonts.mjs
+src/fonts/*.woff2
