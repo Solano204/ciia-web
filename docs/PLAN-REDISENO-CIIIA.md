@@ -139,6 +139,7 @@
 - Nav con rutas, estado activo por página y hamburguesa móvil accesible (Esc, foco atrapado, cierre al navegar).
 - Home resumen: un teaser por sección y un CTA final.
 - Página 404 propia con salida al inicio.
+- Pendiente: verificar en el preview de Cloudflare los 404 de prefetch (`__next.*.txt`). Si aparecen, evaluar `prefetch={false}` en `Link` o ajustar el export.
 
 ### FASE 3 — Hero + Reto
 **Hero**
