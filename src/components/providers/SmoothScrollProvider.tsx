@@ -3,7 +3,6 @@
 import Lenis from "lenis";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import gsap from "gsap";
-import { MotionConfig } from "framer-motion";
 
 gsap.registerPlugin(ScrollTrigger);
 import {
@@ -47,9 +46,10 @@ export function SmoothScrollProvider({ children }: Props) {
       instance.raf(time);
       rafId = requestAnimationFrame(raf);
     };
-    rafId = requestAnimationFrame(raf);
-
-    setLenis(instance);
+    rafId = requestAnimationFrame((time) => {
+      setLenis(instance);
+      raf(time);
+    });
 
     return () => {
       cancelAnimationFrame(rafId);

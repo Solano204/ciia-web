@@ -61,13 +61,7 @@ export function CaseDetail({
 
         {/* Visual panel with overlaid metric */}
         <div className="relative aspect-video w-full overflow-hidden rounded-2xl border border-[var(--border-v2)]">
-          {imageExists ? (
-            <DecayImage src={`/casos/${item.id}.jpg`} alt={item.title} />
-          ) : (
-            // ponytail: no local asset yet at public/casos/<id>.jpg — placeholder
-            // photo so the decay effect is visible; swap to the real image when it lands.
-            <DecayImage src={`https://picsum.photos/seed/${item.id}/900/600?grayscale`} alt={item.title} />
-          )}
+          {imageExists && <DecayImage src={`/casos/${item.id}.jpg`} alt={item.title} />}
           <div className="absolute inset-x-0 bottom-0 flex justify-start p-0">
             <div className="glass-3-v2 px-6 py-6 sm:px-8 sm:py-8">
               <span className="block font-sans text-5xl font-semibold leading-none text-foreground md:text-[72px]">

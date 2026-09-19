@@ -839,6 +839,12 @@ export const CTA_COPY = {
  */
 export const SCHEDULING_URL: string = "";
 
+/**
+ * Dominio público del sitio, base de `metadataBase`. TODO: confirmar el dominio
+ * de producción en Cloudflare; mientras tanto se usa el del sitio institucional.
+ */
+export const SITE_URL = "https://ciiia.mx";
+
 /** Destino de «Agenda con nosotros», con respaldo mientras falte la agenda. */
 export const schedulingHref = (): string => SCHEDULING_URL || "#contacto";
 
