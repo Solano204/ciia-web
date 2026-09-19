@@ -75,23 +75,23 @@ export function CaseCard({
         isActive ? "lg:scale-100 lg:opacity-100" : "lg:scale-[0.96] lg:opacity-[0.35]",
       ].join(" ")}
     >
-      <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--text-muted-v2)]">
+      <span className="font-sans text-[12px] uppercase tracking-[0.08em] text-muted">
         {item.sector} &middot; {technologyLabel(item.technology)}
       </span>
 
-      <span className="mt-6 font-sans text-[56px] font-bold leading-none tabular-nums text-accent lg:text-[72px]">
+      <span className="mt-6 font-display text-[56px] font-bold leading-none tabular-nums text-accent lg:text-[72px]">
         {item.metricHighlight}
       </span>
-      <span className="mt-3 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--text-muted-v2)]">
+      <span className="mt-3 font-sans text-[12px] uppercase tracking-[0.08em] text-muted">
         {item.metricLabel}
       </span>
 
       <div className="my-6 h-px w-full bg-white/8" />
 
-      <h3 className="font-sans text-[20px] font-medium text-foreground lg:text-[24px]">
+      <h3 className="font-display text-[20px] font-medium text-foreground lg:text-[24px]">
         {item.title}
       </h3>
-      <p className="mt-3 line-clamp-3 text-[15px] leading-relaxed text-[var(--text-secondary-v2)]">
+      <p className="mt-3 line-clamp-3 text-[15px] leading-relaxed text-[var(--text-secondary)]">
         {item.challenge}
       </p>
 
@@ -104,7 +104,7 @@ export function CaseCard({
           onClick={(event) => event.stopPropagation()}
           onFocus={() => onFocusCard(index)}
           style={deckTransition(animated)}
-          className={`inline-flex items-center gap-1.5 text-[13px] text-[var(--text-secondary-v2)] outline-none transition-opacity hover:text-foreground focus-visible:ring-2 focus-visible:ring-[var(--accent)] ${
+          className={`inline-flex items-center gap-1.5 text-[13px] text-[var(--text-secondary)] outline-none transition-opacity hover:text-foreground focus-visible:ring-2 focus-visible:ring-[var(--accent)] ${
             isActive ? "opacity-100" : "pointer-events-none opacity-0"
           }`}
         >

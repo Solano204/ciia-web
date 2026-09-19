@@ -9,12 +9,12 @@ const METHODOLOGY_HREF = "/#ciclo";
 
 function nodeClass(active: boolean) {
   return active
-    ? "bg-accent-v2 text-white"
-    : "border border-[var(--border-strong-v2)] text-[var(--text-muted-v2)]";
+    ? "bg-accent text-on-accent"
+    : "border border-[var(--line-strong)] text-muted";
 }
 
 function labelClass(active: boolean) {
-  return active ? "text-foreground" : "text-[var(--text-muted-v2)]";
+  return active ? "text-foreground" : "text-muted";
 }
 
 export function StageRail({
@@ -45,7 +45,7 @@ export function StageRail({
                   {stage.number}
                 </Link>
                 {!isLast && (
-                  <div className={`h-px w-full ${active && nextActive ? "bg-accent-v2" : "bg-[var(--border-v2)]"}`} />
+                  <div className={`h-px w-full ${active && nextActive ? "bg-accent" : "bg-[var(--line)]"}`} />
                 )}
               </Fragment>
             );
@@ -58,7 +58,7 @@ export function StageRail({
             return (
               <Fragment key={stage.id}>
                 <span
-                  className={`text-center font-mono text-[11px] uppercase tracking-[0.14em] ${labelClass(active)}`}
+                  className={`text-center font-sans text-[12px] uppercase tracking-[0.08em] ${labelClass(active)}`}
                 >
                   {stage.name}
                 </span>
@@ -86,13 +86,13 @@ export function StageRail({
                 </Link>
                 {!isLast && (
                   <div
-                    className={`w-px flex-1 ${active && nextActive ? "bg-accent-v2" : "bg-[var(--border-v2)]"}`}
+                    className={`w-px flex-1 ${active && nextActive ? "bg-accent" : "bg-[var(--line)]"}`}
                     style={{ minHeight: "24px" }}
                   />
                 )}
               </div>
               <span
-                className={`pt-2 pb-4 font-mono text-[11px] uppercase tracking-[0.14em] ${labelClass(active)}`}
+                className={`pt-2 pb-4 font-sans text-[12px] uppercase tracking-[0.08em] ${labelClass(active)}`}
               >
                 {stage.name}
               </span>

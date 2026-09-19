@@ -20,7 +20,7 @@ export function Footer() {
         <div className="mx-auto flex max-w-[1400px] flex-col gap-10">
           <div className="flex flex-col justify-between gap-10 md:flex-row md:items-start">
             <div className="flex flex-col gap-3">
-              <div className="flex items-center gap-2.5 font-mono text-[11px] font-semibold uppercase tracking-[0.32em] text-foreground">
+              <div className="flex items-center gap-2.5 font-sans text-[12px] font-semibold uppercase tracking-[0.08em] text-foreground">
                 <span
                   aria-hidden
                   className="inline-block h-2 w-2 rounded-full bg-accent shadow-[0_0_12px_rgba(212,162,47,0.9)]"
@@ -38,7 +38,7 @@ export function Footer() {
 
             <div className="flex flex-col gap-8 sm:flex-row sm:gap-14">
               <nav aria-label="Navegación del sitio" className="flex flex-col gap-3">
-                <h2 className="font-mono text-[10px] uppercase tracking-[0.24em] text-zinc-400">
+                <h2 className="font-sans text-[12px] uppercase tracking-[0.08em] text-zinc-400">
                   Navegación
                 </h2>
                 {NAV_LINKS.map(({ href, label }) => (
@@ -54,7 +54,7 @@ export function Footer() {
               </nav>
 
               <div className="flex flex-col gap-3">
-                <h2 className="font-mono text-[10px] uppercase tracking-[0.24em] text-zinc-400">
+                <h2 className="font-sans text-[12px] uppercase tracking-[0.08em] text-zinc-400">
                   Contacto
                 </h2>
                 <a
@@ -72,7 +72,7 @@ export function Footer() {
               </div>
 
               <div className="flex flex-col gap-3">
-                <h2 className="font-mono text-[10px] uppercase tracking-[0.24em] text-zinc-400">
+                <h2 className="font-sans text-[12px] uppercase tracking-[0.08em] text-zinc-400">
                   Redes
                 </h2>
                 {CONTACT_INFO.social.map((network) => (
@@ -95,7 +95,7 @@ export function Footer() {
             </div>
           </div>
 
-          <div className="flex flex-col gap-2 border-t border-white/5 pt-6 font-mono text-[10px] uppercase tracking-[0.28em] text-zinc-400 md:flex-row md:items-center md:justify-between">
+          <div className="flex flex-col gap-2 border-t border-white/5 pt-6 font-sans text-[12px] uppercase tracking-[0.08em] text-zinc-400 md:flex-row md:items-center md:justify-between">
             <span>
               &copy; {year} CII.IA &nbsp;&middot;&nbsp; Administrado por Monterrey IT
               Clúster

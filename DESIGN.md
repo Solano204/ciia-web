@@ -2,7 +2,7 @@
 
 Fuente de verdad visual. Ninguna decisión de diseño se toma fuera de este archivo: si algo nuevo hace falta, se agrega aquí y luego se usa.
 Lo marcado **PROVISIONAL** espera confirmación del cliente.
-El código actual (`globals.css`) todavía trae `--accent-v2` azul, `glass-*` y `card-surface`. Este archivo manda; la Fase 1 alinea el código.
+Color y grises ya viven en `globals.css` (Fase 1A). Siguen pendientes `glass-*`, `card-surface` y `surface-flat-v2` (Fase 1B) y la tipografía nueva (Fase 1A, a la espera de las fuentes). Este archivo manda.
 
 ## Color
 Regla 60-30-10: negros y grises 60% / imagen 30% / dorado 10%, solo en CTA y datos clave.
@@ -13,31 +13,45 @@ Regla 60-30-10: negros y grises 60% / imagen 30% / dorado 10%, solo en CTA y dat
 | `--accent-soft` | `rgba(212,162,47,0.14)` | Fondo tenue de estados activos. |
 | `--on-accent` | `#0a0a0b` | Texto sobre dorado. |
 
-- El azul `#0019ff` y todos los `--accent-*-v2` desaparecen del sitio.
+- No queda azul en el sitio: el acento es solo dorado. Sobre dorado, texto `--on-accent` (8.5:1).
+- Precios y datos clave van en texto primario semibold. Dorado solo si es el dato principal de su bloque.
+- Focus rings, bordes activos y pasos activos van en dorado.
 - Un solo acento. Los íconos no llevan color.
 - Los colores semánticos (éxito, aviso, error) son solo para estados, nunca decoración.
 - Contraste WCAG AA en todo el texto.
 
 ## Escala de grises
-Una sola escala neutra para superficies y texto. Valores provisionales, tomados del sistema base actual (zinc); se consolidan en la Fase 1. **PROVISIONAL**
+Una sola escala neutra (zinc) para superficies y texto; sustituye a las dos escalas anteriores (base y `-v2`). **PROVISIONAL**
 
-| Token | Valor | Uso |
-|---|---|---|
-| `--gray-950` | `#0a0a0b` | Fondo de página. |
-| `--gray-900` | `#18181b` | Superficie elevada (solo cuando no hay alternativa). |
-| `--gray-700` | `#3f3f46` | Líneas finas y divisores. |
-| `--gray-400` | `#a1a1aa` | Texto secundario y etiquetas. |
-| `--gray-200` | `#e4e4e7` | Texto principal. |
+| Token | Valor | Uso | Contraste sobre fondo |
+|---|---|---|---|
+| `--gray-950` | `#0a0a0b` | Fondo de página (`--background`). | — |
+| `--gray-900` | `#18181b` | Superficie elevada, solo si no hay alternativa (`--card-bg`). | — |
+| `--gray-500` | `#8a8a93` | Texto atenuado y etiquetas (`--muted`). | 5.8:1 |
+| `--gray-400` | `#a1a1aa` | Texto secundario (`--text-secondary`). | 7.7:1 |
+| `--gray-200` | `#e4e4e7` | Texto principal (`--foreground`). | 15.6:1 |
 
-Los grises intermedios y los estados (hover un poco más claro, presionado un poco más oscuro, deshabilitado desaturado) se definen en la Fase 1.
+- `--gray-500` sustituye al `#71717a` anterior, que daba 4.1:1 y no cumplía AA en etiquetas pequeñas.
+- Líneas: blanco translúcido, `--line` (7%), `--line-strong` (12%) y `--line-stronger` (18%).
+- Estados semánticos, solo para estado: `--success` `#2dd4a7`, `--warning` `#e5a93d`, `--danger` `#e56b6b`.
+- Los estados de interacción (hover, presionado, deshabilitado) se definen con los componentes en la Fase 1B.
 
 ## Tipografía — PROVISIONAL
-- **Display:** Clash Display. **Texto:** Satoshi. Ambas de Fontshare, servidas con `next/font/local`.
-- **Mono:** solo para números y datos. Nunca en etiquetas largas ni en mayúsculas espaciadas.
-- **Verificar la licencia de Fontshare antes de publicar.**
-- Hasta la Fase 1 el sitio usa Geist (paquete local `geist`), sin cambio visual.
-- Escala: display, H2, cuerpo y dato. Tamaños por definir en la Fase 1.
-- Máximo 2 familias. Un H1 por página.
+- **Display:** Clash Display (`font-display`; h1, h2 y h3 por defecto, y cifras grandes). **Texto y etiquetas:** Satoshi (`font-sans`). Ambas de Fontshare, servidas con `next/font/local` desde `src/fonts/`. **PROVISIONAL** hasta que el cliente elija (comparativa en `/lab/tipografia`, solo en desarrollo).
+- **Mono:** Geist Mono (`font-mono`) solo para cifras y datos: precios, contadores, números de paso y porcentajes. Las etiquetas van en Satoshi.
+- Máximo 2 familias de texto, más la mono de datos. Un H1 por página.
+- Etiquetas: 12 px mínimo y tracking ≤ 0.08em.
+- Escala en tokens `--text-*`. Se aplica a los componentes en la Fase 1B:
+
+| Token | Valor | Interlineado |
+|---|---|---|
+| `display` | `clamp(3rem, 7vw, 6.5rem)` | 0.95 |
+| `h2` | `clamp(2rem, 4vw, 3.5rem)` | 1.05 |
+| `h3` | `1.5rem` | 1.3 |
+| `body` | `1rem` | 1.6 |
+| `small` | `0.8125rem` | 1.5 |
+
+- Licencia: ITF Free Font License 2.0 (Fontshare). Permite uso comercial y web con `@font-face` autoalojado. Prohíbe modificar los archivos (incluye subsetting y convertir formato) y redistribuirlos, también en repositorios públicos: las `.woff2` no se versionan mientras el repo sea público.
 
 ## Sin cajas
 Se separa con espacio, líneas finas e imágenes a sangre.
@@ -46,7 +60,7 @@ Se separa con espacio, líneas finas e imágenes a sangre.
 - Robot: protagonista de todas las imágenes (`design/PROMPTS-ROBOT.md`).
 
 ## Motion
-Sutil. Máximo 1 efecto de impacto por página. Se queda el cursor de fluido, recoloreado a un dorado tenue con su intensidad actual.
+Sutil. Máximo 1 efecto de impacto por página. Se queda el cursor de fluido, recoloreado a un dorado oscuro y tenue (`COLOR="#5C4514"`, a afinar con el cliente; el primer intento, `#7A5C1A`, salía más luminoso que el azul original). Solo cambia el color, no su intensidad de simulación.
 
 Tokens iniciales, ajustables solo desde este archivo:
 ```css

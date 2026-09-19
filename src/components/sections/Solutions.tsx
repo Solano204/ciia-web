@@ -15,12 +15,12 @@ export function Solutions() {
               <EyebrowBadge tone="muted-v2">CII.IA // SOLUCIONES</EyebrowBadge>
             </AnimatedItem>
             <AnimatedItem className="md:col-span-6">
-              <h2 className="mt-4 font-sans text-4xl font-semibold tracking-tighter text-foreground md:text-5xl">
+              <h2 className="mt-4 font-display text-4xl font-semibold text-foreground md:text-5xl">
                 Soluciones
               </h2>
             </AnimatedItem>
             <AnimatedItem className="md:col-span-5 md:col-start-8 md:self-end">
-              <p className="text-base leading-relaxed text-[var(--text-secondary-v2)]">
+              <p className="text-base leading-relaxed text-[var(--text-secondary)]">
                 Cinco líneas de trabajo que cubren el ciclo completo, de decidir qué merece
                 construirse a dejar la capacidad instalada.
               </p>

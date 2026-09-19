@@ -31,12 +31,12 @@ export function Cases() {
               <EyebrowBadge tone="muted-v2">CII.IA // CASOS</EyebrowBadge>
             </AnimatedItem>
             <AnimatedItem className="md:col-span-6">
-              <h2 className="mt-4 font-sans text-4xl font-semibold tracking-tighter text-foreground md:text-5xl">
+              <h2 className="mt-4 font-display text-4xl font-semibold text-foreground md:text-5xl">
                 Casos
               </h2>
             </AnimatedItem>
             <AnimatedItem className="md:col-span-5 md:col-start-8 md:self-end">
-              <p className="text-base leading-relaxed text-[var(--text-secondary-v2)]">
+              <p className="text-base leading-relaxed text-[var(--text-secondary)]">
                 Doce soluciones de inteligencia artificial documentadas por el CII.IA en
                 manufactura, comercio, servicios financieros y seguridad.
               </p>
@@ -48,7 +48,7 @@ export function Cases() {
           </AnimatedItem>
 
           {filtered.length === 0 ? (
-            <p className="font-mono text-sm text-[var(--text-muted-v2)]">
+            <p className="font-sans text-sm text-muted">
               Ningún caso coincide con esa combinación de filtros.
             </p>
           ) : (

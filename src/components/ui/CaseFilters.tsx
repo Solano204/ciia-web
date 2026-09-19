@@ -63,7 +63,7 @@ export function CaseFilters({
 function FilterGroup({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div className="flex flex-col gap-2">
-      <span className="font-mono text-[10px] uppercase tracking-[0.22em] text-[var(--text-muted-v2)]">{label}</span>
+      <span className="font-sans text-[12px] uppercase tracking-[0.08em] text-muted">{label}</span>
       <div className="flex flex-wrap gap-2">{children}</div>
     </div>
   );
@@ -83,10 +83,10 @@ function FilterChip({
       type="button"
       aria-pressed={active}
       onClick={onClick}
-      className={`rounded-full border px-4 py-2 font-mono text-[11px] uppercase tracking-[0.2em] transition-colors duration-200 motion-reduce:transition-none ${
+      className={`rounded-full border px-4 py-2 font-sans text-[12px] uppercase tracking-[0.08em] transition-colors duration-200 motion-reduce:transition-none ${
         active
-          ? "border-accent-v2 bg-accent-soft-v2 text-accent-light-v2"
-          : "border-[var(--border-v2)] text-[var(--text-secondary-v2)] hover:text-foreground"
+          ? "border-accent bg-accent-soft text-accent"
+          : "border-[var(--line)] text-[var(--text-secondary)] hover:text-foreground"
       }`}
     >
       {label}

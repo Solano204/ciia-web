@@ -132,7 +132,7 @@ function PartnerTile({ partner, isActive, onActivate }: PartnerTileProps) {
 
   const content = logoFailed ? (
     <span
-      className={`font-mono text-sm uppercase tracking-[0.18em] ${onLight ? "text-zinc-600" : "text-zinc-400"}`}
+      className={`font-sans text-sm uppercase tracking-[0.08em] ${onLight ? "text-zinc-600" : "text-zinc-400"}`}
     >
       {initialsOf(partner.name)}
     </span>
@@ -214,7 +214,7 @@ function FoundingPartners() {
           as="h3"
           text={ABOUT_DATA.foundingPartnersTitle}
           delay={70}
-          className="font-sans text-[30px] font-medium leading-tight text-foreground"
+          className="font-display text-[30px] font-medium leading-tight text-foreground"
         />
         <AnimatedItem>
           <p className="mt-5 max-w-[340px] text-[15px] leading-relaxed text-zinc-400">
@@ -309,14 +309,14 @@ function WorkPrincipleLine({ principle, index }: { principle: WorkPrinciple; ind
             // El estado revelado debe cumplir AA: la jerarquía frente a la
             // palabra de 48px la da el tamaño, no un gris ilegible (antes
             // zinc-700, 1.33:1). El estado previo es transitorio.
-            isVisible ? "text-[var(--text-muted-v2)]" : "text-zinc-800",
+            isVisible ? "text-muted" : "text-zinc-800",
           ].join(" ")}
         >
           {order}
         </span>
 
         <span
-          className={`font-sans text-[clamp(26px,4.2vw,48px)] font-bold uppercase leading-[1.05] tracking-tight ${
+          className={`font-display text-[clamp(26px,4.2vw,48px)] font-bold uppercase leading-[1.05] ${
             principle.highlighted ? "text-accent" : "text-foreground"
           }`}
         >
@@ -324,7 +324,7 @@ function WorkPrincipleLine({ principle, index }: { principle: WorkPrinciple; ind
         </span>
 
         <span className="ml-11 flex basis-full items-baseline gap-3 md:ml-0 md:basis-auto">
-          <span aria-hidden className="text-[clamp(15px,2vw,22px)] text-[var(--text-muted-v2)]">
+          <span aria-hidden className="text-[clamp(15px,2vw,22px)] text-muted">
             /
           </span>
           {/* El tachado es un ::after animable; `no-underline` quita el
@@ -333,7 +333,7 @@ function WorkPrincipleLine({ principle, index }: { principle: WorkPrinciple; ind
             className={[
               // Contenido real («no diagnosticamos»), no decoración: zinc-600
               // daba 2.56:1. Sigue siendo el tono más apagado que cumple AA.
-              "relative text-[clamp(15px,2vw,22px)] italic text-[var(--text-muted-v2)] no-underline",
+              "relative text-[clamp(15px,2vw,22px)] italic text-muted no-underline",
               "after:absolute after:left-0 after:top-1/2 after:h-[1.5px] after:w-full",
               "after:origin-left after:bg-white/25 after:content-['']",
               "after:transition-transform after:duration-500 after:ease-out",
@@ -359,7 +359,7 @@ function WorkPrinciples() {
         </span>
         <span className="mt-5 block overflow-hidden pb-[0.08em]">
           <h3
-            className="font-sans text-[36px] font-medium leading-tight text-foreground"
+            className="font-display text-[36px] font-medium leading-tight text-foreground"
             data-fx="principles-title"
           >
             {ABOUT_DATA.principlesTitle}
@@ -594,7 +594,7 @@ export function About() {
             </AnimatedItem>
 
             <AnimatedItem className="order-2 lg:mt-8">
-              <h2 className="font-sans text-[40px] font-bold leading-[1.05] tracking-tight text-foreground lg:text-[56px]">
+              <h2 className="font-display text-[40px] font-bold leading-[1.05] text-foreground lg:text-[56px]">
                 {ABOUT_DATA.headlineLines.map((line, index) => (
                   <BlurText
                     key={line}
@@ -615,7 +615,7 @@ export function About() {
                   value={ABOUT_DATA.highlightValue}
                   animate
                   fx="highlight-value"
-                  className="block font-sans text-[clamp(72px,8vw,112px)] font-bold leading-none tracking-tight text-accent tabular-nums"
+                  className="block font-display text-[clamp(72px,8vw,112px)] font-bold leading-none text-accent tabular-nums"
                 />
               </span>
               <p
@@ -682,11 +682,11 @@ export function About() {
                     value={stat.value}
                     animate={!stat.isDate}
                     fx="stat-value"
-                    className="block font-sans text-[44px] font-medium leading-none tracking-tight text-foreground tabular-nums"
+                    className="block font-display text-[44px] font-medium leading-none text-foreground tabular-nums"
                   />
                 </span>
                 <span
-                  className="mt-3 block font-mono text-[10px] uppercase leading-relaxed tracking-[0.15em] text-[var(--text-muted-v2)]"
+                  className="mt-3 block font-sans text-[12px] uppercase leading-relaxed tracking-[0.08em] text-muted"
                   data-fx="stat-label"
                 >
                   {stat.label}
@@ -712,7 +712,7 @@ export function About() {
                   <blockquote className="font-sans text-lg italic leading-snug text-foreground">
                   &ldquo;{item.quote}&rdquo;
                 </blockquote>
-                <figcaption className="mt-4 text-sm text-[var(--text-muted-v2)]">{item.role}</figcaption>
+                <figcaption className="mt-4 text-sm text-muted">{item.role}</figcaption>
               </figure>
             </AnimatedItem>
           ))}
