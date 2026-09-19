@@ -4,10 +4,9 @@ import { useEffect, useRef, useState, type CSSProperties } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { EyebrowBadge } from "@/components/ui/EyebrowBadge";
 import { AnimatedItem, AnimatedSection } from "@/components/ui/AnimatedSection";
 import { BlurText } from "@/components/ui/BlurText";
-import { BeamsBackground } from "@/components/ui/BeamsBackground";
+import { Section } from "@/components/ui/Section";
 import { CtaButton, CtaLink, SectionCta } from "@/components/ui/Cta";
 import { useCountUp } from "@/hooks/useCountUp";
 import { useRevealOnScroll } from "@/hooks/useRevealOnScroll";
@@ -214,7 +213,7 @@ function FoundingPartners() {
           as="h3"
           text={ABOUT_DATA.foundingPartnersTitle}
           delay={70}
-          className="font-display text-[30px] font-medium leading-tight text-foreground"
+          className="font-display text-h3 font-medium text-foreground"
         />
         <AnimatedItem>
           <p className="mt-5 max-w-[340px] text-[15px] leading-relaxed text-zinc-400">
@@ -354,12 +353,9 @@ function WorkPrinciples() {
   return (
     <AnimatedSection className="border-t border-white/8 pt-10">
       <div data-fx="principles-header">
-        <span className="block" data-fx="principles-eyebrow">
-          <EyebrowBadge>{ABOUT_DATA.principlesEyebrow}</EyebrowBadge>
-        </span>
-        <span className="mt-5 block overflow-hidden pb-[0.08em]">
+        <span className="block overflow-hidden pb-[0.08em]">
           <h3
-            className="font-display text-[36px] font-medium leading-tight text-foreground"
+            className="font-display text-h2 font-medium text-foreground"
             data-fx="principles-title"
           >
             {ABOUT_DATA.principlesTitle}
@@ -506,17 +502,11 @@ export function About() {
         );
       });
 
-      // Encabezado del manifiesto: el título sube enmascarado tras el badge.
+      // Encabezado del manifiesto: el título sube enmascarado.
       // Las nueve líneas las revela `useRevealOnScroll`, una por una.
       gsap
         .timeline({
           scrollTrigger: { trigger: "[data-fx='principles-header']", start: "top 85%", once: true },
-        })
-        .from("[data-fx='principles-eyebrow']", {
-          opacity: 0,
-          y: 14,
-          duration: 0.6,
-          ease: "power2.out",
         })
         .from(
           "[data-fx='principles-title']",
@@ -576,25 +566,15 @@ export function About() {
   }, []);
 
   return (
-    <BeamsBackground className="section-seam">
-    <section
-      ref={sectionRef}
-      id="nosotros"
-      className="px-6 py-24 md:px-10 md:py-32"
-    >
-      <div className="mx-auto flex max-w-[1400px] flex-col gap-20">
+    <Section ref={sectionRef} id="nosotros" className="flex flex-col gap-20">
         <AnimatedSection className="grid grid-cols-1 items-start gap-16 lg:grid-cols-12">
           {/* Columna izquierda. En móvil se disuelve (`contents`) para que sus
               bloques se intercalen con los de la derecha vía `order`. */}
           {/* 5/7 en vez de 6/6: la foto del laboratorio es el elemento con más
               peso de la sección, así que se queda con la columna ancha. */}
           <div className="contents lg:col-span-5 lg:block">
-            <AnimatedItem className="order-1">
-              <EyebrowBadge>{ABOUT_DATA.eyebrow}</EyebrowBadge>
-            </AnimatedItem>
-
-            <AnimatedItem className="order-2 lg:mt-8">
-              <h2 className="font-display text-[40px] font-bold leading-[1.05] text-foreground lg:text-[56px]">
+            <AnimatedItem className="order-2">
+              <h2 className="font-display text-h2 font-bold text-foreground">
                 {ABOUT_DATA.headlineLines.map((line, index) => (
                   <BlurText
                     key={line}
@@ -615,7 +595,7 @@ export function About() {
                   value={ABOUT_DATA.highlightValue}
                   animate
                   fx="highlight-value"
-                  className="block font-display text-[clamp(72px,8vw,112px)] font-bold leading-none text-accent tabular-nums"
+                  className="block font-display text-display font-bold leading-none text-accent tabular-nums"
                 />
               </span>
               <p
@@ -638,7 +618,7 @@ export function About() {
             <div className="order-4 lg:mt-10">
               <figure>
                 <div
-                  className="relative aspect-[4/3] overflow-hidden rounded-xl border border-white/8 bg-white/[0.02]"
+                  className="relative aspect-[4/3] overflow-hidden rounded-xl"
                   data-fx="lab-frame"
                 >
                   <Image
@@ -682,7 +662,7 @@ export function About() {
                     value={stat.value}
                     animate={!stat.isDate}
                     fx="stat-value"
-                    className="block font-display text-[44px] font-medium leading-none text-foreground tabular-nums"
+                    className="block font-display text-h2 font-medium leading-none text-foreground tabular-nums"
                   />
                 </span>
                 <span
@@ -708,7 +688,7 @@ export function About() {
         <AnimatedSection className="grid gap-10 border-t border-white/8 pt-12 md:grid-cols-2">
           {CLIENT_QUOTES.map((item) => (
             <AnimatedItem key={item.id}>
-              <figure className="card-surface max-w-[60ch] p-6">
+              <figure className="max-w-[60ch] border-l border-[var(--line-strong)] pl-6">
                   <blockquote className="font-sans text-lg italic leading-snug text-foreground">
                   &ldquo;{item.quote}&rdquo;
                 </blockquote>
@@ -717,8 +697,6 @@ export function About() {
             </AnimatedItem>
           ))}
         </AnimatedSection>
-      </div>
-    </section>
-    </BeamsBackground>
+    </Section>
   );
 }

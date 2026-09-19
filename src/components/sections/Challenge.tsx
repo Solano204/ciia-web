@@ -1,8 +1,6 @@
 "use client";
 
 import { useCallback, useRef } from "react";
-import { EyebrowBadge } from "@/components/ui/EyebrowBadge";
-import { HudFrame } from "@/components/ui/HudFrame";
 import {
   CHALLENGE_ENTER_FADE_END,
   CHALLENGE_EXIT_FADE_START,
@@ -88,25 +86,15 @@ export function Challenge() {
           style={{ opacity: 0 }}
         />
 
-        <div className="pointer-events-none absolute left-6 top-24 text-accent md:left-10 md:top-28">
-          <HudFrame corner="tl" size={26} />
-        </div>
-        <div className="pointer-events-none absolute right-6 top-24 text-accent md:right-10 md:top-28">
-          <HudFrame corner="tr" size={26} />
-        </div>
-        <div className="pointer-events-none absolute bottom-14 left-6 text-accent md:bottom-16 md:left-10">
-          <HudFrame corner="bl" size={26} />
-        </div>
-        <div className="pointer-events-none absolute bottom-14 right-6 text-accent md:bottom-16 md:right-10">
-          <HudFrame corner="br" size={26} />
-        </div>
-
         <div
           ref={textRef}
           className="absolute inset-x-0 bottom-0 z-10 flex flex-col items-start gap-6 px-6 pb-24 md:px-12 md:pb-28"
           style={{ opacity: 0, transition: "opacity 80ms linear" }}
         >
-          <EyebrowBadge>CII.IA // EL RETO</EyebrowBadge>
+          <span className="inline-flex items-center gap-2 font-sans text-[12px] font-medium uppercase tracking-[0.08em] text-accent">
+            <span aria-hidden className="inline-block h-1.5 w-1.5 rounded-full bg-accent" />
+            CII.IA // EL RETO
+          </span>
           <div className="flex flex-wrap items-end gap-5">
             <span className="font-display font-semibold leading-none text-accent text-[clamp(4rem,10vw,9rem)]">
               {FOUNDING_METRIC.value}
@@ -137,7 +125,10 @@ export function Challenge() {
 
         {!loaded && (
           <div className="absolute inset-0 z-30 flex flex-col items-center justify-center gap-5 bg-background px-6">
-            <EyebrowBadge>CII.IA // CARGANDO</EyebrowBadge>
+            <span className="inline-flex items-center gap-2 font-sans text-[12px] font-medium uppercase tracking-[0.08em] text-accent">
+              <span aria-hidden className="inline-block h-1.5 w-1.5 rounded-full bg-accent" />
+              CII.IA // CARGANDO
+            </span>
             <div className="h-px w-60 bg-white/10 md:w-80">
               <div
                 className="h-full bg-accent transition-[width] duration-150 ease-out"

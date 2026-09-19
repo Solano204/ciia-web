@@ -2,7 +2,7 @@
 
 Fuente de verdad visual. Ninguna decisión de diseño se toma fuera de este archivo: si algo nuevo hace falta, se agrega aquí y luego se usa.
 Lo marcado **PROVISIONAL** espera confirmación del cliente.
-Color y grises ya viven en `globals.css` (Fase 1A). Siguen pendientes `glass-*`, `card-surface` y `surface-flat-v2` (Fase 1B) y la tipografía nueva (Fase 1A, a la espera de las fuentes). Este archivo manda.
+Color, grises y tipografía ya viven en el código (Fase 1A), y los componentes sin cajas (Fase 1B). Este archivo manda.
 
 ## Color
 Regla 60-30-10: negros y grises 60% / imagen 30% / dorado 10%, solo en CTA y datos clave.
@@ -56,7 +56,13 @@ Una sola escala neutra (zinc) para superficies y texto; sustituye a las dos esca
 ## Sin cajas
 Se separa con espacio, líneas finas e imágenes a sangre.
 - Fuera: tarjetas de cristal (`glass-*`, `card-surface`), pastillas eyebrow y marcos HUD.
-- Dentro: `Section`, `SectionHeader` (título + 1 frase), `Cta` y `MediaCard` (imagen protagonista, sin borde).
+- Componentes base:
+  - `Section`: fondo, padding vertical `--section-y` (6 rem; 8 rem desde md) y ancho `--container-max` (1400 px).
+  - `SectionHeader`: título h2 (`text-h2`) y una frase opcional. Sin pastilla.
+  - `MediaCard`: imagen protagonista, título, una frase y dato opcional. Sin borde, fondo ni glass. En hover, zoom de 3% en la imagen y subrayado del título.
+  - `Cta` (`CtaButton` y `CtaLink`).
+- Conservan borde: inputs del formulario (el borde es su affordance), botones y chips de filtro.
+- Etiquetas, productos y tags no son chips: van como texto separado por "·".
 - Robot: protagonista de todas las imágenes (`design/PROMPTS-ROBOT.md`).
 
 ## Motion

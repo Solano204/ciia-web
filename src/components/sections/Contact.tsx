@@ -1,10 +1,10 @@
 "use client";
 
 import { useId, useState, type FormEvent } from "react";
-import { EyebrowBadge } from "@/components/ui/EyebrowBadge";
-import { AnimatedItem, AnimatedSection } from "@/components/ui/AnimatedSection";
-import { BeamsBackground } from "@/components/ui/BeamsBackground";
+import { AnimatedItem } from "@/components/ui/AnimatedSection";
 import { CtaButton } from "@/components/ui/Cta";
+import { Section } from "@/components/ui/Section";
+import { SectionHeader } from "@/components/ui/SectionHeader";
 import { CONTACT_INFO, CTA_COPY, SCHEDULING_URL } from "@/lib/ciiia";
 
 const inputClasses =
@@ -36,27 +36,12 @@ export function Contact() {
   };
 
   return (
-    <BeamsBackground className="section-seam">
-    <section
-      id="contacto"
-      className="px-6 py-24 md:px-10 md:py-32"
-    >
-      <div className="mx-auto flex max-w-[1400px] flex-col gap-12">
-        <AnimatedSection className="grid gap-6 md:grid-cols-12">
-          <AnimatedItem className="md:col-span-12">
-            <EyebrowBadge>CII.IA // CONTACTO</EyebrowBadge>
-          </AnimatedItem>
-          <AnimatedItem className="md:col-span-6">
-            <h2 className="mt-4 font-display text-4xl font-semibold text-foreground md:text-5xl">
-              Contacto
-            </h2>
-          </AnimatedItem>
-          <AnimatedItem className="md:col-span-5 md:col-start-8 md:self-end">
-            <p className="text-base leading-relaxed text-zinc-400">
-              Cuéntanos qué necesitas y en qué punto está tu organización.
-            </p>
-          </AnimatedItem>
-        </AnimatedSection>
+    <Section id="contacto" className="flex flex-col gap-12">
+        <SectionHeader
+          animated
+          title="Contacto"
+          description="Cuéntanos qué necesitas y en qué punto está tu organización."
+        />
 
         <div className="grid gap-12 md:grid-cols-12">
           <AnimatedItem className="md:col-span-7">
@@ -129,8 +114,8 @@ export function Contact() {
             {/* Sólo aparece cuando hay agenda configurada: sin URL sería un
                 botón que no lleva a ninguna parte. Ver SCHEDULING_URL. */}
             {SCHEDULING_URL && (
-              <div className="mb-8 rounded-xl border border-white/10 bg-white/[0.03] p-5">
-                <h3 className="font-display text-lg font-semibold text-foreground">
+              <div className="mb-8 border-t border-[var(--line-strong)] pt-6">
+                <h3 className="font-display text-h3 font-semibold text-foreground">
                   ¿Prefieres una reunión?
                 </h3>
                 <p className="mt-2 text-sm leading-relaxed text-[var(--text-secondary)]">
@@ -142,7 +127,7 @@ export function Contact() {
               </div>
             )}
 
-            <h3 className="font-display text-lg font-semibold text-foreground">Contacto directo</h3>
+            <h3 className="font-display text-h3 font-semibold text-foreground">Contacto directo</h3>
             <dl className="mt-5 flex flex-col divide-y divide-white/8 border-y border-white/8">
               <div className="py-4">
                 <dt className="font-sans text-[12px] uppercase tracking-[0.08em] text-muted">
@@ -199,8 +184,6 @@ export function Contact() {
             </dl>
           </AnimatedItem>
         </div>
-      </div>
-    </section>
-    </BeamsBackground>
+    </Section>
   );
 }

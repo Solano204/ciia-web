@@ -55,17 +55,17 @@ export function CaseDetail({
           <span className="font-sans text-[12px] uppercase tracking-[0.08em] text-muted">
             {item.sector}
           </span>
-          <h1 className="font-display text-[64px] font-semibold leading-[0.95] text-foreground">
+          <h1 className="font-display text-h2 font-semibold text-foreground">
             {item.title}
           </h1>
         </div>
 
         {/* Visual panel with overlaid metric */}
-        <div className="relative aspect-video w-full overflow-hidden rounded-2xl border border-[var(--line)]">
+        <div className="relative aspect-video w-full overflow-hidden rounded-2xl">
           {imageExists && <DecayImage src={`/casos/${item.id}.jpg`} alt={item.title} />}
-          <div className="absolute inset-x-0 bottom-0 flex justify-start p-0">
-            <div className="glass-3-v2 px-6 py-6 sm:px-8 sm:py-8">
-              <span className="block font-display text-5xl font-semibold leading-none text-foreground md:text-[72px]">
+          <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/45 to-transparent px-6 pb-6 pt-24 sm:px-8 sm:pb-8">
+            <div>
+              <span className="block font-display text-h2 font-semibold leading-none text-foreground">
                 {item.metricHighlight}
               </span>
               <span className="mt-3 block font-sans text-[12px] uppercase tracking-[0.08em] text-[var(--text-secondary)]">
@@ -85,7 +85,7 @@ export function CaseDetail({
               <span className="font-sans text-[12px] uppercase tracking-[0.08em] text-muted">
                 {block.eyebrow}
               </span>
-              <h2 className="text-2xl font-semibold text-foreground">{block.heading}</h2>
+              <h2 className="font-display text-h3 font-semibold text-foreground">{block.heading}</h2>
               <p className="text-[17px] leading-relaxed text-[var(--text-secondary)]">{item[block.key]}</p>
             </div>
           ))}
@@ -126,21 +126,12 @@ export function CaseDetail({
           <h2 className="font-sans text-[12px] uppercase tracking-[0.08em] text-muted">
             Tags
           </h2>
-          <div className="mt-3 flex flex-wrap gap-2">
-            {item.tags.map((tag) => (
-              <span
-                key={tag}
-                className="rounded-full border border-[var(--line)] bg-white/[0.04] px-2.5 py-1 text-xs text-[var(--text-secondary)]"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
+          <p className="mt-3 text-sm text-[var(--text-secondary)]">{item.tags.join(" · ")}</p>
         </div>
 
         {/* Closing CTA */}
         <div className="flex flex-col items-start justify-between gap-6 border-t border-[var(--line)] py-16 sm:flex-row sm:items-center">
-          <h2 className="font-display text-[28px] font-semibold text-foreground">
+          <h2 className="font-display text-h3 font-semibold text-foreground">
             ¿Tienes un reto parecido?
           </h2>
           <CtaButton href={CONTACT_HREF} className="shrink-0">
