@@ -65,7 +65,7 @@ export function CaseCard({
         // El 85% deja asomar los separadores del riel a ambos lados y es el
         // número del que salen sus anchos: (100% − 85%) / 2.
         "group relative flex w-[85%] shrink-0 cursor-pointer snap-center flex-col",
-        "rounded-2xl border border-white/8 bg-white/[0.02] p-9",
+        "p-9",
         "min-h-[400px] lg:min-h-[440px] lg:w-[520px]",
         // Tailwind v4 emite `scale-*` como la propiedad `scale`, no dentro de
         // `transform`: la transición tiene que nombrarla o el cambio es seco.
@@ -79,7 +79,7 @@ export function CaseCard({
         {item.sector} &middot; {technologyLabel(item.technology)}
       </span>
 
-      <span className="mt-6 font-display text-[56px] font-bold leading-none tabular-nums text-accent lg:text-[72px]">
+      <span className="mt-6 font-display text-h2 font-bold leading-none tabular-nums text-accent">
         {item.metricHighlight}
       </span>
       <span className="mt-3 font-sans text-[12px] uppercase tracking-[0.08em] text-muted">
@@ -88,7 +88,7 @@ export function CaseCard({
 
       <div className="my-6 h-px w-full bg-white/8" />
 
-      <h3 className="font-display text-[20px] font-medium text-foreground lg:text-[24px]">
+      <h3 className="font-display text-h3 font-medium text-foreground">
         {item.title}
       </h3>
       <p className="mt-3 line-clamp-3 text-[15px] leading-relaxed text-[var(--text-secondary)]">
