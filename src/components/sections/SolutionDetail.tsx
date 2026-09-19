@@ -49,7 +49,7 @@ export function SolutionDetail({
           <span className="font-sans text-[12px] uppercase tracking-[0.08em] text-muted">
             {service.category}
           </span>
-          <h1 className="font-display text-[56px] font-semibold uppercase leading-[0.95] text-foreground">
+          <h1 className="font-display text-h2 font-semibold uppercase text-foreground">
             {service.title}
           </h1>
           {service.previousName && (
@@ -60,11 +60,11 @@ export function SolutionDetail({
           <p className="text-xl font-semibold text-foreground">{service.tagline}</p>
         </div>
 
-        <div className="glass-3-v2 p-6 lg:col-span-4 lg:col-start-9">
+        <div className="border-t border-[var(--line-strong)] pt-6 lg:col-span-4 lg:col-start-9">
           <span className="font-sans text-[12px] uppercase tracking-[0.08em] text-muted">
             Inversión de referencia
           </span>
-          <p className="mt-2 text-[22px] font-semibold leading-snug text-accent">
+          <p className="mt-2 text-h3 font-semibold text-accent">
             {service.startingPrice}
           </p>
         </div>
@@ -110,21 +110,14 @@ export function SolutionDetail({
             <h2 className="font-sans text-[12px] uppercase tracking-[0.08em] text-muted">
               Componentes
             </h2>
-            <div className="mt-3 flex flex-wrap gap-2">
-              {service.technicalSpecs.map((spec) => (
-                <span
-                  key={spec}
-                  className="rounded-full border border-[var(--line)] bg-white/[0.04] px-2.5 py-1 text-xs text-[var(--text-secondary)]"
-                >
-                  {spec}
-                </span>
-              ))}
-            </div>
+            <p className="mt-3 text-sm text-[var(--text-secondary)]">
+              {service.technicalSpecs.join(" · ")}
+            </p>
           </div>
         </div>
 
         <div className="lg:col-span-5 lg:col-start-8">
-          <div className="relative aspect-[4/3] overflow-hidden rounded-2xl border border-[var(--line)]">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
             {imageExists && <DecayImage src={`/soluciones/${service.id}.jpg`} alt={service.title} />}
           </div>
         </div>
@@ -132,7 +125,7 @@ export function SolutionDetail({
 
       {/* Closing CTA */}
       <div className="flex flex-col items-start justify-between gap-6 border-t border-[var(--line)] py-16 sm:flex-row sm:items-center">
-        <h2 className="font-display text-[28px] font-semibold text-foreground">
+        <h2 className="font-display text-h3 font-semibold text-foreground">
           ¿Conversamos sobre tu proyecto?
         </h2>
         <CtaButton href={CONTACT_HREF} className="shrink-0">
