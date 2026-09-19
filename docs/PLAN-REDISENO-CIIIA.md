@@ -237,6 +237,7 @@
 - Lighthouse móvil ≥ 90.
 - `axe` sin errores.
 - Checklist de lanzamiento web con todo lo 🔴 cerrado.
+- Pendiente: actualizar Node local a 22. El wrangler actual (4.135+) lo exige y hoy se usa `wrangler@4.86.0` fijado, con Node 20.20.2.
 
 ---
 
