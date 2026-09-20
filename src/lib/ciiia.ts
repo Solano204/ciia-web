@@ -13,6 +13,8 @@ export type ExecutionStage = {
   focus: string;
   deliverable: string;
   products: string[];
+  /** Una frase de `description`: la que muestra la tarjeta del Ciclo. */
+  phrase: string;
   description: string;
 };
 
@@ -487,6 +489,7 @@ export const EXECUTION_STAGES: ExecutionStage[] = [
     focus: "Estrategia y priorización de casos de uso",
     deliverable: "Roadmap de Adopción IA a 6–12 meses",
     products: ["Workshop IA + Innovación", "Masterclass ejecutiva", "Assessment"],
+    phrase: "Nada se construye antes de saber qué merece construirse.",
     description:
       "Identificamos los retos operativos donde la inteligencia artificial tiene sentido y los ordenamos por impacto y viabilidad. Nada se construye antes de saber qué merece construirse.",
   },
@@ -497,6 +500,7 @@ export const EXECUTION_STAGES: ExecutionStage[] = [
     focus: "Arquitectura, integración y gobernanza",
     deliverable: "Blueprint técnico y modelo operativo",
     products: ["Arquitectura e integración", "Gobernanza de datos y ética", "Ciberseguridad"],
+    phrase: "Definimos datos, integración, modelo y gobernanza.",
     description:
       "Definimos datos, integración, modelo y gobernanza. El diseño contempla desde el principio cómo se va a mantener la solución, no solo cómo se va a demostrar.",
   },
@@ -507,6 +511,7 @@ export const EXECUTION_STAGES: ExecutionStage[] = [
     focus: "Prototipado en laboratorio propio",
     deliverable: "Sandbox → MVP → PoC",
     products: ["AI Lab", "AI Learning Factory NL", "Modelos a la medida"],
+    phrase: "Construimos y probamos en el laboratorio del PIIT, con equipo físico.",
     description:
       "Construimos y probamos en el laboratorio del PIIT, con equipo físico. El prototipo se valida contra las condiciones de tu operación antes de convertirse en inversión.",
   },
@@ -517,6 +522,8 @@ export const EXECUTION_STAGES: ExecutionStage[] = [
     focus: "Puesta en operación y adopción",
     deliverable: "Integración y despliegue en operación",
     products: ["Integración", "HIVA", "Change management", "CII.IA Academy"],
+    phrase:
+      "Integramos con los sistemas existentes y acompañamos la adopción en piso, que es donde la mayoría de los proyectos se detienen.",
     description:
       "Integramos con los sistemas existentes y acompañamos la adopción en piso, que es donde la mayoría de los proyectos se detienen.",
   },
@@ -527,6 +534,7 @@ export const EXECUTION_STAGES: ExecutionStage[] = [
     focus: "Industrialización y eficiencia operativa",
     deliverable: "Operación continua y optimización",
     products: ["Industrialización", "Optimización", "Formación del equipo interno"],
+    phrase: "Escalar no es repetir el piloto: es hacerlo sostenible.",
     description:
       "Industrializamos lo que ya funciona y formamos al equipo interno para que la capacidad se quede en tu organización. Escalar no es repetir el piloto: es hacerlo sostenible.",
   },
@@ -884,7 +892,7 @@ export const PAGE_DESCRIPTIONS = {
   soluciones:
     "Cinco líneas de trabajo que cubren el ciclo completo, de decidir qué merece construirse a dejar la capacidad instalada.",
   ciclo:
-    "Cada proyecto recorre cinco etapas. Elige una para ver qué se entrega y qué productos intervienen.",
+    "Cada proyecto recorre cinco etapas. Elige una para ver qué se entrega y qué soluciones intervienen.",
   casos:
     "Doce soluciones de inteligencia artificial documentadas por el CII.IA en manufactura, comercio, servicios financieros y seguridad.",
   contacto: "Cuéntanos qué necesitas y en qué punto está tu organización.",

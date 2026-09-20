@@ -1,8 +1,10 @@
+import fs from "node:fs";
+import path from "node:path";
 import { CtaButton, CtaLink, SectionCta } from "@/components/ui/Cta";
-import { CycleCarousel } from "@/components/ui/CycleCarousel";
 import { Section } from "@/components/ui/Section";
 import { SectionHeader, type HeadingLevel } from "@/components/ui/SectionHeader";
-import { StageRail } from "@/components/ui/StageRail";
+import { StageDeck } from "@/components/ui/StageDeck";
+import { StageLinks } from "@/components/ui/StageLinks";
 import {
   CTA_COPY,
   EXECUTION_STAGES,
@@ -26,7 +28,7 @@ export function ExecutionCycle({
     return (
       <Section id="ciclo" className="flex flex-col gap-12">
         <SectionHeader as={headingLevel} title={TITLE} description={DESCRIPTION} />
-        <StageRail stages={EXECUTION_STAGES} activeStageIds={[]} />
+        <StageLinks stages={EXECUTION_STAGES} />
         <SectionCta>
           <CtaButton href={schedulingHref()}>{CTA_COPY.agenda}</CtaButton>
           <CtaLink href="/ciclo">Ver el ciclo completo</CtaLink>
@@ -35,15 +37,21 @@ export function ExecutionCycle({
     );
   }
 
+  // Se comprueba aquí, en el build, y no en el navegador: una imagen que no
+  // existe ni se pide, así que no hay 404 en la consola.
+  const imageIds = EXECUTION_STAGES.filter((stage) =>
+    fs.existsSync(path.join(process.cwd(), "public", "ciclo", `${stage.id}.jpg`)),
+  ).map((stage) => stage.id);
+
+  const services = SERVICES_DATA.map(({ id, title, stageMapping }) => ({ id, title, stageMapping }));
+
   return (
-    <Section id="ciclo">
-      <CycleCarousel
-        headingLevel={headingLevel}
-        stages={EXECUTION_STAGES}
-        services={SERVICES_DATA}
-        title={TITLE}
-        description={DESCRIPTION}
-      />
+    <Section id="ciclo" className="flex flex-col gap-12">
+      <SectionHeader as={headingLevel} title={TITLE} description={DESCRIPTION} />
+      <StageDeck stages={EXECUTION_STAGES} services={services} imageIds={imageIds} />
+      <SectionCta>
+        <CtaButton href={schedulingHref()}>{CTA_COPY.agenda}</CtaButton>
+      </SectionCta>
     </Section>
   );
 }

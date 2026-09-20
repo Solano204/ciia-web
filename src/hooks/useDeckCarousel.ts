@@ -59,12 +59,15 @@ export type DeckCarousel = {
 export function useDeckCarousel({
   count,
   resetKey,
+  initialIndex = 0,
 }: {
   count: number;
   /** Identidad del filtro activo. Al cambiar, el deck vuelve a la primera tarjeta. */
   resetKey: string;
+  /** Tarjeta con la que abre el deck (enlaces directos como `/ciclo#desplegar`). */
+  initialIndex?: number;
 }): DeckCarousel {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(initialIndex);
   const [offsetX, setOffsetX] = useState(0);
   const [isDesktop, setIsDesktop] = useState(false);
   const [ready, setReady] = useState(false);
@@ -108,6 +111,21 @@ export function useDeckCarousel({
   useIsomorphicLayoutEffect(() => {
     containerRef.current?.scrollTo({ left: 0, behavior: "auto" });
   }, [resetKey]);
+
+  // Apertura directa en una tarjeta: el scroller móvil arranca centrado en ella,
+  // sin deslizamiento. En escritorio no hace falta: ahí manda el `transform`.
+  useIsomorphicLayoutEffect(() => {
+    if (initialIndex <= 0 || window.matchMedia(DESKTOP_QUERY).matches) return;
+    const container = containerRef.current;
+    const card = cardAt(initialIndex);
+    if (!container || !card) return;
+    const view = container.getBoundingClientRect();
+    const box = card.getBoundingClientRect();
+    container.scrollTo({
+      left: container.scrollLeft + box.left + box.width / 2 - (view.left + view.width / 2),
+      behavior: "auto",
+    });
+  }, [initialIndex, cardAt]);
 
   const recalculate = useCallback(() => {
     const container = containerRef.current;
