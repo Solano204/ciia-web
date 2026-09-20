@@ -240,6 +240,7 @@
   - Anti-bots (honeypot o Turnstile) y límite de envíos.
 - **SEO (viene de la Fase 9):** Open Graph, `sitemap.xml`, `robots.txt` y favicon propio.
 - Pendiente: verificar prefetch en Cloudflare antes de producción.
+- Pendiente: confirmar en el log de Vercel qué formato de payloads genera, y revisar 404 de prefetch en el preview de Cloudflare. (Vercel es solo preview: `flatten-prefetch.mjs` ahí avisa y sigue; el destino es Cloudflare Workers.)
 - Pendiente: actualizar Node local a 22. El wrangler actual (4.135+) lo exige y hoy se usa `wrangler@4.86.0` fijado, con Node 20.20.2.
 
 ---
