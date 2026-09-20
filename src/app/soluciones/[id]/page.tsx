@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { SolutionDetail } from "@/components/sections/SolutionDetail";
-import { EXECUTION_STAGES, SERVICES_DATA } from "@/lib/ciiia";
+import { EXECUTION_STAGES, SERVICES_DATA, relatedServices } from "@/lib/ciiia";
 
 type Params = { id: string };
 
@@ -32,5 +32,11 @@ export default async function SolutionDetailPage({
   const index = SERVICES_DATA.findIndex((s) => s.id === id);
   if (index === -1) notFound();
 
-  return <SolutionDetail service={SERVICES_DATA[index]} stages={EXECUTION_STAGES} />;
+  return (
+    <SolutionDetail
+      service={SERVICES_DATA[index]}
+      stages={EXECUTION_STAGES}
+      related={relatedServices(id)}
+    />
+  );
 }

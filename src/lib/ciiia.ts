@@ -541,7 +541,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     badge: "TRANSFORMADO",
     tagline: "Convertimos estrategia en soluciones operando.",
     description:
-      "Una consultora entrega recomendaciones. Nosotros acompañamos hasta que la solución opera, con arquitectura, gobernanza y adopción en piso.",
+      "Una consultora entrega recomendaciones. Nosotros acompañamos hasta que la solución opera.",
     points: [
       "Workshop IA + Innovación: ideación y priorización de casos de uso",
       "Roadmap de Adopción IA a 6–12 meses",
@@ -564,7 +564,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     badge: "ACTIVO DIFERENCIADOR",
     tagline: "Tu reto en prototipo antes de ser inversión.",
     description:
-      "Infraestructura física propia en el PIIT: celda de manufactura, robots, drones, equipo de realidad virtual, dispositivos edge y data center. Es un activo que muy pocos tienen en México.",
+      "Infraestructura física propia en el PIIT: celda de manufactura, robots, drones, equipo de realidad virtual, dispositivos edge y data center.",
     points: [
       "Ciclo Sandbox → MVP → PoC → Industrialización",
       "Validación con equipo industrial antes de tocar la línea de producción",
@@ -604,7 +604,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     badge: "PLATAFORMA DEL ECOSISTEMA",
     tagline: "Agentes que entienden, responden y ejecutan.",
     description:
-      "Plataforma empresarial de agentes virtuales con cinco capas: agente, modelo de lenguaje, base de conocimiento, integración y seguridad empresarial.",
+      "Plataforma empresarial de agentes virtuales con cinco capas: agente, modelo de lenguaje, base de conocimiento, integración y seguridad.",
     points: [
       "Integración con ERP, CRM, bases de datos, documentos, data lakes y APIs",
       "Despliegue SaaS multi-tenant, instancia dedicada o en tu infraestructura",
@@ -625,7 +625,7 @@ export const SERVICES_DATA: ServiceItem[] = [
     badge: "PROGRAMA INSTITUCIONAL",
     tagline: "Capacidades de clase mundial sin equipo interno.",
     description:
-      "Solo el 5% de las empresas de Nuevo León —principalmente trasnacionales— cuenta con equipos internos de ciencia de datos. Este programa existe para el otro 95%.",
+      "Solo el 5% de las empresas de Nuevo León cuenta con equipos internos de ciencia de datos. Este programa existe para el otro 95%.",
     points: [
       "Adopción de IA: diagnóstico, casos de uso, MVP funcional e implementación",
       "Consultoría preferencial",
@@ -638,6 +638,22 @@ export const SERVICES_DATA: ServiceItem[] = [
     span: { col: 5, row: 1 },
   },
 ];
+
+/**
+ * Las `count` soluciones que comparten más etapas del ciclo con `id`; a igual
+ * número de etapas, el orden de `SERVICES_DATA`.
+ */
+export function relatedServices(id: string, count = 2): ServiceItem[] {
+  const current = SERVICES_DATA.find((service) => service.id === id);
+  if (!current) return [];
+  const shared = (service: ServiceItem) =>
+    service.stageMapping.filter((stage) => current.stageMapping.includes(stage)).length;
+  return SERVICES_DATA.filter((service) => service.id !== id)
+    .map((service, index) => ({ service, index, score: shared(service) }))
+    .sort((a, b) => b.score - a.score || a.index - b.index)
+    .slice(0, count)
+    .map(({ service }) => service);
+}
 
 /**
  * Render de portada de cada caso. Los archivos de `public/casos/` llevan el
