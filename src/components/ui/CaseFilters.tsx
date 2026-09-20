@@ -21,40 +21,34 @@ export function CaseFilters({
     <div className="flex flex-col gap-4">
       <FilterGroup label="Sector">
         <FilterChip
-          label={`Todos (${cases.length})`}
+          label="Todos"
           active={value.sector === "todos"}
           onClick={() => onChange({ ...value, sector: "todos" })}
         />
-        {sectors.map((sector) => {
-          const count = cases.filter((item) => item.sector === sector).length;
-          return (
-            <FilterChip
-              key={sector}
-              label={`${sector} (${count})`}
-              active={value.sector === sector}
-              onClick={() => onChange({ ...value, sector })}
-            />
-          );
-        })}
+        {sectors.map((sector) => (
+          <FilterChip
+            key={sector}
+            label={sector}
+            active={value.sector === sector}
+            onClick={() => onChange({ ...value, sector })}
+          />
+        ))}
       </FilterGroup>
 
       <FilterGroup label="Tecnología">
         <FilterChip
-          label={`Todas (${cases.length})`}
+          label="Todas"
           active={value.technology === "todas"}
           onClick={() => onChange({ ...value, technology: "todas" })}
         />
-        {TECHNOLOGIES.map((technology) => {
-          const count = cases.filter((item) => item.technology === technology.value).length;
-          return (
-            <FilterChip
-              key={technology.id}
-              label={`${technology.label} (${count})`}
-              active={value.technology === technology.value}
-              onClick={() => onChange({ ...value, technology: technology.value })}
-            />
-          );
-        })}
+        {TECHNOLOGIES.map((technology) => (
+          <FilterChip
+            key={technology.id}
+            label={technology.label}
+            active={value.technology === technology.value}
+            onClick={() => onChange({ ...value, technology: technology.value })}
+          />
+        ))}
       </FilterGroup>
     </div>
   );
