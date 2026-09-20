@@ -824,6 +824,11 @@ export const PROJECT_CASES: ProjectCase[] = [
   },
 ];
 
+/** Casos del teaser de la home, de sectores distintos y con el caso 01 primero. */
+export const TEASER_CASES: ProjectCase[] = ["caso-01", "caso-06", "caso-10"].flatMap(
+  (id) => PROJECT_CASES.find((item) => item.id === id) ?? [],
+);
+
 /**
  * Caso destacado: las cuatro cifras pertenecen al mismo despliegue (caso-01).
  * Fuente: [DECK] Ejecutiva 2030 v1.06, lámina «CII.IA in action» — portado
