@@ -894,7 +894,7 @@ export const PAGE_DESCRIPTIONS = {
   ciclo:
     "Cada proyecto recorre cinco etapas. Elige una para ver qué se entrega y qué soluciones intervienen.",
   casos:
-    "Doce soluciones de inteligencia artificial documentadas por el CII.IA en manufactura, comercio, servicios financieros y seguridad.",
+    "Soluciones de inteligencia artificial del CII.IA en manufactura, comercio, servicios financieros y seguridad.",
   contacto: "Cuéntanos qué necesitas y en qué punto está tu organización.",
 } as const;
 

@@ -86,7 +86,7 @@ export function StageCard({
       className={[
         "group relative flex w-[85%] shrink-0 snap-center flex-col lg:w-[520px]",
         "outline-none transition-[opacity,scale] focus-visible:ring-2 focus-visible:ring-[var(--accent)]",
-        // Igual que Casos: el atenuado de las vecinas vive en CSS y solo desde `lg`.
+        // El atenuado de las vecinas vive en CSS y solo desde `lg`.
         isActive
           ? "lg:scale-100 lg:opacity-100"
           : "cursor-pointer lg:scale-[0.96] lg:opacity-[0.35]",
