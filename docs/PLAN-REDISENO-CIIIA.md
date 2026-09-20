@@ -218,7 +218,7 @@
   - Aviso de privacidad (pendiente del documento del cliente).
   - Año dinámico en cliente.
   - Redes.
-- **SEO:** Open Graph, `sitemap.xml`, `robots.txt` y favicon propio.
+- **SEO:** pasa a la Fase 11 (la Fase 9 quedó solo en diseño).
 
 ### FASE 10 — Imágenes del robot (pista paralela)
 - Generar las 17 imágenes de Soluciones y Casos, las 5 del Ciclo y la de Contacto con `design/PROMPTS-ROBOT.md`.
@@ -238,6 +238,7 @@
   - Validación también en servidor.
   - Estado de éxito y de error reales, con reintento.
   - Anti-bots (honeypot o Turnstile) y límite de envíos.
+- **SEO (viene de la Fase 9):** Open Graph, `sitemap.xml`, `robots.txt` y favicon propio.
 - Pendiente: verificar prefetch en Cloudflare antes de producción.
 - Pendiente: actualizar Node local a 22. El wrangler actual (4.135+) lo exige y hoy se usa `wrangler@4.86.0` fijado, con Node 20.20.2.
 
