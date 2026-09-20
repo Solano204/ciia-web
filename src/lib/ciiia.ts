@@ -362,7 +362,10 @@ export type EcosystemPartnerEntry = {
 };
 
 /** Lo que necesita un tile de logo: los socios del ecosistema y los del teaser. */
-export type EcosystemTile = Pick<EcosystemPartnerEntry, "id" | "name" | "logo" | "note">;
+export type EcosystemTile = Pick<EcosystemPartnerEntry, "id" | "name" | "logo" | "note"> & {
+  /** El asset trae fondo blanco opaco (PNG de fundadores): se mezcla con `multiply`. */
+  onWhite?: boolean;
+};
 
 export const ECOSYSTEM_CATEGORIES: EcosystemCategory[] = [
   { id: "tecnologia", label: "Tecnología" },
@@ -452,6 +455,34 @@ export const ECOSYSTEM_PARTNERS: EcosystemPartnerEntry[] = [
   { id: "northware", name: "Northware", categoryId: "empresas", logo: ecosystemLogo("northware") },
   { id: "sit-consultores", name: "SIT Consultores", categoryId: "empresas", logo: ecosystemLogo("sit-consultores") },
   { id: "pcg", name: "PCG", categoryId: "empresas", logo: ecosystemLogo("pcg") },
+];
+
+const TEASER_PARTNER_IDS = ["nvidia", "google-cloud", "tec-monterrey", "nuevo-leon-40", "kernel"];
+
+const TEASER_FOUNDER = ABOUT_DATA.foundingPartners.find((partner) => partner.id === "gobierno");
+
+/** Teaser de la home: un logo por categoría y uno de las instituciones fundadoras. */
+export const ECOSYSTEM_TEASER: EcosystemTile[] = [
+  ...TEASER_PARTNER_IDS.flatMap((id) => ECOSYSTEM_PARTNERS.find((partner) => partner.id === id) ?? []),
+  ...(TEASER_FOUNDER
+    ? [
+        {
+          id: TEASER_FOUNDER.id,
+          name: TEASER_FOUNDER.name,
+          logo: {
+            src: TEASER_FOUNDER.logo,
+            box: {
+              canvasRatio: TEASER_FOUNDER.logoWidth / TEASER_FOUNDER.logoHeight,
+              x: 0,
+              y: 0,
+              w: 1,
+              h: 1,
+            },
+          },
+          onWhite: true,
+        },
+      ]
+    : []),
 ];
 
 export const ECOSYSTEM_INTRO =

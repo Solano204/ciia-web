@@ -21,13 +21,19 @@ const ZOOM =
  * contenido real, sin que los márgenes del lienzo achiquen unos logos más que
  * otros.
  */
-function LogoCrop({ logo }: { logo: NonNullable<EcosystemTile["logo"]> }) {
+function LogoCrop({
+  logo,
+  onWhite = false,
+}: {
+  logo: NonNullable<EcosystemTile["logo"]>;
+  onWhite?: boolean;
+}) {
   const { box } = logo;
   const logoRatio = (box.w / box.h) * box.canvasRatio;
 
   return (
     <span
-      className={`relative block overflow-hidden ${ZOOM}`}
+      className={`relative block overflow-hidden ${onWhite ? "mix-blend-multiply" : ""} ${ZOOM}`}
       style={{
         width: `${logoWidthPercent(logoRatio, LOGO_SIZING)}%`,
         aspectRatio: logoRatio,
@@ -62,10 +68,10 @@ export function LogoTile({ partner }: { partner: EcosystemTile }) {
       role="img"
       title={label}
       aria-label={label}
-      className="group relative flex aspect-[3/2] items-center justify-center overflow-hidden rounded-xl bg-foreground"
+      className="group relative isolate flex aspect-[3/2] items-center justify-center overflow-hidden rounded-xl bg-foreground"
     >
       {partner.logo ? (
-        <LogoCrop logo={partner.logo} />
+        <LogoCrop logo={partner.logo} onWhite={partner.onWhite} />
       ) : (
         <span className="line-clamp-2 px-3 text-center font-sans text-[12px] uppercase leading-tight tracking-wide text-zinc-700">
           {partner.name}
