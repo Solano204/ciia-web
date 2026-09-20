@@ -63,6 +63,7 @@ Se separa con espacio, líneas finas e imágenes a sangre.
   - `Cta` (`CtaButton` y `CtaLink`).
 - Conservan borde: inputs del formulario (el borde es su affordance), botones y chips de filtro.
 - **Excepción: tile claro de logos.** Los logos de Ecosistema (y los de las instituciones fundadoras en Nosotros) van sobre un tile claro uniforme (`bg-foreground`, 3:2, `rounded-xl`, mismo tamaño para todos). Varios SVG son azul marino o negro (`#001142`, `#000000`, `#001d8f`) y los PNG de fundadores traen fondo opaco: sobre el fondo oscuro desaparecen o se ven como recuadros. Es la única excepción a «sin cajas» y se retira cuando existan versiones claras de los logos.
+- **Logos claros, sin tile.** Las versiones claras de un logo del Ecosistema (blancas o monocromas, pensadas para fondo oscuro) van en `public/logos/ecosistema/claro/{id}.svg` o `.png`, donde `{id}` es el `id` del socio en `ECOSYSTEM_PARTNERS` (p. ej. `nvidia`; el Gobierno del Estado del teaser es `gobierno`). **Al agregar un logo ahí, ese logo sale sin tile automáticamente en el siguiente build**: se muestra directo sobre el fondo oscuro, con la misma huella 3:2 y sin recorte de caja. Sin archivo, usa el tile. La decisión se toma en el build (`src/lib/claroLogos.ts`), como el fallback de imagen del Ciclo, así que no hay que tocar código ni datos.
 - Etiquetas, productos y tags no son chips: van como texto separado por "·".
 - Robot: protagonista de todas las imágenes (`design/PROMPTS-ROBOT.md`).
 

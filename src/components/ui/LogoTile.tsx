@@ -63,6 +63,35 @@ function LogoCrop({
 export function LogoTile({ partner }: { partner: EcosystemTile }) {
   const label = partner.note ? `${partner.name} — ${partner.note}` : partner.name;
 
+  // Versión clara: el logo va directo sobre el fondo oscuro, sin tile, con la
+  // misma huella 3:2 y el mismo margen para que la cuadrícula no cambie.
+  if (partner.claroSrc) {
+    return (
+      <div
+        role="img"
+        title={label}
+        aria-label={label}
+        className="group relative flex aspect-[3/2] items-center justify-center"
+      >
+        <span
+          className={`relative block ${ZOOM}`}
+          style={{
+            width: `${LOGO_SIZING.maxWidth * 100}%`,
+            height: `${LOGO_SIZING.maxHeight * 100}%`,
+          }}
+        >
+          <Image
+            src={partner.claroSrc}
+            alt=""
+            fill
+            sizes="(min-width: 1280px) 20vw, 40vw"
+            className="object-contain"
+          />
+        </span>
+      </div>
+    );
+  }
+
   return (
     <div
       role="img"

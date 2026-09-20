@@ -5,7 +5,11 @@ import { LogoTile } from "@/components/ui/LogoTile";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
 import { SectionHeader, type HeadingLevel } from "@/components/ui/SectionHeader";
-import { CTA_COPY, ECOSYSTEM_INTRO, ECOSYSTEM_TEASER } from "@/lib/ciiia";
+import { claroSrc } from "@/lib/claroLogos";
+import { CTA_COPY, ECOSYSTEM_INTRO, ECOSYSTEM_PARTNERS, ECOSYSTEM_TEASER } from "@/lib/ciiia";
+
+const withClaro = <T extends { id: string }>(items: T[]) =>
+  items.map((item) => ({ ...item, claroSrc: claroSrc(item.id) }));
 
 export function Ecosystem({
   headingLevel = "h2",
@@ -26,7 +30,7 @@ export function Ecosystem({
 
       {teaser ? (
         <ul className="grid grid-cols-2 gap-4 md:grid-cols-3 xl:grid-cols-6">
-          {ECOSYSTEM_TEASER.map((partner, index) => (
+          {withClaro(ECOSYSTEM_TEASER).map((partner, index) => (
             <li key={partner.id}>
               <Reveal index={index}>
                 <LogoTile partner={partner} />
@@ -37,7 +41,7 @@ export function Ecosystem({
       ) : (
         // `useSearchParams` obliga a un límite de Suspense; la reserva evita el salto de página.
         <Suspense fallback={<div aria-hidden className="min-h-[60svh]" />}>
-          <EcosystemGrid />
+          <EcosystemGrid partners={withClaro(ECOSYSTEM_PARTNERS)} />
         </Suspense>
       )}
 

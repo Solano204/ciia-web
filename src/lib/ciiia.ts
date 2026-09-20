@@ -365,6 +365,8 @@ export type EcosystemPartnerEntry = {
 export type EcosystemTile = Pick<EcosystemPartnerEntry, "id" | "name" | "logo" | "note"> & {
   /** El asset trae fondo blanco opaco (PNG de fundadores): se mezcla con `multiply`. */
   onWhite?: boolean;
+  /** Versión clara para fondo oscuro (`claro/{id}`), decidida en el build: sin tile. */
+  claroSrc?: string;
 };
 
 export const ECOSYSTEM_CATEGORIES: EcosystemCategory[] = [

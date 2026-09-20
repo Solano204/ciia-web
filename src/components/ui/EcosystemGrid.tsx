@@ -7,8 +7,9 @@ import { LogoTile } from "@/components/ui/LogoTile";
 import { Reveal } from "@/components/ui/Reveal";
 import {
   ECOSYSTEM_CATEGORIES,
-  ECOSYSTEM_PARTNERS,
   type EcosystemCategoryId,
+  type EcosystemPartnerEntry,
+  type EcosystemTile,
 } from "@/lib/ciiia";
 
 /** 60 ms entre logos con tope de 600 ms en total (índice 10). */
@@ -19,7 +20,12 @@ const QUERY_KEY = "categoria";
 const isCategoryId = (value: string | null): value is EcosystemCategoryId =>
   value !== null && ECOSYSTEM_CATEGORIES.some((category) => category.id === value);
 
-export function EcosystemGrid() {
+/** Los socios llegan del servidor con su `claroSrc` ya resuelto en el build. */
+export function EcosystemGrid({
+  partners: allPartners,
+}: {
+  partners: (EcosystemPartnerEntry & Pick<EcosystemTile, "claroSrc">)[];
+}) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -66,9 +72,7 @@ export function EcosystemGrid() {
         className="animate-[eco-fade_var(--dur-base)_var(--ease-out)] motion-reduce:animate-none"
       >
         {visibleCategories.map((category) => {
-          const partners = ECOSYSTEM_PARTNERS.filter(
-            (partner) => partner.categoryId === category.id,
-          );
+          const partners = allPartners.filter((partner) => partner.categoryId === category.id);
 
           return (
             <div
