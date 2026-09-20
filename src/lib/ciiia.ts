@@ -138,7 +138,6 @@ export type WorkPrinciple = {
   id: string;
   affirmative: string;
   negative: string;
-  highlighted: boolean;
 };
 
 export type AboutData = {
@@ -151,22 +150,20 @@ export type AboutData = {
   foundingPartnersTitle: string;
   foundingPartnersCopy: string;
   foundingPartners: AboutFoundingPartner[];
-  principlesEyebrow: string;
   principlesTitle: string;
   workPrinciples: WorkPrinciple[];
 };
 
-/** El índice 01..09 se deriva de la posición en el array, no se guarda aquí. */
 export const WORK_PRINCIPLES: WorkPrinciple[] = [
-  { id: "descubrimos", affirmative: "DESCUBRIMOS", negative: "no diagnosticamos", highlighted: true },
-  { id: "guiamos", affirmative: "GUIAMOS", negative: "no entrenamos", highlighted: false },
-  { id: "catalizamos", affirmative: "CATALIZAMOS", negative: "no instruimos", highlighted: false },
-  { id: "materializamos", affirmative: "MATERIALIZAMOS", negative: "no adoctrinamos", highlighted: false },
-  { id: "educamos", affirmative: "EDUCAMOS", negative: "no damos sermones", highlighted: true },
-  { id: "demostramos", affirmative: "DEMOSTRAMOS", negative: "no solo hablamos", highlighted: false },
-  { id: "innovamos", affirmative: "INNOVAMOS", negative: "no imitamos", highlighted: false },
-  { id: "interrumpimos", affirmative: "INTERRUMPIMOS", negative: "no vamos con la corriente", highlighted: false },
-  { id: "lideramos", affirmative: "LIDERAMOS", negative: "no seguimos", highlighted: true },
+  { id: "descubrimos", affirmative: "DESCUBRIMOS", negative: "no diagnosticamos" },
+  { id: "guiamos", affirmative: "GUIAMOS", negative: "no entrenamos" },
+  { id: "catalizamos", affirmative: "CATALIZAMOS", negative: "no instruimos" },
+  { id: "materializamos", affirmative: "MATERIALIZAMOS", negative: "no adoctrinamos" },
+  { id: "educamos", affirmative: "EDUCAMOS", negative: "no damos sermones" },
+  { id: "demostramos", affirmative: "DEMOSTRAMOS", negative: "no solo hablamos" },
+  { id: "innovamos", affirmative: "INNOVAMOS", negative: "no imitamos" },
+  { id: "interrumpimos", affirmative: "INTERRUMPIMOS", negative: "no vamos con la corriente" },
+  { id: "lideramos", affirmative: "LIDERAMOS", negative: "no seguimos" },
 ];
 
 /**
@@ -245,23 +242,9 @@ export const ABOUT_DATA: AboutData = {
       logoOnLight: true,
     },
   ],
-  principlesEyebrow: "CII.IA // PRINCIPIOS",
   principlesTitle: "Cómo trabajamos",
   workPrinciples: WORK_PRINCIPLES,
 };
-
-export const CLIENT_QUOTES = [
-  {
-    id: "q2",
-    quote: "Ingeniería trae soluciones a la planta, pero en piso nadie entiende cómo usarlas.",
-    role: "Voz de cliente recogida por CII.IA",
-  },
-  {
-    id: "q1",
-    quote: "Llevo más de un año tratando de lanzar asistentes virtuales.",
-    role: "Voz de cliente recogida por CII.IA",
-  },
-];
 
 export const BRAND_PAIRS = [
   { verb1: "DESCUBRIMOS", verb2: "no diagnosticamos" },
