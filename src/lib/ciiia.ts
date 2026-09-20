@@ -51,6 +51,11 @@ export type ProjectCase = {
   technology: string;
   metricHighlight: string;
   metricLabel: string;
+  /**
+   * `true` solo si la métrica es un resultado medible (%, tiempo, costo,
+   * precisión). Los conteos de funciones se conservan en los datos, sin mostrarse.
+   */
+  metricIsResult?: boolean;
   challenge: string;
   approach: string;
   outcome: string;
@@ -676,7 +681,8 @@ export const PROJECT_CASES: ProjectCase[] = [
     sector: "Manufactura",
     technology: "Visión Computacional",
     metricHighlight: "-55%",
-    metricLabel: "PAROS DE LÍNEA",
+    metricLabel: "Paros de línea",
+    metricIsResult: true,
     challenge: "La inspección manual no alcanza el ritmo de la línea y los defectos se detectan tarde.",
     approach: "Inspección automatizada con visión por computadora integrada al proceso productivo.",
     outcome: "55% menos paros, 28% menos tiempo improductivo, 30% menos desperdicio y 60% menos tiempo de inspección.",
@@ -831,6 +837,15 @@ export const FEATURED_CASE_METRICS: { value: string; label: string }[] = [
   { value: "-30%", label: "Desperdicio" },
   { value: "-28%", label: "Tiempo improductivo" },
 ];
+
+/**
+ * Resultados medibles de un caso, los únicos que la interfaz muestra. El caso
+ * destacado trae sus cuatro cifras; los demás, su métrica solo si es resultado.
+ */
+export function caseResults(item: ProjectCase): { value: string; label: string }[] {
+  if (item.id === FEATURED_CASE_ID) return FEATURED_CASE_METRICS;
+  return item.metricIsResult ? [{ value: item.metricHighlight, label: item.metricLabel }] : [];
+}
 
 export const INDUSTRIAL_SECTORS = [
   { id: "manufactura", name: "Manufactura" },

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { MediaCard } from "@/components/ui/MediaCard";
 import { technologyLabel } from "@/lib/cases";
-import { caseImageSrc, type ProjectCase } from "@/lib/ciiia";
+import { caseImageSrc, caseResults, type ProjectCase } from "@/lib/ciiia";
 
 /**
  * Tile de imagen de un caso: imagen, "Sector · Tecnología" y título. Lo
@@ -15,6 +15,8 @@ export function CaseTile({
   item: ProjectCase;
   sizes?: string;
 }) {
+  const [result] = caseResults(item);
+
   return (
     <MediaCard
       href={`/casos/${item.id}`}
@@ -25,6 +27,7 @@ export function CaseTile({
       }
       label={`${item.sector} · ${technologyLabel(item.technology)}`}
       title={item.title}
+      datum={result && `${result.value} · ${result.label}`}
     />
   );
 }
