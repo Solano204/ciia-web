@@ -38,14 +38,40 @@ export function About({
   /** Teaser de la home: titular y foto, con enlace a /nosotros. */
   teaser?: boolean;
 }) {
+  const headline = (
+    <Heading className="font-display text-h2 font-semibold text-foreground">
+      {ABOUT_DATA.headlineLines.map((line, index) => (
+        <BlurText key={line} as="span" text={line} delay={80} initialDelay={index * 180} />
+      ))}
+    </Heading>
+  );
+
+  if (teaser) {
+    return (
+      <Section id="nosotros" className="flex flex-col gap-12">
+        {headline}
+        <Reveal>
+          <div className="relative aspect-video overflow-hidden rounded-xl bg-white/[0.03] md:aspect-[21/9]">
+            <Image
+              src={ABOUT_DATA.labImageSrc}
+              alt={ABOUT_DATA.labImageAlt}
+              fill
+              sizes="(min-width: 1440px) 1345px, 100vw"
+              className="object-cover"
+            />
+          </div>
+        </Reveal>
+        <SectionCta>
+          <CtaLink href="/nosotros">Conocer al CII.IA</CtaLink>
+        </SectionCta>
+      </Section>
+    );
+  }
+
   return (
     <>
       <Section id="nosotros" className="flex flex-col gap-8">
-        <Heading className="font-display text-h2 font-semibold text-foreground">
-          {ABOUT_DATA.headlineLines.map((line, index) => (
-            <BlurText key={line} as="span" text={line} delay={80} initialDelay={index * 180} />
-          ))}
-        </Heading>
+        {headline}
         <Reveal>
           <p className="max-w-[80ch] text-[19px] leading-snug text-foreground">
             {ABOUT_DATA.leadParagraph}
@@ -70,23 +96,14 @@ export function About({
         </figcaption>
       </figure>
 
-      {teaser ? (
-        <Section id="nosotros-cierre" className="flex flex-col">
-          <SectionCta>
-            <CtaButton href="/contacto">{CTA_COPY.contacto}</CtaButton>
-            <CtaLink href="/nosotros">Conocer al CII.IA</CtaLink>
-          </SectionCta>
-        </Section>
-      ) : (
-        <Section id="cifras" className="flex flex-col gap-16">
-          <Stats />
-          <FoundingPartners />
-          <WorkPrinciples />
-          <SectionCta>
-            <CtaButton href="/contacto">{CTA_COPY.contacto}</CtaButton>
-          </SectionCta>
-        </Section>
-      )}
+      <Section id="cifras" className="flex flex-col gap-16">
+        <Stats />
+        <FoundingPartners />
+        <WorkPrinciples />
+        <SectionCta>
+          <CtaButton href="/contacto">{CTA_COPY.contacto}</CtaButton>
+        </SectionCta>
+      </Section>
     </>
   );
 }
