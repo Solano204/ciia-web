@@ -1,252 +1,26 @@
 "use client";
 
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, type CSSProperties } from "react";
 import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { AnimatedItem, AnimatedSection } from "@/components/ui/AnimatedSection";
 import { BlurText } from "@/components/ui/BlurText";
 import { CountingValue } from "@/components/ui/CountingValue";
+import { FoundingPartners } from "@/components/ui/FoundingPartners";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
 import type { HeadingLevel } from "@/components/ui/SectionHeader";
 import { CtaButton, CtaLink, SectionCta } from "@/components/ui/Cta";
 import { useRevealOnScroll } from "@/hooks/useRevealOnScroll";
-import { logoWidthPercent, type LogoSizing } from "@/lib/logoSizing";
 import {
   ABOUT_DATA,
   CLIENT_QUOTES,
   CTA_COPY,
-  type AboutFoundingPartner,
   type WorkPrinciple,
 } from "@/lib/ciiia";
 
 gsap.registerPlugin(ScrollTrigger);
-
-const INITIALS_STOPWORDS = new Set(["de", "del", "la", "el", "y", "en", "los", "las"]);
-
-/** Fallback cuando el logo no carga: iniciales de la institución. */
-function initialsOf(name: string): string {
-  const words = name
-    .replace(/\(.*?\)/g, " ")
-    .split(/[^\p{L}]+/u)
-    .filter((word) => word.length > 1 && !INITIALS_STOPWORDS.has(word.toLowerCase()));
-
-  if (words.length === 0) return "—";
-  if (words.length === 1) return words[0].slice(0, 3).toUpperCase();
-  return words
-    .slice(0, 3)
-    .map((word) => word[0])
-    .join("")
-    .toUpperCase();
-}
-
-type PartnerTileProps = {
-  partner: AboutFoundingPartner;
-  isActive: boolean;
-  onActivate: () => void;
-};
-
-/** Tile `aspect-[3/2]` con pocos logos: se les da bastante presencia. */
-const PARTNER_LOGO_SIZING: LogoSizing = {
-  tileRatio: 3 / 2,
-  area: 0.34,
-  maxWidth: 0.8,
-  maxHeight: 0.66,
-};
-
-function PartnerTile({ partner, isActive, onActivate }: PartnerTileProps) {
-  const [logoFailed, setLogoFailed] = useState(false);
-  const onLight = partner.logoOnLight ?? false;
-
-  // Los PNG traen fondo opaco y los colores de marca dependen de él: los de
-  // fondo blanco van en un tile claro (el `foreground` del sitio, no blanco
-  // puro) y PROSOFT, que trae su propio fondo negro con halo, cubre un tile
-  // oscuro. `isolate` fija el contexto de apilado en el tile para que la
-  // mezcla del logo sea contra su fondo y no contra lo que haya detrás.
-  const tileClass = [
-    "relative isolate flex aspect-[3/2] items-center justify-center overflow-hidden rounded-xl border",
-    // Anchos a juego con el `gap-3` (12px) del contenedor: 2 · 3 · 5 por fila.
-    "w-[calc((100%_-_12px)/2)] sm:w-[calc((100%_-_24px)/3)] xl:w-[calc((100%_-_48px)/5)]",
-    // Hover: el tile se eleva un poco con sombra corta. Tailwind v4 escribe
-    // `translate` (propiedad propia), así que no choca con el `transform`
-    // que deja la entrada de GSAP en el mismo elemento.
-    "transition-[translate,box-shadow,background-color,border-color] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]",
-    "motion-reduce:transition-none",
-    isActive
-      ? "-translate-y-1 shadow-[0_14px_28px_-14px_rgba(0,0,0,0.75)] motion-reduce:translate-y-0"
-      : "translate-y-0",
-    onLight
-      ? isActive
-        ? "border-white/40 bg-zinc-100"
-        : "border-white/10 bg-foreground"
-      : isActive
-        ? "border-white/25 bg-[#151516]"
-        : "border-white/8 bg-[#0f0f10]",
-  ].join(" ");
-
-  const hoverScale = [
-    "transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none",
-    isActive ? "scale-[1.06] motion-reduce:scale-100" : "scale-100",
-  ].join(" ");
-
-  // Misma señal que la fila activa de la lista (`border-l-accent`): una línea
-  // de acento que se dibuja de izquierda a derecha en el borde inferior.
-  const accentLine = (
-    <span
-      aria-hidden
-      className={[
-        "absolute inset-x-0 bottom-0 h-[2px] origin-left bg-accent",
-        "transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none",
-        isActive ? "scale-x-100" : "scale-x-0",
-      ].join(" ")}
-    />
-  );
-
-  const content = logoFailed ? (
-    <span
-      className={`font-sans text-sm uppercase tracking-[0.08em] ${onLight ? "text-zinc-600" : "text-zinc-400"}`}
-    >
-      {initialsOf(partner.name)}
-    </span>
-  ) : onLight ? (
-    // La mezcla vive en este wrapper y no en la imagen: el `scale` del hover
-    // crea un contexto de apilado, y si la mezcla quedara dentro, el fondo
-    // blanco del PNG se vería como recuadro. `multiply` lo deja en el color
-    // del tile sin tocar los colores de la marca.
-    <span
-      className={`flex items-center justify-center mix-blend-multiply ${hoverScale}`}
-      style={{
-        width: `${logoWidthPercent(partner.logoWidth / partner.logoHeight, PARTNER_LOGO_SIZING)}%`,
-      }}
-    >
-      {/* GSAP escribe `filter`/`opacity` inline aquí (ver `About`); sin JS o
-          con reduced motion el logo queda en su color original. */}
-      <Image
-        src={partner.logo}
-        alt={partner.name}
-        width={partner.logoWidth}
-        height={partner.logoHeight}
-        sizes="(min-width: 1280px) 10vw, (min-width: 640px) 22vw, 36vw"
-        onError={() => setLogoFailed(true)}
-        data-fx="partner-logo"
-        className="h-auto w-full"
-      />
-    </span>
-  ) : (
-    // A sangre: el fondo negro y el halo son parte del asset, así que cubre el
-    // tile completo en vez de flotar como un rectángulo dentro de él.
-    <span className={`absolute inset-0 ${hoverScale}`}>
-      <Image
-        src={partner.logo}
-        alt={partner.name}
-        width={partner.logoWidth}
-        height={partner.logoHeight}
-        sizes="(min-width: 1280px) 14vw, (min-width: 640px) 30vw, 50vw"
-        onError={() => setLogoFailed(true)}
-        data-fx="partner-logo"
-        className="h-full w-full object-cover"
-      />
-    </span>
-  );
-
-  if (!partner.url) {
-    return (
-      <div className={tileClass} data-fx="partner-tile" onMouseEnter={onActivate}>
-        {content}
-        {accentLine}
-      </div>
-    );
-  }
-
-  return (
-    <a
-      href={partner.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      data-fx="partner-tile"
-      onMouseEnter={onActivate}
-      onFocus={onActivate}
-      className={`${tileClass} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent`}
-    >
-      {content}
-      {accentLine}
-      <span className="sr-only">{partner.name} — se abre en una ventana nueva</span>
-    </a>
-  );
-}
-
-function FoundingPartners() {
-  const [activeId, setActiveId] = useState<string | null>(null);
-  const partners = ABOUT_DATA.foundingPartners;
-
-  return (
-    <AnimatedSection className="grid gap-10 border-t border-white/8 pt-20 lg:grid-cols-12 bg-transparent  ">
-      <div className="lg:col-span-4 lg:sticky lg:top-24 lg:self-start">
-        <BlurText
-          as="h3"
-          text={ABOUT_DATA.foundingPartnersTitle}
-          delay={70}
-          className="font-display text-h3 font-medium text-foreground"
-        />
-        <AnimatedItem>
-          <p className="mt-5 max-w-[340px] text-[15px] leading-relaxed text-zinc-400">
-            {ABOUT_DATA.foundingPartnersCopy}
-          </p>
-        </AnimatedItem>
-      </div>
-
-      <div className="space-y-10 lg:col-span-8" onMouseLeave={() => setActiveId(null)}>
-        {/* Flex centrado en vez de grid: con 5 logos, las filas incompletas
-            (2+2+1 en móvil, 3+2 en tablet) quedan centradas y no cojas. */}
-        <div className="flex flex-wrap justify-center gap-3" data-fx="partner-tiles">
-          {partners.map((partner) => (
-            <PartnerTile
-              key={partner.id}
-              partner={partner}
-              isActive={activeId === partner.id}
-              onActivate={() => setActiveId(partner.id)}
-            />
-          ))}
-        </div>
-
-        <ul data-fx="partner-rows">
-          {partners.map((partner) => {
-            const isActive = activeId === partner.id;
-            return (
-              <li
-                key={partner.id}
-                data-fx="partner-row"
-                onMouseEnter={() => setActiveId(partner.id)}
-                className={[
-                  "flex flex-col gap-1 border-b border-l-2 border-white/8 py-4 pl-4",
-                  "transition-colors duration-200 motion-reduce:transition-none",
-                  "lg:flex-row lg:items-baseline lg:justify-between lg:gap-6",
-                  isActive ? "border-l-accent" : "border-l-transparent",
-                ].join(" ")}
-              >
-                <span
-                  className={`text-[15px] transition-colors duration-200 motion-reduce:transition-none ${
-                    isActive ? "text-foreground" : "text-zinc-300"
-                  }`}
-                >
-                  {partner.name}
-                </span>
-                <span
-                  className={`text-[13px] transition-colors duration-200 motion-reduce:transition-none lg:text-right ${
-                    isActive ? "text-zinc-300" : "text-zinc-400"
-                  }`}
-                >
-                  {partner.role}
-                </span>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-    </AnimatedSection>
-  );
-}
 
 /** Cada línea lleva su propio delay de cascada en una custom property, para
  *  que el ::after del tachado pueda encadenarse con `calc()`. */
@@ -368,48 +142,6 @@ export function About({
     mm.add("(prefers-reduced-motion: no-preference)", () => {
       // En el teaser de la home no hay cifras, socios ni principios.
       if (teaser) return;
-
-      // Logo wall: los tiles entran en cascada y las filas se deslizan detrás.
-      gsap
-        .timeline({
-          scrollTrigger: { trigger: "[data-fx='partner-tiles']", start: "top 85%", once: true },
-        })
-        .from("[data-fx='partner-tile']", {
-          opacity: 0,
-          y: 26,
-          scale: 0.96,
-          duration: 0.7,
-          ease: "power3.out",
-          stagger: 0.07,
-          // GSAP deja `translate: none` inline al terminar, lo que anula la
-          // elevación del hover (`-translate-y-1`). Se limpia al acabar.
-          clearProps: "transform,translate,scale,opacity",
-        })
-        .from(
-          "[data-fx='partner-row']",
-          { opacity: 0, x: -18, duration: 0.6, ease: "power2.out", stagger: 0.06 },
-          0.25,
-        );
-
-      // Logos: entran algo desaturados y recuperan su color conforme el tile
-      // sube por el viewport. Sólo `grayscale` y `opacity`: filtros como
-      // `contrast` o `brightness` alterarían el blanco/negro del PNG y el fondo
-      // opaco dejaría de fundirse con el tile. Un trigger por tile para que en
-      // móvil cada fila se revele cuando realmente entra.
-      scope.querySelectorAll<HTMLElement>("[data-fx='partner-tile']").forEach((tile) => {
-        const logo = tile.querySelector("[data-fx='partner-logo']");
-        if (!logo) return;
-        gsap.fromTo(
-          logo,
-          { filter: "grayscale(0.65)", opacity: 0.75 },
-          {
-            filter: "grayscale(0)",
-            opacity: 1,
-            ease: "none",
-            scrollTrigger: { trigger: tile, start: "top 92%", end: "center 60%", scrub: 0.6 },
-          },
-        );
-      });
 
       // Encabezado del manifiesto: el título sube enmascarado.
       // Las nueve líneas las revela `useRevealOnScroll`, una por una.
