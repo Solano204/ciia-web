@@ -908,6 +908,9 @@ export const CONTACT_INFO = {
   ],
 };
 
+/** "Cómo llegar": búsqueda de Google Maps con la dirección de `CONTACT_INFO`. */
+export const MAPS_HREF = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(CONTACT_INFO.location)}`;
+
 /**
  * URL del aviso de privacidad. Pendiente de confirmación institucional: mientras
  * esté vacía, el pie de página omite el enlace en vez de apuntar a un 404.

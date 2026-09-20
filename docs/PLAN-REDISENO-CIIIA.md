@@ -211,12 +211,9 @@
 - CTA: "Contáctanos".
 
 ### FASE 9 — Contacto, Footer y legal
-- **Formulario real:** endpoint en Cloudflare Worker o un servicio de formularios en lugar de `mailto:`.
-  - Validación en tiempo real.
-  - Estado de éxito.
-  - Anti-bots.
-- **Datos directos:** `tel:` y `mailto:` clicables.
-- Imagen del robot (`/public/contacto.webp`).
+- **Formulario (solo diseño):** 4 campos, labels visibles, validación al salir del campo, foco dorado, estado de éxito visible y envío por `mailto:`. El backend queda en la Fase 11.
+- **Datos directos:** `tel:` y `mailto:` clicables, más «Cómo llegar» a Google Maps.
+- Imagen del robot (`/public/contacto.jpg`, como banda superior). Sin el archivo, fallback de degradado con brillo dorado tenue, decidido en el build.
 - **Footer:**
   - Aviso de privacidad (pendiente del documento del cliente).
   - Año dinámico en cliente.
@@ -237,6 +234,10 @@
 - Lighthouse móvil ≥ 90.
 - `axe` sin errores.
 - Checklist de lanzamiento web con todo lo 🔴 cerrado.
+- **Formulario real (backend):** endpoint en Cloudflare Worker o un servicio de formularios en lugar de `mailto:`.
+  - Validación también en servidor.
+  - Estado de éxito y de error reales, con reintento.
+  - Anti-bots (honeypot o Turnstile) y límite de envíos.
 - Pendiente: verificar prefetch en Cloudflare antes de producción.
 - Pendiente: actualizar Node local a 22. El wrangler actual (4.135+) lo exige y hoy se usa `wrangler@4.86.0` fijado, con Node 20.20.2.
 
