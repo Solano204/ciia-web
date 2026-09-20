@@ -4,7 +4,7 @@ import { CtaButton, CtaLink, SectionCta } from "@/components/ui/Cta";
 import { Section } from "@/components/ui/Section";
 import { SectionHeader, type HeadingLevel } from "@/components/ui/SectionHeader";
 import { StageDeck } from "@/components/ui/StageDeck";
-import { StageRail } from "@/components/ui/StageRail";
+import { StageLinks } from "@/components/ui/StageLinks";
 import {
   CTA_COPY,
   EXECUTION_STAGES,
@@ -28,7 +28,7 @@ export function ExecutionCycle({
     return (
       <Section id="ciclo" className="flex flex-col gap-12">
         <SectionHeader as={headingLevel} title={TITLE} description={DESCRIPTION} />
-        <StageRail stages={EXECUTION_STAGES} activeStageIds={[]} />
+        <StageLinks stages={EXECUTION_STAGES} />
         <SectionCta>
           <CtaButton href={schedulingHref()}>{CTA_COPY.agenda}</CtaButton>
           <CtaLink href="/ciclo">Ver el ciclo completo</CtaLink>

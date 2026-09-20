@@ -1,8 +1,14 @@
 "use client";
 
+import { useSyncExternalStore } from "react";
 import { Deck } from "@/components/ui/Deck";
 import { StageCard } from "@/components/ui/StageCard";
 import type { ExecutionStage, ServiceItem } from "@/lib/ciiia";
+
+const subscribeHash = (onChange: () => void) => {
+  window.addEventListener("hashchange", onChange);
+  return () => window.removeEventListener("hashchange", onChange);
+};
 
 /** Números de etapa sobre el deck: un segundo control, además de flechas y puntos. */
 function StageNumbers({
@@ -59,8 +65,17 @@ export function StageDeck({
   /** Etapas cuya imagen existe en `public/ciclo/` (comprobado en el build). */
   imageIds: string[];
 }) {
+  // `/ciclo#desplegar` abre el carrusel en esa etapa. El hash solo existe en el
+  // cliente: en el servidor y al hidratar vale "" (mismo HTML) y React lo
+  // corrige antes del primer pintado. `key` remonta el deck ya centrado en ella,
+  // sin deslizamiento visible.
+  const hash = useSyncExternalStore(subscribeHash, () => window.location.hash, () => "");
+  const start = Math.max(0, stages.findIndex((stage) => `#${stage.id}` === hash));
+
   return (
     <Deck
+      key={start}
+      initialIndex={start}
       items={stages}
       getKey={(stage) => stage.id}
       resetKey="ciclo"

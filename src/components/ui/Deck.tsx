@@ -30,6 +30,8 @@ type DeckProps<T> = {
   announce?: (activeIndex: number) => string;
   /** Anillo de foco de los puntos; sin él conservan su aspecto original. */
   dotFocusClass?: string;
+  /** Tarjeta con la que abre el deck. */
+  initialIndex?: number;
 };
 
 /**
@@ -49,6 +51,7 @@ export function Deck<T>({
   renderHeader,
   announce,
   dotFocusClass,
+  initialIndex,
 }: DeckProps<T>) {
   const {
     activeIndex,
@@ -63,7 +66,7 @@ export function Deck<T>({
     goTo,
     next,
     previous,
-  } = useDeckCarousel({ count: items.length, resetKey });
+  } = useDeckCarousel({ count: items.length, resetKey, initialIndex });
 
   const animated = ready && !prefersReducedMotion;
   // Con un solo elemento no hay recorrido: las flechas y la paginación sobran.
