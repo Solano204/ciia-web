@@ -9,9 +9,11 @@ import {
   framePath,
 } from "@/lib/hero";
 import { CTA_COPY, HERO_LEAD, HERO_PROOF, schedulingHref } from "@/lib/ciiia";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { useScrollFrameSequence } from "@/hooks/use-scroll-frame-sequence";
 
 export function Hero() {
+  const reducedMotion = useReducedMotion();
   const heroTextRef = useRef<HTMLDivElement | null>(null);
 
   const handleProgress = useCallback((progress: number) => {
@@ -27,6 +29,7 @@ export function Hero() {
     frameCount: FRAME_COUNT,
     framePath,
     onProgress: handleProgress,
+    reducedMotion,
   });
 
   return (
@@ -78,23 +81,11 @@ export function Hero() {
           </p>
         </div>
 
-        {!loaded && (
-          <div className="absolute inset-0 z-30 flex flex-col items-center justify-center gap-5 bg-background px-6">
-            <span className="inline-flex items-center gap-2 font-sans text-[12px] font-medium uppercase tracking-[0.08em] text-accent">
-              <span aria-hidden className="inline-block h-1.5 w-1.5 rounded-full bg-accent" />
-              CII.IA // CARGANDO
-            </span>
-            <div className="h-px w-60 bg-white/10 md:w-80">
-              <div
-                className="h-full bg-accent transition-[width] duration-150 ease-out"
-                style={{ width: `${Math.round(loadProgress * 100)}%` }}
-              />
-            </div>
-            <p className="font-mono text-[12px] uppercase tracking-[0.08em] text-muted">
-              Cargando CII.IA &nbsp;&middot;&nbsp; {Math.round(loadProgress * 100)}%
-            </p>
-          </div>
-        )}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-0.5 origin-left bg-accent/80 transition-[transform,opacity] duration-300 ease-out motion-reduce:transition-none"
+          style={{ transform: `scaleX(${loadProgress})`, opacity: loaded ? 0 : 1 }}
+        />
       </div>
     </section>
   );
