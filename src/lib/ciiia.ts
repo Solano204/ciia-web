@@ -455,7 +455,7 @@ export const ECOSYSTEM_PARTNERS: EcosystemPartnerEntry[] = [
 ];
 
 export const ECOSYSTEM_INTRO =
-  "Más de 50 organizaciones de tecnología, academia, gobierno e industria forman parte del ecosistema del CII.IA.";
+  "Algunas de las más de 50 organizaciones de tecnología, academia, gobierno e industria que forman el ecosistema del CII.IA.";
 
 export const ECOSYSTEM_GROUPS: { category: EcosystemPartner["category"]; title: string }[] = [
   { category: "Tech", title: "Tecnología" },
