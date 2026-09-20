@@ -640,6 +640,22 @@ export const SERVICES_DATA: ServiceItem[] = [
 ];
 
 /**
+ * Las `count` soluciones que comparten más etapas del ciclo con `id`; a igual
+ * número de etapas, el orden de `SERVICES_DATA`.
+ */
+export function relatedServices(id: string, count = 2): ServiceItem[] {
+  const current = SERVICES_DATA.find((service) => service.id === id);
+  if (!current) return [];
+  const shared = (service: ServiceItem) =>
+    service.stageMapping.filter((stage) => current.stageMapping.includes(stage)).length;
+  return SERVICES_DATA.filter((service) => service.id !== id)
+    .map((service, index) => ({ service, index, score: shared(service) }))
+    .sort((a, b) => b.score - a.score || a.index - b.index)
+    .slice(0, count)
+    .map(({ service }) => service);
+}
+
+/**
  * Render de portada de cada caso. Los archivos de `public/casos/` llevan el
  * mismo nombre que el `id`, así que la ruta se deriva en vez de duplicarse.
  */
