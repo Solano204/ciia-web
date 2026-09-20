@@ -5,11 +5,13 @@ import { ContactForm } from "@/components/ui/ContactForm";
 import { CtaButton } from "@/components/ui/Cta";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
-import { SectionHeader, type HeadingLevel } from "@/components/ui/SectionHeader";
+import type { HeadingLevel } from "@/components/ui/SectionHeader";
 import { CONTACT_INFO, CTA_COPY, MAPS_HREF, PAGE_DESCRIPTIONS, SCHEDULING_URL } from "@/lib/ciiia";
 
 const TITLE = "Contacto";
 const DESCRIPTION = PAGE_DESCRIPTIONS.contacto;
+/** Primera mitad de la frase de `DESCRIPTION`: el titular del cierre en la home. */
+const CLOSING_TITLE = "Cuéntanos qué necesitas.";
 
 const LINK =
   "text-sm text-foreground underline decoration-white/20 underline-offset-4 outline-none transition-colors hover:text-accent focus-visible:ring-2 focus-visible:ring-accent motion-reduce:transition-none";
@@ -65,10 +67,23 @@ export function Contact({
   if (teaser) {
     return (
       <Section id="contacto" className="flex flex-col gap-8">
-        <SectionHeader animated as={Heading} title={TITLE} description={DESCRIPTION} />
-        <div>
+        <Reveal>
+          <Heading className="font-display text-h2 font-semibold text-foreground">
+            {CLOSING_TITLE}
+          </Heading>
+        </Reveal>
+        <Reveal index={1} className="flex flex-wrap items-center gap-x-8 gap-y-4">
           <CtaButton href="/contacto">{CTA_COPY.contacto}</CtaButton>
-        </div>
+          <p className="text-sm text-[var(--text-secondary)]">
+            <a href={`mailto:${CONTACT_INFO.email}`} className={LINK}>
+              {CONTACT_INFO.email}
+            </a>
+            <span aria-hidden> · </span>
+            <a href={CONTACT_INFO.phoneHref} className={LINK}>
+              {CONTACT_INFO.phoneDisplay}
+            </a>
+          </p>
+        </Reveal>
       </Section>
     );
   }
