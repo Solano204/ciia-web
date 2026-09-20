@@ -109,7 +109,7 @@ export function StageCard({
       </div>
 
       <p className="mt-4 text-[15px] leading-relaxed text-[var(--text-secondary)]">
-        {stage.description}
+        {stage.phrase}
       </p>
 
       <dl className="mt-6 flex flex-col gap-5 border-t border-[var(--line)] pt-6">
