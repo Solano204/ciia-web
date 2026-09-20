@@ -1,3 +1,6 @@
+import fs from "node:fs";
+import path from "node:path";
+import Image from "next/image";
 import { ContactForm } from "@/components/ui/ContactForm";
 import { CtaButton } from "@/components/ui/Cta";
 import { Reveal } from "@/components/ui/Reveal";
@@ -11,6 +14,45 @@ const DESCRIPTION = PAGE_DESCRIPTIONS.contacto;
 const LINK =
   "text-sm text-foreground underline decoration-white/20 underline-offset-4 outline-none transition-colors hover:text-accent focus-visible:ring-2 focus-visible:ring-accent motion-reduce:transition-none";
 const LABEL = "font-sans text-[12px] uppercase tracking-[0.08em] text-muted";
+
+const IMAGE_FILE = "contacto.jpg";
+
+/** Decidido en el build: sin el archivo, la banda usa el degradado y no hay 404. */
+function hasContactImage(): boolean {
+  return fs.existsSync(path.join(process.cwd(), "public", IMAGE_FILE));
+}
+
+/**
+ * Banda superior. `id="hero"` hace que el Navbar aplique su degradado sobre
+ * ella. Sin imagen, mismo fallback que el Ciclo: degradado oscuro con un brillo
+ * dorado tenue.
+ */
+function ContactBand() {
+  return (
+    <div
+      id="hero"
+      className="relative h-[36svh] min-h-[240px] max-h-[420px] w-full overflow-hidden bg-background"
+    >
+      {hasContactImage() ? (
+        <Image src={`/${IMAGE_FILE}`} alt="" fill priority sizes="100vw" className="object-cover" />
+      ) : (
+        <div
+          aria-hidden
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(60% 80% at 50% 45%, rgba(212,162,47,0.1), transparent 70%), linear-gradient(135deg, var(--gray-900), var(--gray-950))",
+          }}
+        />
+      )}
+      <div
+        aria-hidden
+        className="absolute inset-0"
+        style={{ background: "linear-gradient(to top, var(--background) 0%, transparent 45%)" }}
+      />
+    </div>
+  );
+}
 
 export function Contact({
   headingLevel: Heading = "h2",
@@ -32,7 +74,9 @@ export function Contact({
   }
 
   return (
-    <Section id="contacto" className="grid gap-16 md:grid-cols-12">
+    <>
+      <ContactBand />
+      <Section id="contacto" className="grid gap-16 md:grid-cols-12">
       <Reveal className="md:col-span-7">
         <div className="flex flex-col gap-10">
           <div className="flex flex-col gap-4">
@@ -107,6 +151,7 @@ export function Contact({
           </div>
         </dl>
       </Reveal>
-    </Section>
+      </Section>
+    </>
   );
 }
