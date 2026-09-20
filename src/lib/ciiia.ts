@@ -367,9 +367,9 @@ export type EcosystemTile = Pick<EcosystemPartnerEntry, "id" | "name" | "logo" |
 export const ECOSYSTEM_CATEGORIES: EcosystemCategory[] = [
   { id: "tecnologia", label: "Tecnología" },
   { id: "plataformas", label: "Plataformas" },
-  { id: "academia", label: "Academia e investigación" },
-  { id: "industria", label: "Industria y clústeres" },
-  { id: "empresas", label: "Empresas socias" },
+  { id: "academia", label: "Academia" },
+  { id: "industria", label: "Industria" },
+  { id: "empresas", label: "Empresas" },
 ];
 
 /**

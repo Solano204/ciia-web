@@ -1,18 +1,15 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef } from "react";
+import { useCallback, useMemo } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { FilterChip, FilterGroup } from "@/components/ui/FilterChips";
+import { LogoTile } from "@/components/ui/LogoTile";
+import { Reveal } from "@/components/ui/Reveal";
 import {
   ECOSYSTEM_CATEGORIES,
   ECOSYSTEM_PARTNERS,
   type EcosystemCategoryId,
 } from "@/lib/ciiia";
-import { LogoTile } from "@/components/ui/LogoTile";
-import { Reveal } from "@/components/ui/Reveal";
-
-gsap.registerPlugin(ScrollTrigger);
 
 /** 60 ms entre logos con tope de 600 ms en total (índice 10). */
 const MAX_STAGGER_INDEX = 10;
@@ -22,14 +19,10 @@ const QUERY_KEY = "categoria";
 const isCategoryId = (value: string | null): value is EcosystemCategoryId =>
   value !== null && ECOSYSTEM_CATEGORIES.some((category) => category.id === value);
 
-/** "Academia e investigación" → "ACADEMIA" para el pill. */
-const pillLabel = (label: string): string => label.split(" ")[0].toUpperCase();
-
 export function EcosystemGrid() {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const rootRef = useRef<HTMLDivElement>(null);
 
   // La URL es la única fuente de verdad: no hay estado espejo que sincronizar.
   const paramValue = searchParams.get(QUERY_KEY);
@@ -52,72 +45,25 @@ export function EcosystemGrid() {
     [activeId],
   );
 
-  const visibleCount = useMemo(
-    () =>
-      ECOSYSTEM_PARTNERS.filter(
-        (partner) => activeId === null || partner.categoryId === activeId,
-      ).length,
-    [activeId],
-  );
-
-  // Los pills entran una sola vez, al aparecer la barra.
-  useEffect(() => {
-    const scope = rootRef.current;
-    if (!scope) return;
-
-    const mm = gsap.matchMedia();
-    mm.add("(prefers-reduced-motion: no-preference)", () => {
-      const ctx = gsap.context(() => {
-        gsap.from("[data-fx='eco-pill']", {
-          opacity: 0,
-          y: 12,
-          scale: 0.9,
-          duration: 0.45,
-          ease: "back.out(1.6)",
-          stagger: 0.05,
-          scrollTrigger: { trigger: "[data-fx='eco-filters']", start: "top 92%", once: true },
-        });
-      }, scope);
-      return () => ctx.revert();
-    });
-
-    return () => mm.revert();
-  }, []);
-
   return (
-    <div ref={rootRef}>
-      <div
-        data-fx="eco-filters"
-        className="flex flex-wrap items-center justify-between gap-4 border-y border-white/8 py-4"
-      >
-        <div
-          role="tablist"
-          aria-label="Filtrar el ecosistema por categoría"
-          className="flex gap-2 overflow-x-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-        >
-          <FilterPill
-            isActive={activeId === null}
-            label="TODAS"
-            onSelect={() => selectCategory(null)}
+    <div className="flex flex-col gap-10">
+      <FilterGroup label="Categoría">
+        <FilterChip label="Todas" active={activeId === null} onClick={() => selectCategory(null)} />
+        {ECOSYSTEM_CATEGORIES.map((category) => (
+          <FilterChip
+            key={category.id}
+            label={category.label}
+            active={activeId === category.id}
+            onClick={() => selectCategory(category.id)}
           />
-          {ECOSYSTEM_CATEGORIES.map((category) => (
-            <FilterPill
-              key={category.id}
-              isActive={activeId === category.id}
-              label={pillLabel(category.label)}
-              onSelect={() => selectCategory(category.id)}
-            />
-          ))}
-        </div>
+        ))}
+      </FilterGroup>
 
-        <span className="shrink-0 font-mono text-[12px] tracking-wide text-muted" aria-live="polite">
-          {visibleCount} DE {ECOSYSTEM_PARTNERS.length}
-        </span>
-      </div>
-
+      {/* La `key` remonta el bloque al cambiar de filtro y relanza el fundido
+          (el mismo de Casos); con reduced motion el cambio es instantáneo. */}
       <div
         key={activeId ?? "todas"}
-        className="animate-[eco-fade_200ms_ease-out] motion-reduce:animate-none"
+        className="animate-[eco-fade_var(--dur-base)_var(--ease-out)] motion-reduce:animate-none"
       >
         {visibleCategories.map((category) => {
           const partners = ECOSYSTEM_PARTNERS.filter(
@@ -127,15 +73,11 @@ export function EcosystemGrid() {
           return (
             <div
               key={category.id}
-              data-fx="eco-block"
-              className="grid gap-5 border-b border-white/8 py-8 lg:grid-cols-12 lg:gap-8"
+              className="grid gap-5 border-t border-[var(--line)] py-8 lg:grid-cols-12 lg:gap-8"
             >
-              <h3
-                data-fx="eco-label"
-                className="font-sans text-[17px] font-medium leading-snug text-foreground lg:col-span-3 lg:sticky lg:top-24 lg:self-start"
-              >
+              <h2 className="font-display text-h3 font-semibold text-foreground lg:col-span-3 lg:sticky lg:top-24 lg:self-start">
                 {category.label}
-              </h3>
+              </h2>
 
               <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:col-span-9 xl:grid-cols-4">
                 {partners.map((partner, index) => (
@@ -162,33 +104,5 @@ export function EcosystemLogos({ limit }: { limit: number }) {
         </Reveal>
       ))}
     </div>
-  );
-}
-
-type FilterPillProps = {
-  label: string;
-  isActive: boolean;
-  onSelect: () => void;
-};
-
-function FilterPill({ label, isActive, onSelect }: FilterPillProps) {
-  return (
-    <button
-      type="button"
-      role="tab"
-      aria-selected={isActive}
-      onClick={onSelect}
-      data-fx="eco-pill"
-      className={[
-        "shrink-0 rounded-full border px-4 py-1.5 font-sans text-[12px] uppercase tracking-wide",
-        "transition-colors duration-200 motion-reduce:transition-none",
-        "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",
-        isActive
-          ? "border-accent text-accent"
-          : "border-white/10 text-muted hover:border-white/20 hover:text-zinc-300",
-      ].join(" ")}
-    >
-      {label}
-    </button>
   );
 }
