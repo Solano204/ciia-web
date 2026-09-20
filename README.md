@@ -25,7 +25,7 @@ This project uses [`next/font`](https://nextjs.org/docs/app/building-your-applic
 `npm run build` exporta el sitio estático a `out/` (Cloudflare Workers, ver `wrangler.toml`). Dos hooks de npm lo acompañan:
 
 - `prebuild` (`scripts/fetch-fonts.mjs`): descarga de Fontshare las fuentes que falten en `src/fonts/`. `predev` hace lo mismo e incluye las de `/lab`. Las `.woff2` no se versionan por licencia (ver `src/fonts/LICENSE-fonts.txt`).
-- `postbuild` (`scripts/flatten-prefetch.mjs`): el export de Next escribe los payloads de prefetch en carpetas (`ciclo/__next.ciclo/__PAGE__.txt`), pero el cliente los pide con nombre plano (`ciclo/__next.ciclo.__PAGE__.txt`), y sin este paso cada `Link` genera un 404 en consola. El script duplica cada payload con nombre plano. Termina con error si no encuentra ningún `__next.*/__PAGE__.txt`, para que un cambio interno de Next rompa el build en lugar de fallar en silencio. `trailingSlash: true` se probó y no lo resuelve.
+- `postbuild` (`scripts/flatten-prefetch.mjs`): el export de Next escribe los payloads de prefetch en carpetas (`ciclo/__next.ciclo/__PAGE__.txt`), pero el cliente los pide con nombre plano (`ciclo/__next.ciclo.__PAGE__.txt`), y sin este paso cada `Link` genera un 404 en consola. El script duplica cada payload con nombre plano. Termina con error si no encuentra ningún `__next.*/__PAGE__.txt`, para que un cambio interno de Next rompa el build en lugar de fallar en silencio. `trailingSlash: true` se probó y no lo resuelve. En Vercel el export no trae esos payloads en carpetas: ahí el script avisa, lista los archivos `__next*` que sí hay y continúa sin error, porque el aplanado es solo para Cloudflare Workers. Si los payloads ya vienen con nombre plano, tampoco hace nada.
 
 ## Learn More
 
