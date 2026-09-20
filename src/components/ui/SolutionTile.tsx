@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { MediaCard } from "@/components/ui/MediaCard";
 import type { ServiceItem } from "@/lib/ciiia";
+import { robotImage } from "@/lib/robotImage";
 
 /**
  * Tile de imagen: imagen, nombre y una frase. Lo comparten el teaser de la
@@ -13,14 +14,14 @@ export function SolutionTile({
   service: ServiceItem;
   sizes?: string;
 }) {
-  const image = service.media?.kind === "image" ? service.media : null;
+  const imageSrc = robotImage(`soluciones/${service.id}`);
 
   return (
     <MediaCard
       href={`/soluciones/${service.id}`}
       media={
         <div className="relative aspect-video bg-white/[0.03]">
-          {image && <Image src={image.src} alt="" fill sizes={sizes} className="object-cover" />}
+          {imageSrc && <Image src={imageSrc} alt="" fill sizes={sizes} className="object-cover" />}
         </div>
       }
       title={service.title}

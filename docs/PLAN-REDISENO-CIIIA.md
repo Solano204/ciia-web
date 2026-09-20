@@ -16,7 +16,7 @@
 | Casos | **Retícula con filtros**, sin conteos, con imagen protagonista. | Es el enfoque que el cliente dijo que le gusta. |
 | Secuencia roja (Reto) | Se **mueve al final de la home**, antes del cierre/Contacto. | El cliente pidió ponerla "al final" porque el cambio es drástico. |
 | CTAs | Solo tres: **Contáctanos · Busca una asesoría · Agenda con nosotros**. Cada módulo cierra con uno. | Pedido explícito del cliente. |
-| Robot | Protagonista de **todas** las imágenes. Prompts en `design/PROMPTS-ROBOT.md`. | Pedido explícito del cliente. |
+| Robot | Protagonista de **todas** las imágenes. Prompts en `docs/IMAGENES-ROBOT.md`. | Pedido explícito del cliente. |
 | Motion | Sutil. Se queda el cursor de fluido (recoloreado). Máximo 1 efecto de impacto por página. | Pedido explícito del cliente. |
 
 ⚠️ **Zona de otro desarrollador.** Hero, Reto, Nosotros, Ecosistema, Contacto y Footer fueron de otro desarrollador. Coordinar antes de tocar esas fases.
@@ -221,7 +221,7 @@
 - **SEO:** pasa a la Fase 11 (la Fase 9 quedó solo en diseño).
 
 ### FASE 10 — Imágenes del robot (pista paralela)
-- Generar las 17 imágenes de Soluciones y Casos, las 5 del Ciclo y la de Contacto con `design/PROMPTS-ROBOT.md`.
+- Generar las 17 imágenes de Soluciones y Casos, las 5 del Ciclo y la de Contacto con `docs/IMAGENES-ROBOT.md`.
 - Mismo nombre de archivo = cero cambios de código.
 - Convertir a WebP de 1600 px de ancho como máximo.
 

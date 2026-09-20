@@ -7,8 +7,12 @@ import { PROJECT_CASES } from "@/lib/ciiia";
 
 const NO_FILTERS: CaseFilterState = { sector: "todos", technology: "todas" };
 
-/** Retícula de /casos: 1 columna en móvil, 2 en tablet y 3 en escritorio. */
-export function CasesBrowser() {
+/**
+ * Retícula de /casos: 1 columna en móvil, 2 en tablet y 3 en escritorio.
+ * `imageSrcs` llega del servidor (id → ruta), con la decisión ya tomada en el
+ * build: un caso sin imagen no aparece en el mapa.
+ */
+export function CasesBrowser({ imageSrcs }: { imageSrcs: Record<string, string> }) {
   const [filters, setFilters] = useState<CaseFilterState>(NO_FILTERS);
 
   const filtered = PROJECT_CASES.filter(
@@ -44,7 +48,7 @@ export function CasesBrowser() {
           <ul className="grid gap-x-8 gap-y-14 md:grid-cols-2 lg:grid-cols-3">
             {filtered.map((item) => (
               <li key={item.id}>
-                <CaseTile item={item} />
+                <CaseTile item={item} imageSrc={imageSrcs[item.id]} />
               </li>
             ))}
           </ul>

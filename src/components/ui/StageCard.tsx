@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import type { DeckCardState } from "@/components/ui/Deck";
 import { deckTransition } from "@/hooks/useDeckCarousel";
-import { cycleImageSrc, type ExecutionStage, type ServiceItem } from "@/lib/ciiia";
+import type { ExecutionStage, ServiceItem } from "@/lib/ciiia";
 
 /**
  * Lo único que la tarjeta necesita de cada solución. El deck es un componente
@@ -46,7 +46,7 @@ function StageFallback({ number }: { number: string }) {
 export function StageCard({
   stage,
   services,
-  hasImage,
+  imageSrc,
   index,
   isActive,
   animated,
@@ -55,8 +55,8 @@ export function StageCard({
 }: {
   stage: ExecutionStage;
   services: StageService[];
-  /** Verificado en el build: si es falso, la imagen ni se pide. */
-  hasImage: boolean;
+  /** Decidida en el build: sin ruta, la imagen ni se pide y sale el fallback. */
+  imageSrc?: string;
 } & DeckCardState) {
   const related = services.filter((service) => service.stageMapping.includes(stage.id));
 
@@ -93,9 +93,9 @@ export function StageCard({
       ].join(" ")}
     >
       <div className="relative aspect-video overflow-hidden rounded-xl">
-        {hasImage ? (
+        {imageSrc ? (
           <Image
-            src={cycleImageSrc(stage.id)}
+            src={imageSrc}
             alt=""
             fill
             sizes="(min-width: 1024px) 520px, 85vw"

@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { MediaCard } from "@/components/ui/MediaCard";
 import { technologyLabel } from "@/lib/cases";
-import { caseImageSrc, caseResults, type ProjectCase } from "@/lib/ciiia";
+import { caseResults, type ProjectCase } from "@/lib/ciiia";
 
 /**
  * Tile de imagen de un caso: imagen, "Sector · Tecnología" y título. Lo
@@ -10,9 +10,12 @@ import { caseImageSrc, caseResults, type ProjectCase } from "@/lib/ciiia";
  */
 export function CaseTile({
   item,
+  imageSrc,
   sizes = "(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw",
 }: {
   item: ProjectCase;
+  /** Decidida en el build (`robotImage`): sin imagen, el marco queda tenue y vacío. */
+  imageSrc?: string;
   sizes?: string;
 }) {
   const [result] = caseResults(item);
@@ -22,7 +25,7 @@ export function CaseTile({
       href={`/casos/${item.id}`}
       media={
         <div className="relative aspect-video bg-white/[0.03]">
-          <Image src={caseImageSrc(item.id)} alt="" fill sizes={sizes} className="object-cover" />
+          {imageSrc && <Image src={imageSrc} alt="" fill sizes={sizes} className="object-cover" />}
         </div>
       }
       label={`${item.sector} · ${technologyLabel(item.technology)}`}

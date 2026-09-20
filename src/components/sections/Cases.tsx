@@ -4,7 +4,17 @@ import { CtaButton, CtaLink, SectionCta } from "@/components/ui/Cta";
 import { Section } from "@/components/ui/Section";
 import { SectionHeader, type HeadingLevel } from "@/components/ui/SectionHeader";
 import { TileRow } from "@/components/ui/TileRow";
-import { CTA_COPY, PAGE_DESCRIPTIONS, TEASER_CASES } from "@/lib/ciiia";
+import { CTA_COPY, PAGE_DESCRIPTIONS, PROJECT_CASES, TEASER_CASES } from "@/lib/ciiia";
+import { robotImage } from "@/lib/robotImage";
+
+/** id → ruta de la imagen, solo de los casos que la tienen (decidido en el build). */
+const caseImageSrcs = (): Record<string, string> =>
+  Object.fromEntries(
+    PROJECT_CASES.flatMap((item) => {
+      const src = robotImage(`casos/${item.id}`);
+      return src ? [[item.id, src]] : [];
+    }),
+  );
 
 export function Cases({
   headingLevel = "h2",
@@ -27,10 +37,16 @@ export function Cases({
         <TileRow
           items={TEASER_CASES}
           getKey={(item) => item.id}
-          renderTile={(item) => <CaseTile item={item} sizes="(min-width: 768px) 33vw, 78vw" />}
+          renderTile={(item) => (
+            <CaseTile
+              item={item}
+              imageSrc={robotImage(`casos/${item.id}`)}
+              sizes="(min-width: 768px) 33vw, 78vw"
+            />
+          )}
         />
       ) : (
-        <CasesBrowser />
+        <CasesBrowser imageSrcs={caseImageSrcs()} />
       )}
 
       <SectionCta>
