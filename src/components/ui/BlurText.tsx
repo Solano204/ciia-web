@@ -1,7 +1,8 @@
 "use client";
 
-import { motion, useReducedMotion, type TargetAndTransition } from "framer-motion";
+import { motion, type TargetAndTransition } from "framer-motion";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
 
 type Snapshot = TargetAndTransition;
 
@@ -121,10 +122,11 @@ export function BlurText({
 
   const MotionTag = MOTION_TAGS[Tag];
 
-  // El árbol es idéntico con y sin reduced motion (evita desajustes de
-  // hidratación): lo único que cambia es si se parte del estado final.
+  // `reduceMotion` es `false` en el servidor y durante la hidratación (el hook
+  // usa `useSyncExternalStore`), así que el primer render del cliente coincide
+  // con el HTML del servidor. La preferencia se aplica justo después del
+  // montaje: pasa al estado final sin animar.
   const restSnapshot = toSnapshots[toSnapshots.length - 1] ?? fromSnapshot;
-  const initialSnapshot = reduceMotion ? restSnapshot : fromSnapshot;
 
   return (
     <MotionTag ref={ref} className={className} style={{ display: "flex", flexWrap: "wrap" }}>
@@ -135,14 +137,18 @@ export function BlurText({
           <motion.span
             key={index}
             className="inline-block will-change-[transform,filter,opacity]"
-            initial={initialSnapshot}
+            initial={fromSnapshot}
             animate={reduceMotion ? restSnapshot : inView ? animateKeyframes : fromSnapshot}
-            transition={{
-              duration: totalDuration,
-              times,
-              ease: [0.22, 1, 0.36, 1],
-              delay: (initialDelay + index * delay) / 1000,
-            }}
+            transition={
+              reduceMotion
+                ? { duration: 0 }
+                : {
+                    duration: totalDuration,
+                    times,
+                    ease: [0.22, 1, 0.36, 1],
+                    delay: (initialDelay + index * delay) / 1000,
+                  }
+            }
             onAnimationComplete={
               index === elements.length - 1 ? onAnimationComplete : undefined
             }

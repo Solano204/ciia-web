@@ -80,7 +80,6 @@ export const MANIFESTO = {
 };
 
 export const INSTITUTIONAL_METRICS: { id: string; value: string; label: string }[] = [
-  { id: "i1", value: "12", label: "Soluciones documentadas" },
   { id: "i2", value: "50+", label: "Organizaciones aliadas" },
   { id: "i3", value: "5", label: "Socios fundadores" },
   { id: "i4", value: "2021", label: "Inauguración en el PIIT, Nuevo León" },
@@ -88,6 +87,13 @@ export const INSTITUTIONAL_METRICS: { id: string; value: string; label: string }
 
 const metricValue = (id: string): string =>
   INSTITUTIONAL_METRICS.find((metric) => metric.id === id)?.value ?? SIN_DATO;
+
+/** Dato de inauguración del Reto: se busca por id, no por posición. */
+export const INAUGURATION = INSTITUTIONAL_METRICS.find((metric) => metric.id === "i4") ?? {
+  id: "i4",
+  value: SIN_DATO,
+  label: "",
+};
 
 /** Recorte de `MANIFESTO.lead` para el Hero: sin la cola que ya dice el H1. */
 export const HERO_LEAD =
@@ -132,14 +138,10 @@ export type WorkPrinciple = {
   id: string;
   affirmative: string;
   negative: string;
-  highlighted: boolean;
 };
 
 export type AboutData = {
-  eyebrow: string;
   headlineLines: string[];
-  highlightValue: string;
-  highlightCopy: string;
   leadParagraph: string;
   labImageSrc: string;
   labImageAlt: string;
@@ -148,22 +150,20 @@ export type AboutData = {
   foundingPartnersTitle: string;
   foundingPartnersCopy: string;
   foundingPartners: AboutFoundingPartner[];
-  principlesEyebrow: string;
   principlesTitle: string;
   workPrinciples: WorkPrinciple[];
 };
 
-/** El índice 01..09 se deriva de la posición en el array, no se guarda aquí. */
 export const WORK_PRINCIPLES: WorkPrinciple[] = [
-  { id: "descubrimos", affirmative: "DESCUBRIMOS", negative: "no diagnosticamos", highlighted: true },
-  { id: "guiamos", affirmative: "GUIAMOS", negative: "no entrenamos", highlighted: false },
-  { id: "catalizamos", affirmative: "CATALIZAMOS", negative: "no instruimos", highlighted: false },
-  { id: "materializamos", affirmative: "MATERIALIZAMOS", negative: "no adoctrinamos", highlighted: false },
-  { id: "educamos", affirmative: "EDUCAMOS", negative: "no damos sermones", highlighted: true },
-  { id: "demostramos", affirmative: "DEMOSTRAMOS", negative: "no solo hablamos", highlighted: false },
-  { id: "innovamos", affirmative: "INNOVAMOS", negative: "no imitamos", highlighted: false },
-  { id: "interrumpimos", affirmative: "INTERRUMPIMOS", negative: "no vamos con la corriente", highlighted: false },
-  { id: "lideramos", affirmative: "LIDERAMOS", negative: "no seguimos", highlighted: true },
+  { id: "descubrimos", affirmative: "DESCUBRIMOS", negative: "no diagnosticamos" },
+  { id: "guiamos", affirmative: "GUIAMOS", negative: "no entrenamos" },
+  { id: "catalizamos", affirmative: "CATALIZAMOS", negative: "no instruimos" },
+  { id: "materializamos", affirmative: "MATERIALIZAMOS", negative: "no adoctrinamos" },
+  { id: "educamos", affirmative: "EDUCAMOS", negative: "no damos sermones" },
+  { id: "demostramos", affirmative: "DEMOSTRAMOS", negative: "no solo hablamos" },
+  { id: "innovamos", affirmative: "INNOVAMOS", negative: "no imitamos" },
+  { id: "interrumpimos", affirmative: "INTERRUMPIMOS", negative: "no vamos con la corriente" },
+  { id: "lideramos", affirmative: "LIDERAMOS", negative: "no seguimos" },
 ];
 
 /**
@@ -173,13 +173,9 @@ export const WORK_PRINCIPLES: WorkPrinciple[] = [
 export const ABOUT_LAB_IMAGE_SRC = "/nosotros-encabezado.jpg";
 
 export const ABOUT_DATA: AboutData = {
-  eyebrow: MANIFESTO.eyebrow,
   headlineLines: ["El problema", "no es la IA.", "Es la última milla."],
-  highlightValue: "5%",
-  highlightCopy:
-    "de las empresas de Nuevo León cuenta con equipos internos de ciencia de datos",
-  // Dos líneas en escritorio: el desarrollo del argumento vive en el resto de
-  // la sección, no en este párrafo.
+  // Una línea en escritorio: el desarrollo del argumento vive en el resto de
+  // la página, no en este párrafo.
   leadParagraph:
     "El desafío no está en crear algoritmos, sino en ponerlos a operar. Nuestra misión es cerrar esa brecha.",
   labImageSrc: ABOUT_LAB_IMAGE_SRC,
@@ -187,10 +183,11 @@ export const ABOUT_DATA: AboutData = {
     "Laboratorio del CII.IA en el PIIT: celda de manufactura con brazos robóticos industriales",
   labCaption:
     "Laboratorio propio en el PIIT: aquí se prototipa y se valida antes de tocar la línea de producción.",
-  stats: INSTITUTIONAL_METRICS.map((metric) => ({
-    ...metric,
-    isDate: metric.id === "i4",
-  })),
+  stats: [
+    { id: "i2", value: metricValue("i2"), label: "Organizaciones aliadas", isDate: false },
+    { id: "i3", value: metricValue("i3"), label: "Instituciones fundadoras", isDate: false },
+    { id: "i4", value: metricValue("i4"), label: "Inauguración en el PIIT", isDate: true },
+  ],
   foundingPartnersTitle: "Cinco instituciones fundadoras",
   foundingPartnersCopy:
     "El centro se inauguró en 2021 dentro del programa federal de Centros de Innovación Industrial. Monterrey IT Clúster se encarga de su administración.",
@@ -245,23 +242,9 @@ export const ABOUT_DATA: AboutData = {
       logoOnLight: true,
     },
   ],
-  principlesEyebrow: "CII.IA // PRINCIPIOS",
   principlesTitle: "Cómo trabajamos",
   workPrinciples: WORK_PRINCIPLES,
 };
-
-export const CLIENT_QUOTES = [
-  {
-    id: "q2",
-    quote: "Ingeniería trae soluciones a la planta, pero en piso nadie entiende cómo usarlas.",
-    role: "Voz de cliente recogida por CII.IA",
-  },
-  {
-    id: "q1",
-    quote: "Llevo más de un año tratando de lanzar asistentes virtuales.",
-    role: "Voz de cliente recogida por CII.IA",
-  },
-];
 
 export const BRAND_PAIRS = [
   { verb1: "DESCUBRIMOS", verb2: "no diagnosticamos" },
