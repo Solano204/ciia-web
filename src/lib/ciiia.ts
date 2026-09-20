@@ -892,7 +892,7 @@ export const PAGE_DESCRIPTIONS = {
   soluciones:
     "Cinco líneas de trabajo que cubren el ciclo completo, de decidir qué merece construirse a dejar la capacidad instalada.",
   ciclo:
-    "Cada proyecto recorre cinco etapas. Elige una para ver qué se entrega y qué productos intervienen.",
+    "Cada proyecto recorre cinco etapas. Elige una para ver qué se entrega y qué soluciones intervienen.",
   casos:
     "Doce soluciones de inteligencia artificial documentadas por el CII.IA en manufactura, comercio, servicios financieros y seguridad.",
   contacto: "Cuéntanos qué necesitas y en qué punto está tu organización.",

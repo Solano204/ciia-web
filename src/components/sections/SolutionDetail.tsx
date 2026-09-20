@@ -97,7 +97,7 @@ export function SolutionDetail({
         </Block>
 
         <Block label="Etapas del ciclo donde interviene" index={1}>
-          <StageRail stages={stages} activeStageIds={service.stageMapping} variant="compact" />
+          <StageRail stages={stages} activeStageIds={service.stageMapping} />
         </Block>
 
         <Block label="Inversión de referencia" index={2}>
