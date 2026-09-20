@@ -62,6 +62,7 @@ Se separa con espacio, líneas finas e imágenes a sangre.
   - `MediaCard`: imagen protagonista, título, una frase y dato opcional. Sin borde, fondo ni glass. En hover, zoom de 3% en la imagen y subrayado del título.
   - `Cta` (`CtaButton` y `CtaLink`).
 - Conservan borde: inputs del formulario (el borde es su affordance), botones y chips de filtro.
+- **Excepción: tile claro de logos.** Los logos de Ecosistema (y los de las instituciones fundadoras en Nosotros) van sobre un tile claro uniforme (`bg-foreground`, 3:2, `rounded-xl`, mismo tamaño para todos). Varios SVG son azul marino o negro (`#001142`, `#000000`, `#001d8f`) y los PNG de fundadores traen fondo opaco: sobre el fondo oscuro desaparecen o se ven como recuadros. Es la única excepción a «sin cajas» y se retira cuando existan versiones claras de los logos.
 - Etiquetas, productos y tags no son chips: van como texto separado por "·".
 - Robot: protagonista de todas las imágenes (`design/PROMPTS-ROBOT.md`).
 

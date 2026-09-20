@@ -361,6 +361,9 @@ export type EcosystemPartnerEntry = {
   url?: string;
 };
 
+/** Lo que necesita un tile de logo: los socios del ecosistema y los del teaser. */
+export type EcosystemTile = Pick<EcosystemPartnerEntry, "id" | "name" | "logo" | "note">;
+
 export const ECOSYSTEM_CATEGORIES: EcosystemCategory[] = [
   { id: "tecnologia", label: "Tecnología" },
   { id: "plataformas", label: "Plataformas" },
