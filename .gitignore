@@ -20,6 +20,9 @@
 # production
 /build
 
+# scratch: capturas y archivos de trabajo, nunca al repo
+/tmp/
+
 # misc
 .DS_Store
 *.pem
