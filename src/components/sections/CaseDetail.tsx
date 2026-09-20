@@ -73,30 +73,30 @@ export function CaseDetail({ item, related }: { item: ProjectCase; related: Proj
         </div>
       </div>
 
-      <Section id="caso" className="flex flex-col gap-16">
-        {results.length > 0 && (
-          <Reveal>
-            <ul className="grid grid-cols-2 gap-x-8 gap-y-10 md:grid-cols-4">
-              {results.map((result) => (
-                <li key={result.label} className="flex flex-col gap-2">
-                  <span className="font-display text-[clamp(2.5rem,6vw,4.5rem)] font-semibold leading-none text-foreground">
-                    {result.value}
-                  </span>
-                  <span className="font-sans text-[12px] uppercase tracking-[0.08em] text-muted">
-                    {result.label}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </Reveal>
-        )}
-
+      <Section id="caso" className="flex flex-col">
         <div className="flex flex-col">
           {STORY_LINES.map((line, index) => (
             <Line key={line.key} label={line.label} index={index}>
-              <p className="max-w-[70ch] text-[17px] leading-relaxed text-[var(--text-secondary)]">
-                {item[line.key]}
-              </p>
+              {/* Con cifras destacadas, ellas son el resultado: el texto de
+                  `outcome` las repite y no se muestra. */}
+              {line.key === "outcome" && results.length > 0 ? (
+                <ul className="grid grid-cols-2 gap-x-8 gap-y-8 md:grid-cols-4">
+                  {results.map((result) => (
+                    <li key={result.label} className="flex flex-col gap-2">
+                      <span className="font-display text-[clamp(2.5rem,5vw,4rem)] font-semibold leading-none text-foreground">
+                        {result.value}
+                      </span>
+                      <span className="font-sans text-[12px] uppercase tracking-[0.08em] text-muted">
+                        {result.label}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="max-w-[70ch] text-[17px] leading-relaxed text-[var(--text-secondary)]">
+                  {item[line.key]}
+                </p>
+              )}
             </Line>
           ))}
           <Line label="Tags" index={STORY_LINES.length}>
