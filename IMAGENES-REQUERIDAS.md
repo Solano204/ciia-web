@@ -40,18 +40,20 @@ coherentes entre sí, pero **no son el robot humanoide del hero**.
 
 Decisión tomada: **se regeneran los 17 con el robot como protagonista.**
 Los prompts, la ficha del personaje y las referencias extraídas del hero están
-en [`design/PROMPTS-ROBOT.md`](design/PROMPTS-ROBOT.md) y
-`design/robot-referencia/`. Al entregar los archivos no hay que tocar código:
-basta con respetar los nombres.
+en [`docs/IMAGENES-ROBOT.md`](docs/IMAGENES-ROBOT.md) y
+`design/robot-referencia/`. Los originales se dejan en `design/originales/` y
+`npm run images` los convierte a WebP y los coloca en `public/`. Al entregar los
+archivos no hay que tocar código: basta con respetar los nombres.
 
 ## Pendientes
 
 ### Ciclo de ejecución (5) y Contacto (1)
 
 Nunca han existido. Escenas y prompts en
-[`design/PROMPTS-ROBOT.md`](design/PROMPTS-ROBOT.md), sección 6:
-`public/ciclo/{descubrir,disenar,desarrollar,desplegar,escalar}.jpg` (4:3) y
-`public/contacto.jpg` (16:9).
+[`docs/IMAGENES-ROBOT.md`](docs/IMAGENES-ROBOT.md):
+`public/ciclo/{descubrir,disenar,desarrollar,desplegar,escalar}.webp` (16:9) y
+`public/contacto.webp` (16:9). Si no hay `.webp`, el sitio usa el `.jpg` con el
+mismo nombre y, sin ninguno, el fallback de cada sección.
 
 ### Ecosistema (logos)
 
