@@ -19,7 +19,7 @@ type MediaCardProps = {
 
 // El zoom de 3% vive en la imagen, contenida por el `overflow-hidden` del marco.
 // Solo `transform`, y sin efecto con reduced motion.
-const MEDIA_CLASS =
+export const MEDIA_CLASS =
   "overflow-hidden rounded-xl [&_img]:transition-transform [&_img]:duration-[var(--dur-large)] [&_img]:ease-[var(--ease-out)] group-hover:[&_img]:scale-[1.03] motion-reduce:[&_img]:transition-none motion-reduce:group-hover:[&_img]:scale-100";
 
 // El enlace lleva el título y su ::after cubre la tarjeta entera, así que toda
