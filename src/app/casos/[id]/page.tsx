@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { CaseDetail } from "@/components/sections/CaseDetail";
-import { PROJECT_CASES } from "@/lib/ciiia";
+import { PROJECT_CASES, relatedCases } from "@/lib/ciiia";
 
 type Params = { id: string };
 
@@ -32,9 +32,5 @@ export default async function CaseDetailPage({
   const index = PROJECT_CASES.findIndex((c) => c.id === id);
   if (index === -1) notFound();
 
-  const total = PROJECT_CASES.length;
-  const prev = PROJECT_CASES[(index - 1 + total) % total];
-  const next = PROJECT_CASES[(index + 1) % total];
-
-  return <CaseDetail item={PROJECT_CASES[index]} prev={prev} next={next} />;
+  return <CaseDetail item={PROJECT_CASES[index]} related={relatedCases(id)} />;
 }

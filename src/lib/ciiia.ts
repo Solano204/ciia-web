@@ -824,6 +824,22 @@ export const PROJECT_CASES: ProjectCase[] = [
   },
 ];
 
+/**
+ * Los `count` casos más cercanos a `id`: el mismo sector pesa más que la misma
+ * tecnología; a igual puntaje, el orden de `PROJECT_CASES`.
+ */
+export function relatedCases(id: string, count = 2): ProjectCase[] {
+  const current = PROJECT_CASES.find((item) => item.id === id);
+  if (!current) return [];
+  const score = (item: ProjectCase) =>
+    (item.sector === current.sector ? 2 : 0) + (item.technology === current.technology ? 1 : 0);
+  return PROJECT_CASES.filter((item) => item.id !== id)
+    .map((item, index) => ({ item, index, score: score(item) }))
+    .sort((a, b) => b.score - a.score || a.index - b.index)
+    .slice(0, count)
+    .map(({ item }) => item);
+}
+
 /** Casos del teaser de la home, de sectores distintos y con el caso 01 primero. */
 export const TEASER_CASES: ProjectCase[] = ["caso-01", "caso-06", "caso-10"].flatMap(
   (id) => PROJECT_CASES.find((item) => item.id === id) ?? [],
