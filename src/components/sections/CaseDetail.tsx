@@ -6,7 +6,8 @@ import { CtaButton, SectionCta } from "@/components/ui/Cta";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
 import { technologyLabel } from "@/lib/cases";
-import { CTA_COPY, caseImageSrc, caseResults, type ProjectCase } from "@/lib/ciiia";
+import { CTA_COPY, caseResults, type ProjectCase } from "@/lib/ciiia";
+import { robotImage } from "@/lib/robotImage";
 
 const CASES_HREF = "/casos";
 const CONTACT_HREF = "/contacto";
@@ -33,6 +34,7 @@ const STORY_LINES = [
 
 export function CaseDetail({ item, related }: { item: ProjectCase; related: ProjectCase[] }) {
   const results = caseResults(item);
+  const imageSrc = robotImage(`casos/${item.id}`);
 
   return (
     <>
@@ -41,14 +43,9 @@ export function CaseDetail({ item, related }: { item: ProjectCase; related: Proj
         id="hero"
         className="relative h-[70svh] min-h-[440px] max-h-[760px] w-full overflow-hidden bg-white/[0.03]"
       >
-        <Image
-          src={caseImageSrc(item.id)}
-          alt=""
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover"
-        />
+        {imageSrc && (
+          <Image src={imageSrc} alt="" fill priority sizes="100vw" className="object-cover" />
+        )}
         <div
           aria-hidden
           className="absolute inset-0"
@@ -115,7 +112,11 @@ export function CaseDetail({ item, related }: { item: ProjectCase; related: Proj
             {related.map((relatedItem, index) => (
               <li key={relatedItem.id}>
                 <Reveal index={index} className="h-full">
-                  <CaseTile item={relatedItem} sizes="(min-width: 768px) 50vw, 100vw" />
+                  <CaseTile
+                    item={relatedItem}
+                    imageSrc={robotImage(`casos/${relatedItem.id}`)}
+                    sizes="(min-width: 768px) 50vw, 100vw"
+                  />
                 </Reveal>
               </li>
             ))}

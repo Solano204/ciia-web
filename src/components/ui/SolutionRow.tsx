@@ -3,6 +3,7 @@ import Link from "next/link";
 import { MEDIA_CLASS } from "@/components/ui/MediaCard";
 import { Reveal } from "@/components/ui/Reveal";
 import type { ServiceItem } from "@/lib/ciiia";
+import { robotImage } from "@/lib/robotImage";
 
 /**
  * Fila editorial: imagen (~60%) y texto (~40%), alternando lado. El enlace es
@@ -10,7 +11,7 @@ import type { ServiceItem } from "@/lib/ciiia";
  * reveal) acotaría su área y la fila dejaría de ser clicable entera.
  */
 export function SolutionRow({ service, reverse }: { service: ServiceItem; reverse: boolean }) {
-  const image = service.media?.kind === "image" ? service.media : null;
+  const imageSrc = robotImage(`soluciones/${service.id}`);
 
   return (
     <article
@@ -21,9 +22,9 @@ export function SolutionRow({ service, reverse }: { service: ServiceItem; revers
       <Reveal className={reverse ? "md:order-2" : ""}>
         <div className={MEDIA_CLASS}>
           <div className="relative aspect-video bg-white/[0.03]">
-            {image && (
+            {imageSrc && (
               <Image
-                src={image.src}
+                src={imageSrc}
                 alt=""
                 fill
                 sizes="(min-width: 768px) 60vw, 100vw"

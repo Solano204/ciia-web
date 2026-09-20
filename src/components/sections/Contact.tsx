@@ -1,5 +1,3 @@
-import fs from "node:fs";
-import path from "node:path";
 import Image from "next/image";
 import { ContactForm } from "@/components/ui/ContactForm";
 import { CtaButton } from "@/components/ui/Cta";
@@ -7,6 +5,7 @@ import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
 import type { HeadingLevel } from "@/components/ui/SectionHeader";
 import { CONTACT_INFO, CTA_COPY, MAPS_HREF, PAGE_DESCRIPTIONS, SCHEDULING_URL } from "@/lib/ciiia";
+import { robotImage } from "@/lib/robotImage";
 
 const TITLE = "Contacto";
 const DESCRIPTION = PAGE_DESCRIPTIONS.contacto;
@@ -17,26 +16,21 @@ const LINK =
   "text-sm text-foreground underline decoration-white/20 underline-offset-4 outline-none transition-colors hover:text-accent focus-visible:ring-2 focus-visible:ring-accent motion-reduce:transition-none";
 const LABEL = "font-sans text-[12px] uppercase tracking-[0.08em] text-muted";
 
-const IMAGE_FILE = "contacto.jpg";
-
-/** Decidido en el build: sin el archivo, la banda usa el degradado y no hay 404. */
-function hasContactImage(): boolean {
-  return fs.existsSync(path.join(process.cwd(), "public", IMAGE_FILE));
-}
-
 /**
  * Banda superior. `id="hero"` hace que el Navbar aplique su degradado sobre
  * ella. Sin imagen, mismo fallback que el Ciclo: degradado oscuro con un brillo
  * dorado tenue.
  */
 function ContactBand() {
+  const imageSrc = robotImage("contacto");
+
   return (
     <div
       id="hero"
       className="relative h-[36svh] min-h-[240px] max-h-[420px] w-full overflow-hidden bg-background"
     >
-      {hasContactImage() ? (
-        <Image src={`/${IMAGE_FILE}`} alt="" fill priority sizes="100vw" className="object-cover" />
+      {imageSrc ? (
+        <Image src={imageSrc} alt="" fill priority sizes="100vw" className="object-cover" />
       ) : (
         <div
           aria-hidden

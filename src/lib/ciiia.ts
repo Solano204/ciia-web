@@ -498,13 +498,6 @@ export const ECOSYSTEM_GROUPS: { category: EcosystemPartner["category"]; title: 
   { category: "Shareholders", title: "Empresas socias" },
 ];
 
-/**
- * Render del robot para cada etapa del ciclo. Los archivos aún no existen
- * (ver `design/PROMPTS-ROBOT.md`): mientras falten, la tarjeta cae al número
- * gigante de la etapa en vez de mostrar un hueco roto.
- */
-export const cycleImageSrc = (id: string) => `/ciclo/${id}.jpg`;
-
 export const EXECUTION_STAGES: ExecutionStage[] = [
   {
     id: "descubrir",
@@ -686,12 +679,6 @@ export function relatedServices(id: string, count = 2): ServiceItem[] {
     .slice(0, count)
     .map(({ service }) => service);
 }
-
-/**
- * Render de portada de cada caso. Los archivos de `public/casos/` llevan el
- * mismo nombre que el `id`, así que la ruta se deriva en vez de duplicarse.
- */
-export const caseImageSrc = (id: string) => `/casos/${id}.jpg`;
 
 export const PROJECT_CASES: ProjectCase[] = [
   {

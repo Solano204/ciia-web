@@ -58,12 +58,12 @@ function StageNumbers({
 export function StageDeck({
   stages,
   services,
-  imageIds,
+  imageSrcs,
 }: {
   stages: ExecutionStage[];
   services: StageService[];
-  /** Etapas cuya imagen existe en `public/ciclo/` (comprobado en el build). */
-  imageIds: string[];
+  /** id de etapa → ruta de su imagen, solo de las que existen (decidido en el build). */
+  imageSrcs: Record<string, string>;
 }) {
   // `/ciclo#desplegar` abre el carrusel en esa etapa. El hash solo existe en el
   // cliente: en el servidor y al hidratar vale "" (mismo HTML) y React lo
@@ -92,7 +92,7 @@ export function StageDeck({
         <StageCard
           stage={stage}
           services={services}
-          hasImage={imageIds.includes(stage.id)}
+          imageSrc={imageSrcs[stage.id]}
           {...state}
         />
       )}

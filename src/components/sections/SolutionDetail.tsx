@@ -1,5 +1,3 @@
-import fs from "node:fs";
-import path from "node:path";
 import type { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,13 +7,10 @@ import { Section } from "@/components/ui/Section";
 import { SolutionTile } from "@/components/ui/SolutionTile";
 import { StageRail } from "@/components/ui/StageRail";
 import { CTA_COPY, type ExecutionStage, type ServiceItem } from "@/lib/ciiia";
+import { robotImage } from "@/lib/robotImage";
 
 const SOLUTIONS_HREF = "/soluciones";
 const CONTACT_HREF = "/contacto";
-
-function hasLocalImage(id: string): boolean {
-  return fs.existsSync(path.join(process.cwd(), "public", "soluciones", `${id}.jpg`));
-}
 
 /** Bloque editorial: etiqueta a la izquierda, contenido a la derecha, una línea fina arriba. */
 function Block({ label, index, children }: { label: string; index: number; children: ReactNode }) {
@@ -40,7 +35,7 @@ export function SolutionDetail({
   stages: ExecutionStage[];
   related: ServiceItem[];
 }) {
-  const imageExists = hasLocalImage(service.id);
+  const imageSrc = robotImage(`soluciones/${service.id}`);
 
   return (
     <>
@@ -49,9 +44,9 @@ export function SolutionDetail({
         id="hero"
         className="relative h-[70svh] min-h-[440px] max-h-[760px] w-full overflow-hidden bg-white/[0.03]"
       >
-        {imageExists && (
+        {imageSrc && (
           <Image
-            src={`/soluciones/${service.id}.jpg`}
+            src={imageSrc}
             alt=""
             fill
             priority
