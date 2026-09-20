@@ -65,6 +65,17 @@ Se separa con espacio, líneas finas e imágenes a sangre.
 - Etiquetas, productos y tags no son chips: van como texto separado por "·".
 - Robot: protagonista de todas las imágenes (`design/PROMPTS-ROBOT.md`).
 
+## Formularios
+- Labels siempre visibles sobre el campo; el placeholder no sustituye a la etiqueta.
+- Los inputs conservan el borde (`--line-stronger`), que es su affordance y la excepción a «sin cajas». Hover: borde a `white/30`.
+- Foco: borde y anillo de 2 px en dorado, siempre visibles. También con error.
+- Error: solo el borde pasa a `--danger`, más un mensaje debajo del campo en `--danger`, enlazado con `aria-describedby` y `aria-invalid`. El color no es la única señal: el mensaje explica qué escribir.
+- Validación al salir del campo (`blur`) y al enviar; nunca mientras se escribe. Al enviar con errores, el foco va al primer campo inválido.
+- Mensajes útiles y con ejemplo («Escribe un correo válido, p. ej. nombre@empresa.com»), sin culpar al usuario.
+- Éxito: aviso visible en la página (`role="status"`, filete `--success`), no solo el efecto del `mailto:`. Deja de mostrarse en cuanto se edita el formulario.
+- Errores y éxito entran con un fundido de `--dur-micro` (150 ms); con reduced motion, sin animación.
+- El botón de envío es el CTA dorado con el copy aprobado en `PRODUCT.md`.
+
 ## Motion
 Sutil. Máximo 1 efecto de impacto por página. Se queda el cursor de fluido, recoloreado a un dorado oscuro y tenue (`COLOR="#5C4514"`, a afinar con el cliente; el primer intento, `#7A5C1A`, salía más luminoso que el azul original). Solo cambia el color, no su intensidad de simulación.
 
