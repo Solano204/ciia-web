@@ -9,11 +9,9 @@ import {
   challengeFramePath,
   challengeLayers,
 } from "@/lib/challenge";
-import { CTA_COPY, INSTITUTIONAL_METRICS, RETO_STAT, schedulingHref } from "@/lib/ciiia";
+import { CTA_COPY, INAUGURATION, RETO_STAT, schedulingHref } from "@/lib/ciiia";
 import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { useScrollFrameSequence } from "@/hooks/use-scroll-frame-sequence";
-
-const INAUGURATION = INSTITUTIONAL_METRICS[3];
 
 function Stat({ value, label }: { value: string; label: string }) {
   return (

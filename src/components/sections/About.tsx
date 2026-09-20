@@ -6,11 +6,11 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { AnimatedItem, AnimatedSection } from "@/components/ui/AnimatedSection";
 import { BlurText } from "@/components/ui/BlurText";
+import { CountingValue } from "@/components/ui/CountingValue";
 import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
 import type { HeadingLevel } from "@/components/ui/SectionHeader";
 import { CtaButton, CtaLink, SectionCta } from "@/components/ui/Cta";
-import { useCountUp } from "@/hooks/useCountUp";
 import { useRevealOnScroll } from "@/hooks/useRevealOnScroll";
 import { logoWidthPercent, type LogoSizing } from "@/lib/logoSizing";
 import {
@@ -22,31 +22,6 @@ import {
 } from "@/lib/ciiia";
 
 gsap.registerPlugin(ScrollTrigger);
-
-/** "12" → 12 + ""; "50+" → 50 + "+"; "5%" → 5 + "%". */
-const COUNTABLE_VALUE = /^(\d+)(\D*)$/;
-
-type CountingValueProps = {
-  value: string;
-  animate: boolean;
-  className?: string;
-  /** Gancho `data-fx` para las tweens de GSAP. */
-  fx?: string;
-};
-
-function CountingValue({ value, animate, className, fx }: CountingValueProps) {
-  const parsed = COUNTABLE_VALUE.exec(value);
-  const target = parsed ? Number(parsed[1]) : 0;
-  const suffix = parsed ? parsed[2] : "";
-  const shouldCount = animate && parsed !== null;
-  const { ref, count } = useCountUp<HTMLSpanElement>(target, { enabled: shouldCount });
-
-  return (
-    <span ref={ref} className={className} data-fx={fx}>
-      {shouldCount ? `${count}${suffix}` : value}
-    </span>
-  );
-}
 
 const INITIALS_STOPWORDS = new Set(["de", "del", "la", "el", "y", "en", "los", "las"]);
 
@@ -394,23 +369,6 @@ export function About({
       // En el teaser de la home no hay cifras, socios ni principios.
       if (teaser) return;
 
-      // Stats: cada número sube enmascarado y su etiqueta aparece detrás.
-      gsap
-        .timeline({
-          scrollTrigger: { trigger: "[data-fx='stats']", start: "top 88%", once: true },
-        })
-        .from("[data-fx='stat-value']", {
-          yPercent: 115,
-          duration: 0.9,
-          ease: "power3.out",
-          stagger: 0.09,
-        })
-        .from(
-          "[data-fx='stat-label']",
-          { opacity: 0, y: 12, duration: 0.6, ease: "power2.out", stagger: 0.09 },
-          0.2,
-        );
-
       // Logo wall: los tiles entran en cascada y las filas se deslizan detrás.
       gsap
         .timeline({
@@ -552,40 +510,22 @@ export function About({
 
         {!teaser && (
           <>
-        <AnimatedSection className="border-t border-white/8 pt-16">
-          <div
-            className="grid grid-cols-2 divide-white/8 lg:grid-cols-4 lg:divide-x"
-            data-fx="stats"
-          >
-            {ABOUT_DATA.stats.map((stat, index) => (
-              <div
-                key={stat.id}
-                className={[
-                  "px-6 py-6",
-                  index % 2 === 1 ? "border-l border-white/8" : "",
-                  index >= 2 ? "border-t border-white/8 lg:border-t-0" : "",
-                ]
-                  .filter(Boolean)
-                  .join(" ")}
-              >
-                <span className="block overflow-hidden pb-[0.06em]">
-                  <CountingValue
-                    value={stat.value}
-                    animate={!stat.isDate}
-                    fx="stat-value"
-                    className="block font-display text-h2 font-medium leading-none text-foreground tabular-nums"
-                  />
-                </span>
-                <span
-                  className="mt-3 block font-sans text-[12px] uppercase leading-relaxed tracking-[0.08em] text-muted"
-                  data-fx="stat-label"
-                >
+        <ul className="grid gap-12 md:grid-cols-3">
+          {ABOUT_DATA.stats.map((stat, index) => (
+            <li key={stat.id}>
+              <Reveal index={index} className="flex flex-col gap-3">
+                <CountingValue
+                  value={stat.value}
+                  animate={!stat.isDate}
+                  className="font-display text-display font-semibold leading-none text-foreground tabular-nums"
+                />
+                <span className="font-sans text-[12px] uppercase tracking-[0.08em] text-muted">
                   {stat.label}
                 </span>
-              </div>
-            ))}
-          </div>
-        </AnimatedSection>
+              </Reveal>
+            </li>
+          ))}
+        </ul>
 
         <FoundingPartners />
 

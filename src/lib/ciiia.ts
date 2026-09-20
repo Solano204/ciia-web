@@ -80,7 +80,6 @@ export const MANIFESTO = {
 };
 
 export const INSTITUTIONAL_METRICS: { id: string; value: string; label: string }[] = [
-  { id: "i1", value: "12", label: "Soluciones documentadas" },
   { id: "i2", value: "50+", label: "Organizaciones aliadas" },
   { id: "i3", value: "5", label: "Socios fundadores" },
   { id: "i4", value: "2021", label: "Inauguración en el PIIT, Nuevo León" },
@@ -88,6 +87,13 @@ export const INSTITUTIONAL_METRICS: { id: string; value: string; label: string }
 
 const metricValue = (id: string): string =>
   INSTITUTIONAL_METRICS.find((metric) => metric.id === id)?.value ?? SIN_DATO;
+
+/** Dato de inauguración del Reto: se busca por id, no por posición. */
+export const INAUGURATION = INSTITUTIONAL_METRICS.find((metric) => metric.id === "i4") ?? {
+  id: "i4",
+  value: SIN_DATO,
+  label: "",
+};
 
 /** Recorte de `MANIFESTO.lead` para el Hero: sin la cola que ya dice el H1. */
 export const HERO_LEAD =
@@ -180,10 +186,11 @@ export const ABOUT_DATA: AboutData = {
     "Laboratorio del CII.IA en el PIIT: celda de manufactura con brazos robóticos industriales",
   labCaption:
     "Laboratorio propio en el PIIT: aquí se prototipa y se valida antes de tocar la línea de producción.",
-  stats: INSTITUTIONAL_METRICS.map((metric) => ({
-    ...metric,
-    isDate: metric.id === "i4",
-  })),
+  stats: [
+    { id: "i2", value: metricValue("i2"), label: "Organizaciones aliadas", isDate: false },
+    { id: "i3", value: metricValue("i3"), label: "Instituciones fundadoras", isDate: false },
+    { id: "i4", value: metricValue("i4"), label: "Inauguración en el PIIT", isDate: true },
+  ],
   foundingPartnersTitle: "Cinco instituciones fundadoras",
   foundingPartnersCopy:
     "El centro se inauguró en 2021 dentro del programa federal de Centros de Innovación Industrial. Monterrey IT Clúster se encarga de su administración.",
