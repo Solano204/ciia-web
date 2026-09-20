@@ -361,12 +361,20 @@ export type EcosystemPartnerEntry = {
   url?: string;
 };
 
+/** Lo que necesita un tile de logo: los socios del ecosistema y los del teaser. */
+export type EcosystemTile = Pick<EcosystemPartnerEntry, "id" | "name" | "logo" | "note"> & {
+  /** El asset trae fondo blanco opaco (PNG de fundadores): se mezcla con `multiply`. */
+  onWhite?: boolean;
+  /** Versión clara para fondo oscuro (`claro/{id}`), decidida en el build: sin tile. */
+  claroSrc?: string;
+};
+
 export const ECOSYSTEM_CATEGORIES: EcosystemCategory[] = [
   { id: "tecnologia", label: "Tecnología" },
   { id: "plataformas", label: "Plataformas" },
-  { id: "academia", label: "Academia e investigación" },
-  { id: "industria", label: "Industria y clústeres" },
-  { id: "empresas", label: "Empresas socias" },
+  { id: "academia", label: "Academia" },
+  { id: "industria", label: "Industria" },
+  { id: "empresas", label: "Empresas" },
 ];
 
 /**
@@ -451,8 +459,36 @@ export const ECOSYSTEM_PARTNERS: EcosystemPartnerEntry[] = [
   { id: "pcg", name: "PCG", categoryId: "empresas", logo: ecosystemLogo("pcg") },
 ];
 
+const TEASER_PARTNER_IDS = ["nvidia", "google-cloud", "tec-monterrey", "nuevo-leon-40", "kernel"];
+
+const TEASER_FOUNDER = ABOUT_DATA.foundingPartners.find((partner) => partner.id === "gobierno");
+
+/** Teaser de la home: un logo por categoría y uno de las instituciones fundadoras. */
+export const ECOSYSTEM_TEASER: EcosystemTile[] = [
+  ...TEASER_PARTNER_IDS.flatMap((id) => ECOSYSTEM_PARTNERS.find((partner) => partner.id === id) ?? []),
+  ...(TEASER_FOUNDER
+    ? [
+        {
+          id: TEASER_FOUNDER.id,
+          name: TEASER_FOUNDER.name,
+          logo: {
+            src: TEASER_FOUNDER.logo,
+            box: {
+              canvasRatio: TEASER_FOUNDER.logoWidth / TEASER_FOUNDER.logoHeight,
+              x: 0,
+              y: 0,
+              w: 1,
+              h: 1,
+            },
+          },
+          onWhite: true,
+        },
+      ]
+    : []),
+];
+
 export const ECOSYSTEM_INTRO =
-  "Más de 50 organizaciones de tecnología, academia, gobierno e industria forman parte del ecosistema del CII.IA.";
+  "Algunas de las más de 50 organizaciones de tecnología, academia, gobierno e industria que forman el ecosistema del CII.IA.";
 
 export const ECOSYSTEM_GROUPS: { category: EcosystemPartner["category"]; title: string }[] = [
   { category: "Tech", title: "Tecnología" },

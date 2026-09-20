@@ -15,7 +15,7 @@ export default function Home() {
       <ExecutionCycle teaser />
       <Cases teaser />
       <About teaser />
-      <Ecosystem limit={6} />
+      <Ecosystem teaser />
       <Challenge />
       <Contact teaser />
     </>
