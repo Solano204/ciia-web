@@ -13,7 +13,7 @@ export default function Home() {
       <Hero />
       <Solutions limit={3} />
       <ExecutionCycle teaser />
-      <Cases limit={3} />
+      <Cases teaser />
       <About teaser />
       <Ecosystem limit={6} />
       <Challenge />

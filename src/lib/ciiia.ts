@@ -51,6 +51,11 @@ export type ProjectCase = {
   technology: string;
   metricHighlight: string;
   metricLabel: string;
+  /**
+   * `true` solo si la métrica es un resultado medible (%, tiempo, costo,
+   * precisión). Los conteos de funciones se conservan en los datos, sin mostrarse.
+   */
+  metricIsResult?: boolean;
   challenge: string;
   approach: string;
   outcome: string;
@@ -676,7 +681,8 @@ export const PROJECT_CASES: ProjectCase[] = [
     sector: "Manufactura",
     technology: "Visión Computacional",
     metricHighlight: "-55%",
-    metricLabel: "PAROS DE LÍNEA",
+    metricLabel: "Paros de línea",
+    metricIsResult: true,
     challenge: "La inspección manual no alcanza el ritmo de la línea y los defectos se detectan tarde.",
     approach: "Inspección automatizada con visión por computadora integrada al proceso productivo.",
     outcome: "55% menos paros, 28% menos tiempo improductivo, 30% menos desperdicio y 60% menos tiempo de inspección.",
@@ -819,6 +825,27 @@ export const PROJECT_CASES: ProjectCase[] = [
 ];
 
 /**
+ * Los `count` casos más cercanos a `id`: el mismo sector pesa más que la misma
+ * tecnología; a igual puntaje, el orden de `PROJECT_CASES`.
+ */
+export function relatedCases(id: string, count = 2): ProjectCase[] {
+  const current = PROJECT_CASES.find((item) => item.id === id);
+  if (!current) return [];
+  const score = (item: ProjectCase) =>
+    (item.sector === current.sector ? 2 : 0) + (item.technology === current.technology ? 1 : 0);
+  return PROJECT_CASES.filter((item) => item.id !== id)
+    .map((item, index) => ({ item, index, score: score(item) }))
+    .sort((a, b) => b.score - a.score || a.index - b.index)
+    .slice(0, count)
+    .map(({ item }) => item);
+}
+
+/** Casos del teaser de la home, de sectores distintos y con el caso 01 primero. */
+export const TEASER_CASES: ProjectCase[] = ["caso-01", "caso-06", "caso-10"].flatMap(
+  (id) => PROJECT_CASES.find((item) => item.id === id) ?? [],
+);
+
+/**
  * Caso destacado: las cuatro cifras pertenecen al mismo despliegue (caso-01).
  * Fuente: [DECK] Ejecutiva 2030 v1.06, lámina «CII.IA in action» — portado
  * literal desde cii.ia-artificial-intelligence/src/data/ciiiaData.ts.
@@ -831,6 +858,15 @@ export const FEATURED_CASE_METRICS: { value: string; label: string }[] = [
   { value: "-30%", label: "Desperdicio" },
   { value: "-28%", label: "Tiempo improductivo" },
 ];
+
+/**
+ * Resultados medibles de un caso, los únicos que la interfaz muestra. El caso
+ * destacado trae sus cuatro cifras; los demás, su métrica solo si es resultado.
+ */
+export function caseResults(item: ProjectCase): { value: string; label: string }[] {
+  if (item.id === FEATURED_CASE_ID) return FEATURED_CASE_METRICS;
+  return item.metricIsResult ? [{ value: item.metricHighlight, label: item.metricLabel }] : [];
+}
 
 export const INDUSTRIAL_SECTORS = [
   { id: "manufactura", name: "Manufactura" },
@@ -894,7 +930,7 @@ export const PAGE_DESCRIPTIONS = {
   ciclo:
     "Cada proyecto recorre cinco etapas. Elige una para ver qué se entrega y qué soluciones intervienen.",
   casos:
-    "Doce soluciones de inteligencia artificial documentadas por el CII.IA en manufactura, comercio, servicios financieros y seguridad.",
+    "Soluciones de inteligencia artificial del CII.IA en manufactura, comercio, servicios financieros y seguridad.",
   contacto: "Cuéntanos qué necesitas y en qué punto está tu organización.",
 } as const;
 

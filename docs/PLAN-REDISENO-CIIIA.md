@@ -203,6 +203,7 @@
 - Principios ("Descubrimos / no diagnosticamos") conservados pero más compactos.
 - CTA: "Contáctanos".
 - Pendiente: error de hidratación en `/nosotros` con `prefers-reduced-motion: reduce` activo (detectado durante la Fase 2). Reproducir con reduced motion, revisar la consola y corregir en esta fase.
+- Pendiente: error de hidratación con reduced motion en Challenge/BlurText (mismo patrón que About).
 
 ### FASE 8 — Ecosistema
 - Logos a color completo, más grandes, con hover sutil. Que resalten y no se vea apagado.

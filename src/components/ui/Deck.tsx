@@ -36,8 +36,8 @@ type DeckProps<T> = {
 
 /**
  * Carrusel de tarjetas con la activa al centro y las vecinas asomando. Lo
- * comparten Casos y el Ciclo: aquí viven el riel, las flechas, los puntos, el
- * contador y las teclas; cada sección aporta solo la tarjeta.
+ * usa el Ciclo: aquí viven el riel, las flechas, los puntos, el contador y las
+ * teclas; cada sección aporta solo la tarjeta.
  */
 export function Deck<T>({
   items,
