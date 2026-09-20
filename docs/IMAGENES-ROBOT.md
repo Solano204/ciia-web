@@ -27,18 +27,21 @@ character reference. Keep the same robot design exactly."*
 |---|---|---|
 | `01-busto-dorado.jpg` | Sí | Cabeza, casco, visor y aletas, con la luz dorada correcta |
 | `02-torso-dorado.jpg` | Sí | Pectoral con «CII.IA», emisor circular y hombreras, en dorado |
-| `03-cuerpo-completo-cian.jpg` | **No** | Es cian: contamina el color |
+| `03-cintura-dorado.jpg` | Sí | Del casco a la cintura, de frente: proporciones del torso, brazos y estructura interna, en dorado (frame 99 del Hero) |
 | `04-mano-escena-roja.jpg` | **No** | Es roja: contamina el color |
+
+Las tres primeras son las únicas que se suben. La `04` se conserva solo como
+registro de la escena roja del Hero: **no subirla a Gemini**.
 
 Los frames del Hero (`public/frames`) recorren el dorado (aprox. frames 1 al
 100, de busto a cintura), una transición (105 al 111) y el cian (117 al 169, ya de
-cuerpo completo). **No existe un frame de cuerpo completo en dorado**, así que no
-hay una referencia `05`. Las proporciones de cuerpo completo (Ciclo, Casos con
-robot de pie) salen de la descripción del personaje en el prompt. El frame dorado
-con más cuerpo visible es el 99, por si hace falta una tercera referencia.
+cuerpo completo). **No existe un frame de cuerpo completo en dorado**: el cuerpo
+completo solo aparece en cian, y por eso se retiró esa referencia. Las
+proporciones de cuerpo completo (Ciclo, Casos con robot de pie) salen de la
+descripción del personaje en el prompt y de la `03`.
 
 ## 3. Cómo generar, imagen por imagen
-1. Abre un chat nuevo en Gemini y sube las referencias 01 y 02.
+1. Abre un chat nuevo en Gemini y sube las referencias 01, 02 y 03.
 2. Pega el prompt completo de la tabla y elige formato **16:9**.
 3. Revisa la imagen con la lista de la sección 6. Si falla algo, regenera.
 4. Guarda el original con el **nombre de la checklist** en `design/originales/`
