@@ -52,9 +52,12 @@ function StageNumbers({
 export function StageDeck({
   stages,
   services,
+  imageIds,
 }: {
   stages: ExecutionStage[];
   services: ServiceItem[];
+  /** Etapas cuya imagen existe en `public/ciclo/` (comprobado en el build). */
+  imageIds: string[];
 }) {
   return (
     <Deck
@@ -70,7 +73,14 @@ export function StageDeck({
       renderHeader={({ activeIndex, goTo }) => (
         <StageNumbers stages={stages} activeIndex={activeIndex} onSelect={goTo} />
       )}
-      renderCard={(stage, state) => <StageCard stage={stage} services={services} {...state} />}
+      renderCard={(stage, state) => (
+        <StageCard
+          stage={stage}
+          services={services}
+          hasImage={imageIds.includes(stage.id)}
+          {...state}
+        />
+      )}
     />
   );
 }

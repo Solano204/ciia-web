@@ -9,18 +9,48 @@ import { cycleImageSrc, type ExecutionStage, type ServiceItem } from "@/lib/ciii
 const LABEL = "font-sans text-[12px] uppercase tracking-[0.08em] text-muted";
 
 /**
+ * Reserva mientras la etapa no tiene imagen: degradado oscuro con un brillo
+ * dorado tenue y el número en Clash con contorno dorado. Nunca una caja gris.
+ */
+function StageFallback({ number }: { number: string }) {
+  return (
+    <div
+      aria-hidden
+      className="absolute inset-0 flex items-center justify-center"
+      style={{
+        background:
+          "radial-gradient(60% 80% at 50% 45%, rgba(212,162,47,0.1), transparent 70%), linear-gradient(135deg, #18181b, #0a0a0b)",
+      }}
+    >
+      <span
+        className="select-none font-display text-[clamp(96px,14vw,168px)] font-semibold leading-none text-transparent"
+        style={{ WebkitTextStroke: "1px rgba(212,162,47,0.45)" }}
+      >
+        {number}
+      </span>
+    </div>
+  );
+}
+
+/**
  * Tarjeta de etapa del deck del Ciclo. Sin caja ni borde: imagen, número en
  * Clash, nombre, una frase, entregable y las soluciones que intervienen.
  */
 export function StageCard({
   stage,
   services,
+  hasImage,
   index,
   isActive,
   animated,
   onSelect,
   onFocusCard,
-}: { stage: ExecutionStage; services: ServiceItem[] } & DeckCardState) {
+}: {
+  stage: ExecutionStage;
+  services: ServiceItem[];
+  /** Verificado en el build: si es falso, la imagen ni se pide. */
+  hasImage: boolean;
+} & DeckCardState) {
   const related = services.filter((service) => service.stageMapping.includes(stage.id));
 
   // Solo las laterales reaccionan: la activa no cambia nada al pulsarla.
@@ -55,14 +85,18 @@ export function StageCard({
           : "cursor-pointer lg:scale-[0.96] lg:opacity-[0.35]",
       ].join(" ")}
     >
-      <div className="relative aspect-video overflow-hidden rounded-xl bg-white/[0.03]">
-        <Image
-          src={cycleImageSrc(stage.id)}
-          alt=""
-          fill
-          sizes="(min-width: 1024px) 520px, 85vw"
-          className="object-cover"
-        />
+      <div className="relative aspect-video overflow-hidden rounded-xl">
+        {hasImage ? (
+          <Image
+            src={cycleImageSrc(stage.id)}
+            alt=""
+            fill
+            sizes="(min-width: 1024px) 520px, 85vw"
+            className="object-cover"
+          />
+        ) : (
+          <StageFallback number={stage.number} />
+        )}
       </div>
 
       <div className="mt-6 flex items-baseline gap-4">

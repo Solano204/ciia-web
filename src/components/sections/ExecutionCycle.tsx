@@ -1,3 +1,5 @@
+import fs from "node:fs";
+import path from "node:path";
 import { CtaButton, CtaLink, SectionCta } from "@/components/ui/Cta";
 import { Section } from "@/components/ui/Section";
 import { SectionHeader, type HeadingLevel } from "@/components/ui/SectionHeader";
@@ -35,10 +37,16 @@ export function ExecutionCycle({
     );
   }
 
+  // Se comprueba aquí, en el build, y no en el navegador: una imagen que no
+  // existe ni se pide, así que no hay 404 en la consola.
+  const imageIds = EXECUTION_STAGES.filter((stage) =>
+    fs.existsSync(path.join(process.cwd(), "public", "ciclo", `${stage.id}.jpg`)),
+  ).map((stage) => stage.id);
+
   return (
     <Section id="ciclo" className="flex flex-col gap-12">
       <SectionHeader as={headingLevel} title={TITLE} description={DESCRIPTION} />
-      <StageDeck stages={EXECUTION_STAGES} services={SERVICES_DATA} />
+      <StageDeck stages={EXECUTION_STAGES} services={SERVICES_DATA} imageIds={imageIds} />
       <SectionCta>
         <CtaButton href={schedulingHref()}>{CTA_COPY.agenda}</CtaButton>
       </SectionCta>
