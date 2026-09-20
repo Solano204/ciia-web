@@ -28,10 +28,9 @@ character reference. Keep the same robot design exactly."*
 | `01-busto-dorado.jpg` | Sí | Cabeza, casco, visor y aletas, con la luz dorada correcta |
 | `02-torso-dorado.jpg` | Sí | Pectoral con «CII.IA», emisor circular y hombreras, en dorado |
 | `03-cintura-dorado.jpg` | Sí | Del casco a la cintura, de frente: proporciones del torso, brazos y estructura interna, en dorado (frame 99 del Hero) |
-| `04-mano-escena-roja.jpg` | **No** | Es roja: contamina el color |
 
-Las tres primeras son las únicas que se suben. La `04` se conserva solo como
-registro de la escena roja del Hero: **no subirla a Gemini**.
+La carpeta solo tiene referencias doradas: **se suben las tres**, en cada
+generación.
 
 Los frames del Hero (`public/frames`) recorren el dorado (aprox. frames 1 al
 100, de busto a cintura), una transición (105 al 111) y el cian (117 al 169, ya de
