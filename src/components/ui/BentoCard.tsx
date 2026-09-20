@@ -32,7 +32,7 @@ export function BentoCard({
       description={service.tagline}
       datum={service.startingPrice}
       action={
-        <CtaLink href="#contacto" className="py-0 text-[12px]">
+        <CtaLink href="/contacto" className="py-0 text-[12px]">
           {CTA_COPY.asesoria}
         </CtaLink>
       }

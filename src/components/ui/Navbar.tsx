@@ -1,18 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState, type MouseEvent } from "react";
-import { useLenis } from "@/components/providers/SmoothScrollProvider";
-import { scrollToAnchor } from "@/lib/smooth-anchor";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import { CtaButton } from "@/components/ui/Cta";
+import { MobileMenu } from "@/components/ui/MobileMenu";
+import { linkState } from "@/lib/nav";
 import { CTA_COPY, NAV_LINKS, schedulingHref } from "@/lib/ciiia";
 
 export function Navbar() {
+  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
-  const lenis = useLenis();
-
-  const handleAnchorClick = (event: MouseEvent<HTMLAnchorElement>, href: string) =>
-    scrollToAnchor(event, href, lenis);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -45,27 +43,34 @@ export function Navbar() {
           CII.IA
         </Link>
 
-        <nav className="hidden items-center gap-5 lg:flex xl:gap-7">
-          {NAV_LINKS.map(({ href, label }) => (
-            <a
-              key={href}
-              href={href}
-              onClick={(event) => handleAnchorClick(event, href)}
-              className="font-sans text-[12px] uppercase tracking-[0.08em] text-zinc-400 transition-colors hover:text-foreground"
-            >
-              {label}
-            </a>
-          ))}
+        <nav aria-label="Principal" className="hidden items-center gap-5 lg:flex xl:gap-7">
+          {NAV_LINKS.map(({ href, label }) => {
+            const state = linkState(pathname, href);
+            return (
+              <Link
+                key={href}
+                href={href}
+                aria-current={state === "page" ? "page" : undefined}
+                data-active={state ? "" : undefined}
+                className="font-sans text-[12px] uppercase tracking-[0.08em] text-zinc-400 underline-offset-[10px] transition-colors hover:text-foreground data-[active]:text-foreground data-[active]:underline data-[active]:decoration-accent"
+              >
+                {label}
+              </Link>
+            );
+          })}
         </nav>
 
         {/* CTA fijo. En móvil se recorta a «Agenda» para no empujar la marca
             fuera de pantalla; el nombre completo queda para lectores. */}
-        <CtaButton href={schedulingHref()} className="shrink-0 max-sm:px-4">
-          <span aria-hidden className="sm:hidden">
-            Agenda
-          </span>
-          <span className="max-sm:sr-only">{CTA_COPY.agenda}</span>
-        </CtaButton>
+        <div className="flex shrink-0 items-center gap-3">
+          <CtaButton href={schedulingHref()} className="shrink-0 max-sm:px-4">
+            <span aria-hidden className="sm:hidden">
+              Agenda
+            </span>
+            <span className="max-sm:sr-only">{CTA_COPY.agenda}</span>
+          </CtaButton>
+          <MobileMenu links={NAV_LINKS} />
+        </div>
       </div>
     </header>
   );

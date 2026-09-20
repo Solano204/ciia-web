@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { usePathname } from "next/navigation";
 
 interface ColorRGB {
   r: number;
@@ -131,6 +132,9 @@ export default function SplashCursor({
   const canRun = !prefersReducedMotion && !isCoarsePointer && isDesktopViewport;
 
   // --- Pause while the Hero's GPU-heavy scroll-frame section is in view ---
+  // El hero solo existe en la home: el observador se reengancha en cada ruta y,
+  // al salir de ella, el estado vuelve a «fuera de vista».
+  const pathname = usePathname();
   const [heroInView, setHeroInView] = useState(false);
   useEffect(() => {
     const hero = document.getElementById("hero");
@@ -139,8 +143,11 @@ export default function SplashCursor({
       threshold: 0,
     });
     observer.observe(hero);
-    return () => observer.disconnect();
-  }, []);
+    return () => {
+      observer.disconnect();
+      setHeroInView(false);
+    };
+  }, [pathname]);
 
   const active = canRun && !heroInView;
 

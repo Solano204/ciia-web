@@ -18,7 +18,7 @@ export async function generateMetadata({
   const item = PROJECT_CASES.find((c) => c.id === id);
   if (!item) return {};
   return {
-    title: `${item.title} — CII.IA`,
+    title: { absolute: `${item.title} — CII.IA` },
     description: item.challenge,
   };
 }

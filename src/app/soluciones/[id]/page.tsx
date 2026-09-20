@@ -18,7 +18,7 @@ export async function generateMetadata({
   const item = SERVICES_DATA.find((s) => s.id === id);
   if (!item) return {};
   return {
-    title: `${item.title} — CII.IA`,
+    title: { absolute: `${item.title} — CII.IA` },
     description: item.tagline,
   };
 }

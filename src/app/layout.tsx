@@ -5,6 +5,8 @@ import "./globals.css";
 import { SmoothScrollProvider } from "@/components/providers/SmoothScrollProvider";
 import { SplashCursorMount } from "@/components/providers/SplashCursorMount";
 import { BeamsGlobalMount } from "@/components/providers/BeamsGlobalMount";
+import { Navbar } from "@/components/ui/Navbar";
+import { Footer } from "@/components/sections/Footer";
 import { SITE_URL } from "@/lib/ciiia";
 
 const clashDisplay = localFont({
@@ -24,7 +26,7 @@ const satoshi = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "CII.IA | De la idea a la operación",
+  title: { default: "CII.IA | De la idea a la operación", template: "%s | CII.IA" },
   description:
     "Centro de Innovación Industrial en Inteligencia Artificial. Desde el PIIT, en Nuevo León, acompañamos a empresas e instituciones a llevar la inteligencia artificial de la idea a la operación.",
   metadataBase: new URL(SITE_URL),
@@ -40,7 +42,11 @@ export default function RootLayout({
     >
       <body className="relative min-h-full bg-background text-foreground grain">
         <BeamsGlobalMount />
-        <SmoothScrollProvider>{children}</SmoothScrollProvider>
+        <SmoothScrollProvider>
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+        </SmoothScrollProvider>
         <SplashCursorMount />
       </body>
     </html>

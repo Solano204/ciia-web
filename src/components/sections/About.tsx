@@ -7,6 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { AnimatedItem, AnimatedSection } from "@/components/ui/AnimatedSection";
 import { BlurText } from "@/components/ui/BlurText";
 import { Section } from "@/components/ui/Section";
+import type { HeadingLevel } from "@/components/ui/SectionHeader";
 import { CtaButton, CtaLink, SectionCta } from "@/components/ui/Cta";
 import { useCountUp } from "@/hooks/useCountUp";
 import { useRevealOnScroll } from "@/hooks/useRevealOnScroll";
@@ -374,7 +375,14 @@ function WorkPrinciples() {
   );
 }
 
-export function About() {
+export function About({
+  headingLevel: Heading = "h2",
+  teaser = false,
+}: {
+  headingLevel?: HeadingLevel;
+  /** Teaser de la home: titular, dato del 5% y foto, con enlace a /nosotros. */
+  teaser?: boolean;
+}) {
   const lastHeadlineIndex = ABOUT_DATA.headlineLines.length - 1;
   const sectionRef = useRef<HTMLElement>(null);
 
@@ -442,6 +450,9 @@ export function About() {
           0.1,
         )
         .from("[data-fx='highlight-copy']", { opacity: 0, y: 18, duration: 0.7, ease: "power2.out" }, 0.45);
+
+      // En el teaser de la home no hay cifras, socios ni principios.
+      if (teaser) return;
 
       // Stats: cada número sube enmascarado y su etiqueta aparece detrás.
       gsap
@@ -563,7 +574,7 @@ export function About() {
     );
 
     return () => mm.revert();
-  }, []);
+  }, [teaser]);
 
   return (
     <Section ref={sectionRef} id="nosotros" className="flex flex-col gap-20">
@@ -574,7 +585,7 @@ export function About() {
               peso de la sección, así que se queda con la columna ancha. */}
           <div className="contents lg:col-span-5 lg:block">
             <AnimatedItem className="order-2">
-              <h2 className="font-display text-h2 font-bold text-foreground">
+              <Heading className="font-display text-h2 font-bold text-foreground">
                 {ABOUT_DATA.headlineLines.map((line, index) => (
                   <BlurText
                     key={line}
@@ -585,7 +596,7 @@ export function About() {
                     className={index === lastHeadlineIndex ? "text-accent" : ""}
                   />
                 ))}
-              </h2>
+              </Heading>
             </AnimatedItem>
 
             <div className="order-5" data-fx="highlight">
@@ -641,6 +652,8 @@ export function About() {
           </div>
         </AnimatedSection>
 
+        {!teaser && (
+          <>
         <AnimatedSection className="border-t border-white/8 pt-16">
           <div
             className="grid grid-cols-2 divide-white/8 lg:grid-cols-4 lg:divide-x"
@@ -679,12 +692,19 @@ export function About() {
         <FoundingPartners />
 
         <WorkPrinciples />
+          </>
+        )}
 
         <SectionCta className="border-white/8">
-          <CtaButton href="#contacto">{CTA_COPY.contacto}</CtaButton>
-          <CtaLink href="#ecosistema">Ver el ecosistema</CtaLink>
+          <CtaButton href="/contacto">{CTA_COPY.contacto}</CtaButton>
+          {teaser ? (
+            <CtaLink href="/nosotros">Conocer al CII.IA</CtaLink>
+          ) : (
+            <CtaLink href="/ecosistema">Ver el ecosistema</CtaLink>
+          )}
         </SectionCta>
 
+        {!teaser && (
         <AnimatedSection className="grid gap-10 border-t border-white/8 pt-12 md:grid-cols-2">
           {CLIENT_QUOTES.map((item) => (
             <AnimatedItem key={item.id}>
@@ -697,6 +717,7 @@ export function About() {
             </AnimatedItem>
           ))}
         </AnimatedSection>
+        )}
     </Section>
   );
 }

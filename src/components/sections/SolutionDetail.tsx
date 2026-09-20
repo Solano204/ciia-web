@@ -3,14 +3,12 @@ import path from "node:path";
 import Link from "next/link";
 import { DecayImage } from "@/components/ui/DecayImage";
 import { StageRail } from "@/components/ui/StageRail";
-import { BeamsBackground } from "@/components/ui/BeamsBackground";
+import { Section } from "@/components/ui/Section";
 import { CtaButton } from "@/components/ui/Cta";
 import { CTA_COPY, type ExecutionStage, type ServiceItem } from "@/lib/ciiia";
 
-// ponytail: these three sections only exist as anchors on the home page
-// today, not standalone routes — linking there instead of a 404.
-const SOLUTIONS_HREF = "/#soluciones";
-const CONTACT_HREF = "/#contacto";
+const SOLUTIONS_HREF = "/soluciones";
+const CONTACT_HREF = "/contacto";
 
 function hasLocalImage(id: string): boolean {
   return fs.existsSync(path.join(process.cwd(), "public", "soluciones", `${id}.jpg`));
@@ -34,8 +32,7 @@ export function SolutionDetail({
   const imageExists = hasLocalImage(service.id);
 
   return (
-    <BeamsBackground className="min-h-screen">
-    <main className="mx-auto flex max-w-[1400px] flex-col gap-16 px-6 py-24 md:px-10 bg-transparent">
+    <Section id="solucion" className="flex flex-col gap-16">
       <Link
         href={SOLUTIONS_HREF}
         className="inline-flex w-fit items-center gap-2 font-sans text-[12px] uppercase tracking-[0.08em] text-muted transition-colors hover:text-foreground"
@@ -132,7 +129,6 @@ export function SolutionDetail({
           {CTA_COPY.asesoria}
         </CtaButton>
       </div>
-    </main>
-    </BeamsBackground>
+    </Section>
   );
 }

@@ -1,10 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import type { MouseEvent, ReactNode } from "react";
+import type { ReactNode } from "react";
 import { ArrowUpRightIcon } from "@phosphor-icons/react";
-import { useLenis } from "@/components/providers/SmoothScrollProvider";
-import { scrollToAnchor } from "@/lib/smooth-anchor";
 
 type CtaProps = {
   href: string;
@@ -12,27 +10,14 @@ type CtaProps = {
   className?: string;
 };
 
-const isAnchor = (href: string) => href.startsWith("#");
 const isExternal = (href: string) => /^(https?:|mailto:|tel:)/.test(href);
 
 /**
- * Un solo componente resuelve las tres formas de destino que usa el sitio:
- * ancla con scroll suave de Lenis, enlace externo y ruta interna de Next.
- * Así ningún llamador tiene que acordarse de cuál le toca.
+ * Un solo componente resuelve las dos formas de destino que usa el sitio:
+ * enlace externo y ruta interna de Next. Así ningún llamador tiene que
+ * acordarse de cuál le toca.
  */
 function CtaAnchor({ href, className, children }: CtaProps) {
-  const lenis = useLenis();
-
-  if (isAnchor(href)) {
-    const onClick = (event: MouseEvent<HTMLAnchorElement>) =>
-      scrollToAnchor(event, href, lenis);
-    return (
-      <a href={href} onClick={onClick} className={className}>
-        {children}
-      </a>
-    );
-  }
-
   if (isExternal(href)) {
     const nuevaVentana = href.startsWith("http");
     return (

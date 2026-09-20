@@ -6,33 +6,43 @@ import { CaseFilters, type CaseFilterState } from "@/components/ui/CaseFilters";
 import { CasesDeck } from "@/components/ui/CasesDeck";
 import { CtaButton, CtaLink, SectionCta } from "@/components/ui/Cta";
 import { Section } from "@/components/ui/Section";
-import { SectionHeader } from "@/components/ui/SectionHeader";
-import { CTA_COPY, PROJECT_CASES, schedulingHref } from "@/lib/ciiia";
+import { SectionHeader, type HeadingLevel } from "@/components/ui/SectionHeader";
+import { CTA_COPY, PAGE_DESCRIPTIONS, PROJECT_CASES, schedulingHref } from "@/lib/ciiia";
 
-export function Cases() {
+export function Cases({
+  headingLevel = "h2",
+  limit,
+}: {
+  headingLevel?: HeadingLevel;
+  /** Teaser de la home: solo los primeros `limit`, sin filtros y con enlace a /casos. */
+  limit?: number;
+}) {
   const [filters, setFilters] = useState<CaseFilterState>({ sector: "todos", technology: "todas" });
 
   const filtered = useMemo(
     () =>
-      PROJECT_CASES.filter(
+      (limit ? PROJECT_CASES.slice(0, limit) : PROJECT_CASES).filter(
         (item) =>
           (filters.sector === "todos" || item.sector === filters.sector) &&
           (filters.technology === "todas" || item.technology === filters.technology),
       ),
-    [filters],
+    [filters, limit],
   );
 
   return (
     <Section id="casos" className="flex flex-col gap-12">
       <SectionHeader
         animated
+        as={headingLevel}
         title="Casos"
-        description="Doce soluciones de inteligencia artificial documentadas por el CII.IA en manufactura, comercio, servicios financieros y seguridad."
+        description={PAGE_DESCRIPTIONS.casos}
       />
 
-      <AnimatedItem>
-        <CaseFilters cases={PROJECT_CASES} value={filters} onChange={setFilters} />
-      </AnimatedItem>
+      {!limit && (
+        <AnimatedItem>
+          <CaseFilters cases={PROJECT_CASES} value={filters} onChange={setFilters} />
+        </AnimatedItem>
+      )}
 
       {filtered.length === 0 ? (
         <p className="font-sans text-sm text-muted">
@@ -43,8 +53,12 @@ export function Cases() {
       )}
 
       <SectionCta>
-        <CtaButton href="#contacto">{CTA_COPY.asesoriaCaso}</CtaButton>
-        <CtaLink href={schedulingHref()}>{CTA_COPY.agenda}</CtaLink>
+        <CtaButton href="/contacto">{CTA_COPY.asesoriaCaso}</CtaButton>
+        {limit ? (
+          <CtaLink href="/casos">Ver todos los casos</CtaLink>
+        ) : (
+          <CtaLink href={schedulingHref()}>{CTA_COPY.agenda}</CtaLink>
+        )}
       </SectionCta>
     </Section>
   );

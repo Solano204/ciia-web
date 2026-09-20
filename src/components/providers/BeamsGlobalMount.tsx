@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
+import { usePathname } from "next/navigation";
 
 // ssr: false is only valid from within a Client Component boundary.
 const Beams = dynamic(() => import("@/components/ui/Beams"), { ssr: false });
@@ -12,6 +13,8 @@ const Beams = dynamic(() => import("@/components/ui/Beams"), { ssr: false });
 // Challenge — both share the `.scroll-animation` class) is in view, since
 // they fully occlude it anyway, and while the tab is hidden.
 function useBeamsPaused(): boolean {
+  // Las secciones opacas solo están en la home: se buscan de nuevo en cada ruta.
+  const pathname = usePathname();
   const [occluded, setOccluded] = useState(true);
   const [tabHidden, setTabHidden] = useState(false);
 
@@ -31,7 +34,7 @@ function useBeamsPaused(): boolean {
     });
     opaqueSections.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
-  }, []);
+  }, [pathname]);
 
   useEffect(() => {
     const handleVisibility = () => setTabHidden(document.hidden);
