@@ -23,6 +23,10 @@
 # scratch: capturas y archivos de trabajo, nunca al repo
 /tmp/
 
+# originales de las imágenes del robot: se convierten con `npm run images`
+/design/originales/*
+!/design/originales/.gitkeep
+
 # misc
 .DS_Store
 *.pem
