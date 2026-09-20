@@ -202,8 +202,7 @@
 - Fundadores con logos a color.
 - Principios ("Descubrimos / no diagnosticamos") conservados pero más compactos.
 - CTA: "Contáctanos".
-- Pendiente: error de hidratación en `/nosotros` con `prefers-reduced-motion: reduce` activo (detectado durante la Fase 2). Reproducir con reduced motion, revisar la consola y corregir en esta fase.
-- Pendiente: error de hidratación con reduced motion en Challenge/BlurText (mismo patrón que About).
+- Resuelto en esta fase: error de hidratación con `prefers-reduced-motion: reduce` en `/` y `/nosotros` (detectado en la Fase 2). Causa: `BlurText`, que solo usa About, leía el `useReducedMotion` de framer-motion, que en el cliente da la preferencia real desde el primer render. Ahora usa `@/hooks/use-reduced-motion` (servidor y hidratación = `false`) y la preferencia se aplica tras el montaje. Challenge no intervenía.
 
 ### FASE 8 — Ecosistema
 - Logos a color completo, más grandes, con hover sutil. Que resalten y no se vea apagado.
