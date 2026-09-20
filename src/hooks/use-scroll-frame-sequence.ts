@@ -6,12 +6,17 @@ type UseScrollFrameSequenceOptions = {
   frameCount: number;
   framePath: (n: number) => string;
   onProgress?: (progress: number) => void;
+  /** Con reduced motion la escena no sigue al scroll: se queda en `reducedProgress`. */
+  reducedMotion?: boolean;
+  reducedProgress?: number;
 };
 
 export function useScrollFrameSequence({
   frameCount,
   framePath,
   onProgress,
+  reducedMotion = false,
+  reducedProgress = 0,
 }: UseScrollFrameSequenceOptions) {
   const sectionRef = useRef<HTMLElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
@@ -23,6 +28,7 @@ export function useScrollFrameSequence({
 
   const [loadProgress, setLoadProgress] = useState(0);
   const [loaded, setLoaded] = useState(false);
+  const [firstReady, setFirstReady] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -42,7 +48,10 @@ export function useScrollFrameSequence({
     for (let i = 1; i <= frameCount; i++) {
       const img = new Image();
       img.src = framePath(i);
-      img.onload = bump;
+      img.onload = () => {
+        if (i === 1 && !cancelled) setFirstReady(true);
+        bump();
+      };
       img.onerror = bump;
       imgs.push(img);
     }
@@ -113,10 +122,14 @@ export function useScrollFrameSequence({
   }, [resizeCanvas]);
 
   useEffect(() => {
-    if (!loaded) return;
+    if (!firstReady) return;
     drawFrame(0);
     lastFrameRef.current = 0;
-  }, [loaded, drawFrame]);
+  }, [firstReady, drawFrame]);
+
+  useEffect(() => {
+    if (loaded) window.dispatchEvent(new Event("scroll"));
+  }, [loaded]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -130,10 +143,9 @@ export function useScrollFrameSequence({
 
         const rect = section.getBoundingClientRect();
         const scrollable = section.offsetHeight - window.innerHeight;
-        const progress =
-          scrollable <= 0
-            ? 0
-            : Math.min(1, Math.max(0, -rect.top / scrollable));
+        const scrolled =
+          scrollable <= 0 ? 0 : Math.min(1, Math.max(0, -rect.top / scrollable));
+        const progress = reducedMotion ? reducedProgress : scrolled;
 
         const frameIndex = Math.min(
           frameCount - 1,
@@ -151,7 +163,7 @@ export function useScrollFrameSequence({
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
-  }, [drawFrame, frameCount, onProgress]);
+  }, [drawFrame, frameCount, onProgress, reducedMotion, reducedProgress]);
 
   return { sectionRef, canvasRef, loaded, loadProgress };
 }

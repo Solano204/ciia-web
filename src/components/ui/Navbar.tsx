@@ -2,36 +2,61 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { CtaButton } from "@/components/ui/Cta";
 import { MobileMenu } from "@/components/ui/MobileMenu";
 import { linkState } from "@/lib/nav";
 import { CTA_COPY, NAV_LINKS, schedulingHref } from "@/lib/ciiia";
 
+/**
+ * - `hero`: sobre la secuencia del Hero. Sin fondo; solo un degradado negro
+ *   arriba para que los enlaces se lean sobre el casco blanco.
+ * - `solid`: fuera del Hero (o pasados 40 px en páginas sin Hero). La secuencia
+ *   de «El reto» termina en un fotograma casi blanco y sin fondo los enlaces
+ *   quedarían ilegibles.
+ * - `clear`: arriba de una página sin Hero.
+ */
+type NavMode = "clear" | "hero" | "solid";
+
+const LAYER = "pointer-events-none absolute transition-opacity duration-200 motion-reduce:transition-none";
+
 export function Navbar() {
   const pathname = usePathname();
-  const [scrolled, setScrolled] = useState(false);
+  const headerRef = useRef<HTMLElement | null>(null);
+  const [mode, setMode] = useState<NavMode>(pathname === "/" ? "hero" : "clear");
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    const update = () => {
+      const hero = document.getElementById("hero");
+      if (hero) {
+        const navHeight = headerRef.current?.offsetHeight ?? 0;
+        setMode(hero.getBoundingClientRect().bottom > navHeight ? "hero" : "solid");
+      } else {
+        setMode(window.scrollY > 40 ? "solid" : "clear");
+      }
+    };
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, [pathname]);
 
   return (
-    <header
-      // El fondo al hacer scroll no es sólo estética: la secuencia de «El reto»
-      // termina en un fotograma casi blanco y sin él los enlaces quedan
-      // ilegibles encima. Las dos ramas estaban comentadas, de modo que la
-      // plantilla interpolaba `scrolled` y colaba `true`/`false` como clase.
-      className={`fixed inset-x-0 top-0 z-40 transition-[background-color,backdrop-filter,border-color] duration-300 ${
-        scrolled
-          ? "border-b border-white/10 bg-black/60 backdrop-blur-2xl backdrop-saturate-150"
-          : "border-b border-transparent bg-transparent"
-      }`}
-    >
-      <div className="mx-auto flex max-w-[1400px] items-center justify-between gap-4 px-6 py-4 md:px-8 md:py-5">
+    <header ref={headerRef} className="fixed inset-x-0 top-0 z-40">
+      {/* Opacidad plena sobre el nav y 40 px más para desvanecerse, sin caja ni borde. */}
+      <div
+        aria-hidden
+        className={`${LAYER} inset-x-0 top-0 h-[calc(100%+40px)] ${mode === "hero" ? "opacity-100" : "opacity-0"}`}
+        style={{ background: "linear-gradient(to bottom, rgba(0,0,0,0.6) calc(100% - 40px), transparent)" }}
+      />
+      <div
+        aria-hidden
+        className={`${LAYER} inset-0 border-b border-white/10 bg-black/80 backdrop-blur-md ${mode === "solid" ? "opacity-100" : "opacity-0"}`}
+      />
+      <div className="relative mx-auto flex max-w-[1400px] items-center justify-between gap-4 px-6 py-4 md:px-8 md:py-5">
         <Link
           href="/"
           className="flex shrink-0 items-center gap-2.5 font-sans text-[12px] font-semibold uppercase tracking-[0.08em] text-foreground"
@@ -52,7 +77,9 @@ export function Navbar() {
                 href={href}
                 aria-current={state === "page" ? "page" : undefined}
                 data-active={state ? "" : undefined}
-                className="font-sans text-[12px] uppercase tracking-[0.08em] text-zinc-400 underline-offset-[10px] transition-colors hover:text-foreground data-[active]:text-foreground data-[active]:underline data-[active]:decoration-accent"
+                className={`font-sans text-[12px] uppercase tracking-[0.08em] underline-offset-[10px] transition-colors hover:text-foreground data-[active]:text-foreground data-[active]:underline data-[active]:decoration-accent ${
+                  mode === "hero" ? "text-foreground" : "text-zinc-400"
+                }`}
               >
                 {label}
               </Link>

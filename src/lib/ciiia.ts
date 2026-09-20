@@ -79,6 +79,21 @@ export const INSTITUTIONAL_METRICS: { id: string; value: string; label: string }
   { id: "i4", value: "2021", label: "Inauguración en el PIIT, Nuevo León" },
 ];
 
+const metricValue = (id: string): string =>
+  INSTITUTIONAL_METRICS.find((metric) => metric.id === id)?.value ?? SIN_DATO;
+
+/** Recorte de `MANIFESTO.lead` para el Hero: sin la cola que ya dice el H1. */
+export const HERO_LEAD =
+  "Centro de Innovación Industrial en Inteligencia Artificial. Desde el PIIT, en Nuevo León, acompaña a empresas e instituciones.";
+
+export const HERO_PROOF = `${metricValue("i3")} instituciones fundadoras · ${metricValue("i2")} organizaciones aliadas`;
+
+/** Dato del Reto, recortado de la primera oración de `MANIFESTO.reto`. */
+export const RETO_STAT = {
+  value: "5%",
+  label: "de las empresas de Nuevo León cuenta con equipos internos de ciencia de datos",
+};
+
 export type AboutStat = {
   id: string;
   value: string;

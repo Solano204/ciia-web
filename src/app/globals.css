@@ -118,6 +118,13 @@ body {
   }
 }
 
+/* Con reduced motion la escena no sigue al scroll: ocupa una sola pantalla. */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-animation {
+    height: 100vh;
+  }
+}
+
 /* Costura entre secciones. Sustituye al `border-t` de un píxel a sangre, que
    cortaba el tono en seco de un bloque al siguiente. La línea se apaga hacia
    los bordes y la acompaña un lavado vertical corto, de modo que el paso se
