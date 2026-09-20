@@ -88,6 +88,12 @@ export const HERO_LEAD =
 
 export const HERO_PROOF = `${metricValue("i3")} instituciones fundadoras · ${metricValue("i2")} organizaciones aliadas`;
 
+/** Dato del Reto, recortado de la primera oración de `MANIFESTO.reto`. */
+export const RETO_STAT = {
+  value: "5%",
+  label: "de las empresas de Nuevo León cuenta con equipos internos de ciencia de datos",
+};
+
 export type AboutStat = {
   id: string;
   value: string;

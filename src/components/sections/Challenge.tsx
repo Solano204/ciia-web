@@ -1,58 +1,79 @@
 "use client";
 
 import { useCallback, useRef } from "react";
+import { CtaButton } from "@/components/ui/Cta";
 import {
-  CHALLENGE_ENTER_FADE_END,
-  CHALLENGE_EXIT_FADE_START,
   CHALLENGE_FRAME_COUNT,
-  CHALLENGE_TEXT_FADE_IN_END,
+  CHALLENGE_REDUCED_LAYERS,
+  CHALLENGE_REDUCED_PROGRESS,
   challengeFramePath,
+  challengeLayers,
 } from "@/lib/challenge";
-import { INSTITUTIONAL_METRICS, MANIFESTO } from "@/lib/ciiia";
+import { CTA_COPY, INSTITUTIONAL_METRICS, RETO_STAT, schedulingHref } from "@/lib/ciiia";
+import { useReducedMotion } from "@/hooks/use-reduced-motion";
 import { useScrollFrameSequence } from "@/hooks/use-scroll-frame-sequence";
 
-const FOUNDING_METRIC = INSTITUTIONAL_METRICS[3];
+const INAUGURATION = INSTITUTIONAL_METRICS[3];
+
+function Stat({ value, label }: { value: string; label: string }) {
+  return (
+    <div className="flex max-w-[30ch] flex-col gap-3">
+      <span className="font-display text-display font-semibold text-foreground">{value}</span>
+      <span className="font-sans text-base leading-snug text-foreground/85 [text-shadow:0_1px_14px_rgba(0,0,0,0.6)]">
+        {label}
+      </span>
+    </div>
+  );
+}
 
 export function Challenge() {
+  const reducedMotion = useReducedMotion();
   const textRef = useRef<HTMLDivElement | null>(null);
-  const progressFillRef = useRef<HTMLDivElement | null>(null);
+  const ctaRef = useRef<HTMLDivElement | null>(null);
   const enterVeilRef = useRef<HTMLDivElement | null>(null);
   const exitVeilRef = useRef<HTMLDivElement | null>(null);
 
-  const handleProgress = useCallback((progress: number) => {
-    if (textRef.current) {
-      const opacity = Math.min(1, progress / CHALLENGE_TEXT_FADE_IN_END);
-      textRef.current.style.opacity = String(opacity);
-      textRef.current.style.transform = `translateY(${(1 - opacity) * 14}px)`;
-    }
+  // Todo se escribe directo en el estilo, atado al scroll: no debe provocar
+  // un render por frame.
+  const handleProgress = useCallback(
+    (progress: number) => {
+      const layers = reducedMotion ? CHALLENGE_REDUCED_LAYERS : challengeLayers(progress);
 
-    if (progressFillRef.current) {
-      progressFillRef.current.style.transform = `scaleX(${progress})`;
-    }
+      if (enterVeilRef.current) enterVeilRef.current.style.opacity = String(layers.enterVeil);
+      if (exitVeilRef.current) exitVeilRef.current.style.opacity = String(layers.exitVeil);
 
-    // Se escriben directamente en el estilo, igual que el resto de esta
-    // sección: van atadas al scroll y no deben provocar un render por frame.
-    if (enterVeilRef.current) {
-      enterVeilRef.current.style.opacity = String(
-        1 - Math.min(1, progress / CHALLENGE_ENTER_FADE_END),
-      );
-    }
+      if (textRef.current) {
+        textRef.current.style.opacity = String(layers.text);
+        textRef.current.style.transform = `translateY(${(1 - layers.text) * 14}px)`;
+      }
 
-    if (exitVeilRef.current) {
-      exitVeilRef.current.style.opacity = String(
-        Math.max(0, (progress - CHALLENGE_EXIT_FADE_START) / (1 - CHALLENGE_EXIT_FADE_START)),
-      );
-    }
-  }, []);
+      if (ctaRef.current) {
+        ctaRef.current.style.opacity = String(layers.cta);
+        ctaRef.current.style.transform = `translateY(${(1 - layers.cta) * 14}px)`;
+        // Oculto no recibe foco ni clics mientras el CTA no se ve.
+        ctaRef.current.style.visibility = layers.cta > 0.02 ? "visible" : "hidden";
+      }
+    },
+    [reducedMotion],
+  );
 
-  const { sectionRef, canvasRef, loaded, loadProgress } = useScrollFrameSequence({
+  const { sectionRef, canvasRef } = useScrollFrameSequence({
     frameCount: CHALLENGE_FRAME_COUNT,
     framePath: challengeFramePath,
     onProgress: handleProgress,
+    reducedMotion,
+    reducedProgress: CHALLENGE_REDUCED_PROGRESS,
   });
 
   return (
     <section ref={sectionRef} className="scroll-animation relative">
+      {/* Funde el final de la sección anterior a negro antes de que entre el rojo. */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 -top-[16vh] z-10 h-[16vh]"
+        style={{ background: "linear-gradient(to bottom, transparent, var(--background))" }}
+      />
+
       <div
         className="sticky top-0 min-h-[100dvh] w-full overflow-hidden bg-background"
         style={{ height: "100dvh", willChange: "transform", transform: "translateZ(0)" }}
@@ -71,8 +92,16 @@ export function Challenge() {
           }}
         />
 
-        {/* Velos de empalme. Van sobre el lienzo pero bajo el texto (z-10),
-            para que la copia siga legible mientras la escena se funde. */}
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 bottom-0 h-3/5"
+          style={{
+            background:
+              "linear-gradient(to top, rgba(10,10,11,0.8), rgba(10,10,11,0.4) 50%, transparent)",
+          }}
+        />
+
+        {/* Velos de opacidad. Van sobre el lienzo y bajo el texto (z-10). */}
         <div
           ref={enterVeilRef}
           aria-hidden
@@ -86,60 +115,22 @@ export function Challenge() {
           style={{ opacity: 0 }}
         />
 
-        <div
-          ref={textRef}
-          className="absolute inset-x-0 bottom-0 z-10 flex flex-col items-start gap-6 px-6 pb-24 md:px-12 md:pb-28"
-          style={{ opacity: 0, transition: "opacity 80ms linear" }}
-        >
-          <span className="inline-flex items-center gap-2 font-sans text-[12px] font-medium uppercase tracking-[0.08em] text-accent">
-            <span aria-hidden className="inline-block h-1.5 w-1.5 rounded-full bg-accent" />
-            CII.IA // EL RETO
-          </span>
-          <div className="flex flex-wrap items-end gap-5">
-            <span className="font-display font-semibold leading-none text-accent text-[clamp(4rem,10vw,9rem)]">
-              {FOUNDING_METRIC.value}
-            </span>
-            <span className="max-w-[24ch] pb-2 font-sans text-xs uppercase leading-snug tracking-[0.08em] text-zinc-400 md:text-sm">
-              {FOUNDING_METRIC.label}
-            </span>
+        <div className="absolute inset-x-0 bottom-0 z-10 flex flex-col items-start gap-10 px-6 pb-14 md:px-12 md:pb-20">
+          <div
+            ref={textRef}
+            className="flex flex-col gap-8 md:flex-row md:gap-16"
+            style={{ opacity: 0, willChange: "opacity, transform" }}
+          >
+            <Stat value={INAUGURATION.value} label={INAUGURATION.label} />
+            <Stat value={RETO_STAT.value} label={RETO_STAT.label} />
           </div>
-          <p className="max-w-[56ch] font-sans text-sm leading-relaxed text-zinc-400 md:text-base">
-            {MANIFESTO.reto}
-          </p>
-        </div>
-
-        <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10">
-          <div className="mx-6 mb-3 h-px bg-white/10 md:mx-10">
-            <div
-              ref={progressFillRef}
-              className="h-full origin-left bg-accent"
-              style={{ transform: "scaleX(0)", transition: "transform 80ms linear" }}
-            />
-          </div>
-          <div className="mx-6 flex items-center justify-between pb-4 font-mono text-[12px] uppercase tracking-[0.08em] text-muted md:mx-10">
-            <span>SEQ 002 / 169</span>
-            <span>CII.IA // CONTEXTO</span>
-            <span>Despl&aacute;zate &darr;</span>
+          <div
+            ref={ctaRef}
+            style={{ opacity: 0, visibility: "hidden", willChange: "opacity, transform" }}
+          >
+            <CtaButton href={schedulingHref()}>{CTA_COPY.agenda}</CtaButton>
           </div>
         </div>
-
-        {!loaded && (
-          <div className="absolute inset-0 z-30 flex flex-col items-center justify-center gap-5 bg-background px-6">
-            <span className="inline-flex items-center gap-2 font-sans text-[12px] font-medium uppercase tracking-[0.08em] text-accent">
-              <span aria-hidden className="inline-block h-1.5 w-1.5 rounded-full bg-accent" />
-              CII.IA // CARGANDO
-            </span>
-            <div className="h-px w-60 bg-white/10 md:w-80">
-              <div
-                className="h-full bg-accent transition-[width] duration-150 ease-out"
-                style={{ width: `${Math.round(loadProgress * 100)}%` }}
-              />
-            </div>
-            <p className="font-sans text-[12px] uppercase tracking-[0.08em] text-muted">
-              Cargando CII.IA &nbsp;&middot;&nbsp; {Math.round(loadProgress * 100)}%
-            </p>
-          </div>
-        )}
       </div>
     </section>
   );

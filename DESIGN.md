@@ -78,6 +78,10 @@ Tokens iniciales, ajustables solo desde este archivo:
 --stagger: 60ms;     /* entre hermanos */
 ```
 - Solo se animan `transform` y `opacity`.
+- Secuencias de scroll de la home (fracción del scroll de cada sección; las ventanas viven en `src/lib/hero.ts` y `src/lib/challenge.ts`):
+  - Hero: el texto queda opaco hasta el 35% y sale entre el 35% y el 50%.
+  - Reto: velo negro de entrada 1 → 0 entre 0% y 45%; texto entre 38% y 68%; velo negro de salida 0 → 1 entre 60% y 90%; CTA entre 85% y 95%. Una banda de 16vh funde el final de la sección anterior a negro.
+- Con reduced motion las secuencias no siguen al scroll: una pantalla, frame fijo y texto visible.
 - `prefers-reduced-motion` en todo. Con GSAP, `gsap.matchMedia()`.
 - Nunca easing lineal. Sin scrolljacking.
 
