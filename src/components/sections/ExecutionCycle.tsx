@@ -43,10 +43,12 @@ export function ExecutionCycle({
     fs.existsSync(path.join(process.cwd(), "public", "ciclo", `${stage.id}.jpg`)),
   ).map((stage) => stage.id);
 
+  const services = SERVICES_DATA.map(({ id, title, stageMapping }) => ({ id, title, stageMapping }));
+
   return (
     <Section id="ciclo" className="flex flex-col gap-12">
       <SectionHeader as={headingLevel} title={TITLE} description={DESCRIPTION} />
-      <StageDeck stages={EXECUTION_STAGES} services={SERVICES_DATA} imageIds={imageIds} />
+      <StageDeck stages={EXECUTION_STAGES} services={services} imageIds={imageIds} />
       <SectionCta>
         <CtaButton href={schedulingHref()}>{CTA_COPY.agenda}</CtaButton>
       </SectionCta>

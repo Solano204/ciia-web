@@ -2,8 +2,8 @@
 
 import { useSyncExternalStore } from "react";
 import { Deck } from "@/components/ui/Deck";
-import { StageCard } from "@/components/ui/StageCard";
-import type { ExecutionStage, ServiceItem } from "@/lib/ciiia";
+import { StageCard, type StageService } from "@/components/ui/StageCard";
+import type { ExecutionStage } from "@/lib/ciiia";
 
 const subscribeHash = (onChange: () => void) => {
   window.addEventListener("hashchange", onChange);
@@ -61,7 +61,7 @@ export function StageDeck({
   imageIds,
 }: {
   stages: ExecutionStage[];
-  services: ServiceItem[];
+  services: StageService[];
   /** Etapas cuya imagen existe en `public/ciclo/` (comprobado en el build). */
   imageIds: string[];
 }) {

@@ -6,6 +6,13 @@ import type { DeckCardState } from "@/components/ui/Deck";
 import { deckTransition } from "@/hooks/useDeckCarousel";
 import { cycleImageSrc, type ExecutionStage, type ServiceItem } from "@/lib/ciiia";
 
+/**
+ * Lo único que la tarjeta necesita de cada solución. El deck es un componente
+ * de cliente: todo lo que recibe se serializa en el HTML, así que no se le
+ * pasa el objeto completo (con sus campos internos).
+ */
+export type StageService = Pick<ServiceItem, "id" | "title" | "stageMapping">;
+
 const LABEL = "font-sans text-[12px] uppercase tracking-[0.08em] text-muted";
 
 /**
@@ -47,7 +54,7 @@ export function StageCard({
   onFocusCard,
 }: {
   stage: ExecutionStage;
-  services: ServiceItem[];
+  services: StageService[];
   /** Verificado en el build: si es falso, la imagen ni se pide. */
   hasImage: boolean;
 } & DeckCardState) {
