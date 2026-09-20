@@ -136,10 +136,7 @@ export type WorkPrinciple = {
 };
 
 export type AboutData = {
-  eyebrow: string;
   headlineLines: string[];
-  highlightValue: string;
-  highlightCopy: string;
   leadParagraph: string;
   labImageSrc: string;
   labImageAlt: string;
@@ -173,13 +170,9 @@ export const WORK_PRINCIPLES: WorkPrinciple[] = [
 export const ABOUT_LAB_IMAGE_SRC = "/nosotros-encabezado.jpg";
 
 export const ABOUT_DATA: AboutData = {
-  eyebrow: MANIFESTO.eyebrow,
   headlineLines: ["El problema", "no es la IA.", "Es la última milla."],
-  highlightValue: "5%",
-  highlightCopy:
-    "de las empresas de Nuevo León cuenta con equipos internos de ciencia de datos",
-  // Dos líneas en escritorio: el desarrollo del argumento vive en el resto de
-  // la sección, no en este párrafo.
+  // Una línea en escritorio: el desarrollo del argumento vive en el resto de
+  // la página, no en este párrafo.
   leadParagraph:
     "El desafío no está en crear algoritmos, sino en ponerlos a operar. Nuestra misión es cerrar esa brecha.",
   labImageSrc: ABOUT_LAB_IMAGE_SRC,

@@ -6,6 +6,7 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { AnimatedItem, AnimatedSection } from "@/components/ui/AnimatedSection";
 import { BlurText } from "@/components/ui/BlurText";
+import { Reveal } from "@/components/ui/Reveal";
 import { Section } from "@/components/ui/Section";
 import type { HeadingLevel } from "@/components/ui/SectionHeader";
 import { CtaButton, CtaLink, SectionCta } from "@/components/ui/Cta";
@@ -21,9 +22,6 @@ import {
 } from "@/lib/ciiia";
 
 gsap.registerPlugin(ScrollTrigger);
-
-/** Radio de `rounded-xl`, necesario para que el wipe no cuadre las esquinas. */
-const FRAME_RADIUS = "12px";
 
 /** "12" → 12 + ""; "50+" → 50 + "+"; "5%" → 5 + "%". */
 const COUNTABLE_VALUE = /^(\d+)(\D*)$/;
@@ -383,7 +381,6 @@ export function About({
   /** Teaser de la home: titular, dato del 5% y foto, con enlace a /nosotros. */
   teaser?: boolean;
 }) {
-  const lastHeadlineIndex = ABOUT_DATA.headlineLines.length - 1;
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -394,63 +391,6 @@ export function About({
     const mm = gsap.matchMedia();
 
     mm.add("(prefers-reduced-motion: no-preference)", () => {
-      // Imagen: wipe horizontal de izquierda a derecha + desescalado del render.
-      gsap
-        .timeline({
-          scrollTrigger: { trigger: "[data-fx='lab-frame']", start: "top 85%", once: true },
-        })
-        .fromTo(
-          "[data-fx='lab-frame']",
-          { clipPath: `inset(0% 100% 0% 0% round ${FRAME_RADIUS})` },
-          {
-            clipPath: `inset(0% 0% 0% 0% round ${FRAME_RADIUS})`,
-            duration: 1.8,
-            ease: "power3.inOut",
-          },
-        )
-        .fromTo(
-          "[data-fx='lab-image']",
-          { scale: 1.3 },
-          { scale: 1.15, duration: 2, ease: "power3.out" },
-          0,
-        )
-        .from("[data-fx='lab-caption']", { opacity: 0, y: 16, duration: 0.7, ease: "power2.out" }, 0.9);
-
-      // Parallax horizontal dentro del marco. El recorrido corto y el scrub con
-      // retardo son lo que lo hacen avanzar despacio respecto del scroll.
-      gsap.fromTo(
-        "[data-fx='lab-image']",
-        { xPercent: -3.5 },
-        {
-          xPercent: 3.5,
-          ease: "none",
-          scrollTrigger: {
-            trigger: "[data-fx='lab-frame']",
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1.5,
-          },
-        },
-      );
-
-      // Bloque del 5%: la regla se dibuja y el número sube dentro de su máscara.
-      gsap
-        .timeline({
-          scrollTrigger: { trigger: "[data-fx='highlight']", start: "top 85%", once: true },
-        })
-        .from("[data-fx='divider']", {
-          scaleX: 0,
-          transformOrigin: "left center",
-          duration: 0.7,
-          ease: "power2.out",
-        })
-        .from(
-          "[data-fx='highlight-value']",
-          { yPercent: 110, duration: 1.1, ease: "power3.out" },
-          0.1,
-        )
-        .from("[data-fx='highlight-copy']", { opacity: 0, y: 18, duration: 0.7, ease: "power2.out" }, 0.45);
-
       // En el teaser de la home no hay cifras, socios ni principios.
       if (teaser) return;
 
@@ -577,80 +517,38 @@ export function About({
   }, [teaser]);
 
   return (
-    <Section ref={sectionRef} id="nosotros" className="flex flex-col gap-20">
-        <AnimatedSection className="grid grid-cols-1 items-start gap-16 lg:grid-cols-12">
-          {/* Columna izquierda. En móvil se disuelve (`contents`) para que sus
-              bloques se intercalen con los de la derecha vía `order`. */}
-          {/* 5/7 en vez de 6/6: la foto del laboratorio es el elemento con más
-              peso de la sección, así que se queda con la columna ancha. */}
-          <div className="contents lg:col-span-5 lg:block">
-            <AnimatedItem className="order-2">
-              <Heading className="font-display text-h2 font-bold text-foreground">
-                {ABOUT_DATA.headlineLines.map((line, index) => (
-                  <BlurText
-                    key={line}
-                    as="span"
-                    text={line}
-                    delay={80}
-                    initialDelay={index * 180}
-                    className={index === lastHeadlineIndex ? "text-accent" : ""}
-                  />
-                ))}
-              </Heading>
-            </AnimatedItem>
+    <>
+      <Section id="nosotros" className="flex flex-col gap-8">
+        <Heading className="font-display text-h2 font-semibold text-foreground">
+          {ABOUT_DATA.headlineLines.map((line, index) => (
+            <BlurText key={line} as="span" text={line} delay={80} initialDelay={index * 180} />
+          ))}
+        </Heading>
+        <Reveal>
+          <p className="max-w-[80ch] text-[19px] leading-snug text-foreground">
+            {ABOUT_DATA.leadParagraph}
+          </p>
+        </Reveal>
+      </Section>
 
-            <div className="order-5" data-fx="highlight">
-              <div className="my-12 h-px w-16 bg-white/15" data-fx="divider" />
-              <span className="block overflow-hidden pb-[0.06em]">
-                <CountingValue
-                  value={ABOUT_DATA.highlightValue}
-                  animate
-                  fx="highlight-value"
-                  className="block font-display text-display font-bold leading-none text-accent tabular-nums"
-                />
-              </span>
-              <p
-                className="mt-6 max-w-[420px] text-[17px] leading-relaxed text-zinc-300"
-                data-fx="highlight-copy"
-              >
-                {ABOUT_DATA.highlightCopy}
-              </p>
-            </div>
+      <figure>
+        <Reveal>
+          <div className="relative h-[60svh] min-h-[320px] max-h-[720px] w-full overflow-hidden bg-white/[0.03]">
+            <Image
+              src={ABOUT_DATA.labImageSrc}
+              alt={ABOUT_DATA.labImageAlt}
+              fill
+              sizes="100vw"
+              className="object-cover"
+            />
           </div>
+        </Reveal>
+        <figcaption className="px-6 pt-5 text-sm text-zinc-400 md:px-10">
+          <span className="mx-auto block max-w-[var(--container-max)]">{ABOUT_DATA.labCaption}</span>
+        </figcaption>
+      </figure>
 
-          {/* Columna derecha. */}
-          <div className="contents lg:col-span-7 lg:block">
-            <AnimatedItem className="order-3">
-              <p className="max-w-[46ch] text-[19px] leading-snug text-foreground">
-                {ABOUT_DATA.leadParagraph}
-              </p>
-            </AnimatedItem>
-
-            <div className="order-4 lg:mt-10">
-              <figure>
-                <div
-                  className="relative aspect-[4/3] overflow-hidden rounded-xl"
-                  data-fx="lab-frame"
-                >
-                  <Image
-                    src={ABOUT_DATA.labImageSrc}
-                    alt={ABOUT_DATA.labImageAlt}
-                    fill
-                    sizes="(min-width: 1024px) 58vw, 100vw"
-                    className="object-cover"
-                    data-fx="lab-image"
-                  />
-                </div>
-                <figcaption
-                  className="mt-5 max-w-[60ch] text-sm leading-relaxed text-zinc-400"
-                  data-fx="lab-caption"
-                >
-                  {ABOUT_DATA.labCaption}
-                </figcaption>
-              </figure>
-            </div>
-          </div>
-        </AnimatedSection>
+      <Section ref={sectionRef} id="cifras" className="flex flex-col gap-20">
 
         {!teaser && (
           <>
@@ -719,5 +617,6 @@ export function About({
         </AnimatedSection>
         )}
     </Section>
+    </>
   );
 }
